@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getUser } from '../../ducks/reducer.js';
 import Header from '../Header/Header';
 import Button from '../Button/Button';
+import './Dashboard.css';
 
 class Dashboard extends Component {
     componentDidMount() {
@@ -11,11 +12,57 @@ class Dashboard extends Component {
     render() {
         let { userData } = this.props
         return (
-            <div className="dashboard_parent_container">
+            <div className="dashboard_container">
                 <div className="header">
                     <Header />
                 </div>
-                <div className="dashboard_child_profile"></div>
+                <div className="dashboard_parent_container">
+                    <div className="dashboard_parent_profile_left">
+                        <div className="dashboard_child_profile">
+                            <div className="dashboard_grandchild_profile_left">
+                                <div className="dashboard_username_container">
+                                    <div className="dashboard_name">Namefasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasd</div>
+                                </div>
+
+                            </div>
+                            <div className="dashaboard_grandchild_profile_right">
+                                <div className="dashboard_points_container">
+
+                                </div>
+                                <div className="dashboard_points">Points</div>
+                            </div>
+                            <div className="dashboard_profileinfo_gender">
+                                <h3>Gender</h3>
+                            </div>
+                            <div className="dashboard_profileinfo_gender_props">
+                                <h3>This is the persons gender</h3>
+                            </div>
+                            <div className="dashboard_profileinfo_email">
+                                <h3>Email</h3>
+                            </div>
+                            <div className="dashboard_profileinfo_birthday">
+                                <h3>Birthday</h3>
+                            </div>
+                            <div className="dashboard_profileinfo_age">
+                                <h3>Age</h3>
+                            </div>
+                            <div className="dashboard_profileinfo_weight">
+                                <h3>Weight</h3>
+                            </div>
+                            <div className="dashboard_profileinfo_height">
+                                <h3>Height</h3>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div className="dashboard_parent_profile_right">
+                        <div className="dashboard_image_container">
+                            <div className="dashboard_left_image"></div>
+                            <div className="dashboard_right_image"></div>
+
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

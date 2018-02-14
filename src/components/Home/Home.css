@@ -1,0 +1,47 @@
+.home_container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.home_child_parent {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+}
+
+.home_child_right {
+    height: 100%;
+    width: 50%vw;
+    background:blue;
+    position: absolute;
+}
+
+.home_child_left {
+    height: 100%;
+    width: 50%vw;
+    background:red;
+    position: relative;
+}
+
+.image_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.login_container {
+    height: 200px;
+    width: 200px;
+    position: absolute;
+    background: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

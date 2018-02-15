@@ -5,6 +5,7 @@ const massive = require('massive');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
+const ctrl = require('./ctrl/ctrl');
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING, DOMAIN, CLIENTID, CLIENT_SECRET, CALLBACK_URL} = process.env;
 
 const app = express();
@@ -26,19 +27,17 @@ passport.use(new Auth0Strategy({
     clientID:CLIENTID,
     clientSecret:CLIENT_SECRET,
     callbackURL:CALLBACK_URL,
-    scope: 'openid profile id'
+    scope: 'openid profile id email'
 }, function(accessToken, refreshToken, extraParams, profile, done) {
     const db = app.get('db')
-
-    console.log(profile)
     
     const {sub, given_name, family_name, gender} = profile._json;
     db.find_user([sub]).then(response=> {
-        console.log(response)
         if(response[0]) {
             done(null, response[0].id);
         } else {
             db.create_user([given_name, family_name, gender, sub]).then(response=> {
+            
                 done(null, response[0].id);
             })
         }
@@ -57,11 +56,10 @@ passport.deserializeUser((id, done)=> {
 
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect:'http://localhost:3000#/dashboard'
+    successRedirect:'http://localhost:3000/#/dashboard'
 }))
 
 app.get('/auth/me', (req, res)=> {
-    console.log(req.user)
     if(!req.user) {
         res.status(404).send('Not Logged In')
     } else {
@@ -73,6 +71,7 @@ app.get('/logout', (req,res)=> {
     req.logOut();
     res.redirect('http://localhost:3000/')
 })
+app.put('/api/edit', ctrl.updateFirstName);
 
 
 app.listen(SERVER_PORT, () => {console.log(`Listening on port:${ SERVER_PORT }`)})

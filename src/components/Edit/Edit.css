@@ -85,8 +85,14 @@
     grid-row:9;
     grid-column:3; 
 }
-
-
+.edit_profile_gender {
+    grid-row:10;
+    grid-column: 2;
+}
+.edit_profile_gender_props {
+    grid-row:10;
+    grid-column:3;
+}
 .edit_parent_container_right {
     background:pink;
 }

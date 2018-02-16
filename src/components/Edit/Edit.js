@@ -1,26 +1,40 @@
 import React, { Component } from 'react';
 import Header from '../Header/Header';
 import { connect } from 'react-redux';
-import { getUser, updateFirstName } from '../../ducks/reducer';
+import { getUser, updateUser } from '../../ducks/reducer';
+import { Link } from 'react-router-dom';
 import './Edit.css';
 
 class Edit extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            firstName: ''
+            first_name:'',
+            last_name:'',
+            age:'',
+            gender:'',
+            email:'',
+            height_cm:'',
+            current_weight:'',
+            birthday:''
         }
     }
     componentDidMount() {
         this.props.getUser();
     }
-    handleChange(e, props) {
-        const {userData} = this.props
-        console.log(e.target.value)
-        // this.setState({firstName:e.target.value})
+
+    handleInput(event) {
+        this.setState({[event.target.name]: event.target.value})
     }
+    submitChanges() {
+        let obj = this.state
+        obj.id = this.props.userData.id
+        this.props.updateUser(obj);
+    }
+
     render() {
-        let { userData, updateFirstName } = this.props
+        let { userData, updateUser } = this.props
+        
         return (
             <div className="edit_container">
                 <div className="header">
@@ -37,30 +51,40 @@ class Edit extends Component {
                             </div>
                             <div className="edit_profile_first_name">First Name:</div>
                             <div className="edit_profile_first_name_props">
-                                <input className="edit_profile_input_first_name" type="text" onChange={(e)=>updateFirstName(e.target.value)} />
+                                <input type="text" name="first_name" value={this.state.first_name} onChange={e=>this.handleInput(e)} />
                             </div>
                             <div className="edit_profile_last_name">Last Name:</div>
                             <div className="edit_profile_last_name_props">
-                                <input className="edit_profile_input_last_name" type="text" />
+                                <input name="last_name" value={this.state.last_name} type="text" onChange={e=>this.handleInput(e)}/>
                             </div>
                             <div className="edit_profile_height">Height (cm):</div>
                             <div className="edit_profile_height_props">
-                                <input className="edit_profile_height_input" type="text" />
+                                <input name="height_cm" value={this.state.height_cm} type="text" onChange={e=>this.handleInput(e)}/>
                             </div>
                             <div className="edit_profile_weight">Weight (kg):</div>
                             <div className="edit_profile_weight_props">
-                                <input className="edit_profile_weight_input" type="text" />
+                                <input name="current_weight" value={this.state.current_weight} type="text" onChange={e=>this.handleInput(e)}/>
 
                             </div>
                             <div className="edit_profile_age">Age:</div>
                             <div className="edit_profile_age_props">
-                                <input className="edit_profile_age_input" type="text" />
+                                <input name="age" value={this.state.age} type="text"  onChange={e=>this.handleInput(e)}/>
                             </div>
                             <div className="edit_profile_birthday">Birthday:</div>
                             <div className="edit_profile_birthday_props">
-                                <input className="edit_profile_birthday_input" type="text" />
+                                <input name="birthday" value={this.state.birthday} type="text" onChange={e=>this.handleInput(e)}/>
                             </div>
+                            <div className="edit_profile_email">email:</div>
+                            <div className="edit_profile_email_props">
+                                <input name="age" value={this.state.email} type="text"  onChange={e=>this.handleInput(e)}/>
+                            </div>
+                            <div className="edit_profile_gender">Gender:</div>
+                            <div className="edit_profile_gender_props">
+                                <input name="age" value={this.state.gender} type="text"  onChange={e=>this.handleInput(e)}/>
+                            </div>
+                            
                         </div>
+                        <Link to="/dashboard" ><div><button onClick={()=>this.submitChanges()}>Update</button></div></Link>
                     </div>
                     <div className="edit_parent_container_right">
                         <div className=""></div>
@@ -72,7 +96,8 @@ class Edit extends Component {
 }
 export function mapStateToProps(state) {
     return {
-        userData: state.user
+        userData: state.user,
+        updateUser: state.user,
     }
 }
-export default connect(mapStateToProps, { getUser, updateFirstName })(Edit);
+export default connect(mapStateToProps, { getUser, updateUser})(Edit);

@@ -44,6 +44,31 @@ passport.use(new Auth0Strategy({
     })
 }));
 
+//////////////
+
+app.use((req, res, next) => {
+    if (!req.session.user) {
+        req.session.user = {
+            id:4,
+            first_name: "testing",
+            last_name:"stuff",
+            age:34,
+            gender:"male",
+            auth_id:"google-oauth2|104169181473731414256",
+            email: "B32alls@gmail.com",
+            current_height: "234",
+            profile_picture: "http://www.placekitten.com/200/250",
+        }
+    }
+
+    next()
+})
+
+
+
+
+//////////////////////////////////////////
+
 passport.serializeUser((id, done)=> {
     done(null, id)
 })
@@ -58,12 +83,16 @@ app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
     successRedirect:'http://localhost:3000/#/dashboard'
 }))
-
+////
+//change req.user to req.session.user so you don't have to login and out all the time. 
+//
+//Change this back when you're done updating the site;
+////
 app.get('/auth/me', (req, res)=> {
-    if(!req.user) {
+    if(!req.session.user) {
         res.status(404).send('Not Logged In')
     } else {
-        res.status(200).send(req.user)
+        res.status(200).send(req.session.user)
     }
 })
 
@@ -71,7 +100,7 @@ app.get('/logout', (req,res)=> {
     req.logOut();
     res.redirect('http://localhost:3000/')
 })
-app.put('/api/edit', ctrl.updateFirstName);
+app.put('/api/edit/:id', ctrl.updateUser);
 
 
 app.listen(SERVER_PORT, () => {console.log(`Listening on port:${ SERVER_PORT }`)})

@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { getUser } from '../../ducks/reducer.js';
 import Header from '../Header/Header';
 import Edit from '../Edit/Edit';
+import Create_Challenge from '../Create_Challenge/Create_Challenge'
+import Join_Challenge from '../Join_Challenge/Join_Challenge';
 import './Dashboard.css';
 
 class Dashboard extends Component {
@@ -74,8 +76,8 @@ class Dashboard extends Component {
                             </div>
                         </div>
                         <div className="dashboard_left_parent_buttons">
-                            <div><button>Create Challenge</button></div>
-                            <div><button>Join Challenge</button></div>
+                            <Link to="/create_challenge"><div><button>Create Challenge</button></div></Link>
+                            <Link to="/join_challenge"><div><button>Join Challenge</button></div></Link>
                         </div>
 
                     </div>

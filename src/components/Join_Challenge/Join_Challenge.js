@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../Header/Header';
 
-class Group extends Component {
+class Join extends Component {
     render() {
         return( 
             <div>
@@ -11,4 +11,4 @@ class Group extends Component {
         )
     }
 }
-export default Group
+export default Join

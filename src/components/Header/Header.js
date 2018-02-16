@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
-import './Header.css'
-import Button from '../Button/Button'
+import { Link }  from 'react-router-dom';
+import './Header.css';
+import Button from '../Button/Button';
+import Dashboard from '../Dashboard/Dashboard';
+import Join_Challenge from '../Join_Challenge/Join_Challenge';
+import Create_Challenge from '../Create_Challenge/Create_Challenge';
+import Group from '../Group/Group';
 
 export default class Header extends Component {
     componentWillReceiveProps() {
@@ -11,16 +16,16 @@ export default class Header extends Component {
             <div className="header_container">
                 <div className="header_parent_container">
 
-                    {/* <nav> */}
+                    
                     <div className="header_child_left">
                         <div className="header_image"><img src="" alt=""></img>Logo</div>
                     </div>
-
+                        
                     <div className="header_child_right">
-                        <h3>Profile</h3>
-                        <h3>Create</h3>
-                        <h3>Join</h3>
-                        <h3>Groups</h3>
+                        <Link to="/dashboard"><h3>Dashboard</h3></Link>
+                        <Link to="/create_challenge"><h3>Create</h3></Link>
+                        <Link to="/join_challenge"><h3>Join</h3></Link>
+                        <Link to="/group"><h3>Groups</h3></Link>
                         <div className="header_button">
                             <Button />
                         </div>

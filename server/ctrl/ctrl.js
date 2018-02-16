@@ -17,7 +17,13 @@ module.exports = {
         // console.log("ID", req.params.id)
         // console.log("REQ BODY", req.body)
        const db = req.app.get('db');
-       const { id, first_name, last_name, age, height_cm, current_weight, birthday} = req.body
+    //    const { id, first_name, last_name, age, height_cm, current_weight, birthday} = req.body
+       const {id, first_name, last_name, age, height_cm, current_weight, birthday}= req.user
+       
+    //    switch(req.body) {
+    //        case first_name:
+    //        return 
+    //    }
 
     db.update_user([id, first_name, last_name, age, height_cm, current_weight, birthday])
     .then( (resp)=>{

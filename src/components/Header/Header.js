@@ -2,10 +2,7 @@ import React, { Component } from 'react';
 import { Link }  from 'react-router-dom';
 import './Header.css';
 import Button from '../Button/Button';
-import Dashboard from '../Dashboard/Dashboard';
-import Join_Challenge from '../Join_Challenge/Join_Challenge';
-import Create_Challenge from '../Create_Challenge/Create_Challenge';
-import Group from '../Group/Group';
+
 
 export default class Header extends Component {
     componentWillReceiveProps() {

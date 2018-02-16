@@ -50,14 +50,14 @@ app.use((req, res, next) => {
     if (!req.session.user) {
         req.session.user = {
             id:4,
-            first_name: "testing",
-            last_name:"stuff",
+            first_name: "stuffify",
+            last_name:"you",
             age:34,
             gender:"male",
             auth_id:"google-oauth2|104169181473731414256",
             email: "B32alls@gmail.com",
             current_height: "234",
-            profile_picture: "http://www.placekitten.com/200/250",
+            // profile_picture: "http://www.placekitten.com/200/250",
         }
     }
 

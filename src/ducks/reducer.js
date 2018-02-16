@@ -16,30 +16,12 @@ const initialState = {
 
 
 const GET_USER = 'GET_USER';
-const UPDATE_FIRST_NAME = 'UPDATE_FIRST_NAME';
 const UPDATE_USER = 'UPDATE_USER';
-const UPDATE_LAST_NAME = 'UPDATE_LAST_NAME';
-const UPDATE_HEIGHT = 'UPDATE_HEIGHT';
-const UPDATE_WEIGHT = 'UPDATE_WEIGHT';
-const UPDATE_AGE = 'UPDATE_AGE';
-const UPDATE_BIRTHDAY = 'UPDATE_BIRTHDAY';
-
 
 export default function reducer(state = initialState, action) {
-    console.log(state)
     switch (action.type) {
         case GET_USER + '_FULFILLED':
             return Object.assign({}, state, { user: action.payload });
-        case UPDATE_FIRST_NAME:
-            return Object.assign({}, state, { first_name: action.payload });
-        case UPDATE_LAST_NAME:
-            return Object.assign({}, state, { last_name: action.payload })
-        case UPDATE_AGE:
-            return Object.assign({}, state, { age: action.payload })
-        case UPDATE_HEIGHT:
-            return Object.assign({}, state, { height_cm: action.payload })
-        case UPDATE_WEIGHT:
-            return Object.assign({}, state, { current_weight: action.payload })
         case UPDATE_USER +'_FULLFILLED':
             return Object.assign({}, state, {updatedUser:action.payload})
         default:

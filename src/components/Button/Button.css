@@ -13,6 +13,12 @@
     align-items: center;
     border: 2px solid white;
     border-radius: 150px;
+    
+}
+.button_parent a {
+    color: inherit;
+    text-decoration:none; 
+    cursor:pointer;  
 }
 /* .button_child_container {
     height: 80px;

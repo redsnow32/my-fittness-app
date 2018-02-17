@@ -3,20 +3,50 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUser } from '../../ducks/reducer.js';
 import Header from '../Header/Header';
+import Create_Challenge from '../Create_Challenge/Create_Challenge'
 import './Dashboard.css';
 
 class Dashboard extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            challengeID:''
+        }
+        // this.handleCreateChallengeClick = this.handleCreateChallengeClick.bind(this)
+    }
     componentDidMount() {
         this.props.getUser();
-    }
 
+    }
+    // handleCreateChallengeClick(e) {
+    //     function generateChallengeID() {
+    //         var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+    //         var challenge_length = 10;
+    //         var randID = '';
+    //         for (var i = 0; i < challenge_length; i++) {
+    //             var rnum = Math.floor(Math.random() * chars.length);
+    //             randID += chars.substring(rnum, rnum + 1);
+
+    //         }
+    //         console.log(randID)
+    //         return randID  
+    //     }
+    //     let newChallengeID = generateChallengeID()
+    //     console.log(newChallengeID)
+    //     this.setState({challengeID:newChallengeID})
+        
+    // }
     render() {
         let { userData } = this.props
+        let {newID } = this.state 
+        
         return (
             <div className="dashboard_container">
                 <div className="header">
                     <Header />
+                    
                 </div>
+               
                 <div className="dashboard_parent_container">
                     <div className="dashboard_parent_profile_left">
                         <div className="dashboard_child_profile">
@@ -86,6 +116,7 @@ class Dashboard extends Component {
                         </div>
                     </div>
                 </div>
+               
             </div>
         )
     }

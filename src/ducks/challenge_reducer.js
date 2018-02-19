@@ -20,6 +20,9 @@ export function challenge_reducer(state = initialState, action) {
 }
 
 export function createChallenge(challenge_id) {
+    const newChallengeID = axios.post(`/api/create_challenge`).then(res=>{
+        res.data
+    })
     return {
         type: CREATE_NEW_CHALLENGE_ID,
         payload: challenge_id

@@ -1,10 +1,13 @@
 require('dotenv').config();
+const axios = require('axios');
 const express = require('express');
 const session = require('express-session');
 const massive = require('massive');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const Auth0Strategy = require('passport-auth0');
+const randtoken = require('rand-token');
+const challenge_ctrl = require('./ctrl/challenge_ctrl');
 const ctrl = require('./ctrl/ctrl');
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING, DOMAIN, CLIENTID, CLIENT_SECRET, CALLBACK_URL} = process.env;
 
@@ -101,6 +104,11 @@ app.get('/logout', (req,res)=> {
     res.redirect('http://localhost:3000/')
 })
 app.put('/api/edit/:id', ctrl.updateUser);
+// axios.get('/api/create_challenge').then(res=>{
+//     let token = randtoken.generate(16)
+//     return res.status(200).send(token)
+// })
 
+// app.post('/api/create_challenge', challenge_ctrl.generateNewChallengeID);
 
 app.listen(SERVER_PORT, () => {console.log(`Listening on port:${ SERVER_PORT }`)})

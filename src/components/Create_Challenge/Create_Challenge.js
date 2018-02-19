@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// import axios from 'axios';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { createChallenge } from '../../ducks/challenge_reducer';
@@ -15,6 +16,10 @@ class Create extends Component {
             challengeID: ''
         }
     }
+    componentDidMount(){
+        this.props.createChallenge();
+        
+    }
     render() {
         const { challengeData } = this.props
         function generateChallengeID() {
@@ -29,6 +34,7 @@ class Create extends Component {
             return randID
         }
         let newChallengeID = generateChallengeID()
+        let {newID} = this.props
         return (
             <div className="create_container">
                 <div><Header /></div>
@@ -47,7 +53,8 @@ class Create extends Component {
                     <div className="create_parent_right">
                         <div>
                             <div>ChallengeID:</div>
-                            <div>{newChallengeID}</div>
+                            {/* <div>{newChallengeID}</div> */}
+                            <div>{newID}</div>
                     </div>
                     <div className="create_children_right">
                         <div className="create_child_right1">test</div>

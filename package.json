@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "aws-sdk": "^2.197.0",
     "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "c": "^0.1.0",
@@ -20,6 +21,7 @@
     "react-focal": "^1.0.2",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
+    "react-s3-uploader": "^4.6.2",
     "react-scripts": "1.1.1",
     "redux": "^3.7.2",
     "redux-promise-middleware": "^5.0.0"

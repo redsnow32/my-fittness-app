@@ -8,10 +8,10 @@
     width: 100%;
 }
 .edit_parent_container {
-    display:grid;
-    grid-template-columns: 1fr 1fr;
-    grid-auto-rows: minmax(400px, auto);
-    grid-gap: 10px;
+    // display:grid;
+    // grid-template-columns: 1fr 1fr;
+    // grid-auto-rows: minmax(400px, auto);
+    // grid-gap: 10px;
 }
 
 .edit_parent_container_left {
@@ -36,10 +36,15 @@
     /* background: blue; */
 
 }
+.image_container {
+    height: 250px;
+    width: 250px;
+    background:red;
+    display: flex;
+}
 .edit_grandchild_profile_right {
     grid-row: 1/3;
     grid-column: 4;
-    background: green;
 }
 
 .edit_profile_first_name {
@@ -99,5 +104,4 @@
     grid-column:3;
 }
 .edit_parent_container_right {
-    background:pink;
 }

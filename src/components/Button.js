@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getUser } from '../../ducks/reducer';
-import './Button.css';
+import { getUser } from '../ducks/reducer';
 
 class Button extends Component {
     componentDidMount() {

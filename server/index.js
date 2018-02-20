@@ -9,38 +9,42 @@ const Auth0Strategy = require('passport-auth0');
 const randtoken = require('rand-token');
 const challenge_ctrl = require('./ctrl/challenge_ctrl');
 const ctrl = require('./ctrl/ctrl');
-const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING, DOMAIN, CLIENTID, CLIENT_SECRET, CALLBACK_URL} = process.env;
+const cors = require('cors');
+const AWS = require('aws-sdk')
+// const S3 = require('./S3.js');
+const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING, DOMAIN, CLIENTID, CLIENT_SECRET, CALLBACK_URL, AWS_SECRET_ACCESS_KEY, AWS_ACCESS_KEY_ID, AWS_REGION, AWS_BUCKET } = process.env;
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use(session({
-    secret:SESSION_SECRET,
+    secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: true
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-massive(CONNECTION_STRING).then(db=> {
+massive(CONNECTION_STRING).then(db => {
     app.set('db', db)
 });
 passport.use(new Auth0Strategy({
-    domain:DOMAIN,
-    clientID:CLIENTID,
-    clientSecret:CLIENT_SECRET,
-    callbackURL:CALLBACK_URL,
+    domain: DOMAIN,
+    clientID: CLIENTID,
+    clientSecret: CLIENT_SECRET,
+    callbackURL: CALLBACK_URL,
     scope: 'openid profile id email'
-}, function(accessToken, refreshToken, extraParams, profile, done) {
+}, function (accessToken, refreshToken, extraParams, profile, done) {
     const db = app.get('db')
-    
-    const {sub, given_name, family_name, gender} = profile._json;
-    db.find_user([sub]).then(response=> {
-        if(response[0]) {
+
+    const { sub, given_name, family_name, gender } = profile._json;
+    db.find_user([sub]).then(response => {
+        if (response[0]) {
             done(null, response[0].id);
         } else {
-            db.create_user([given_name, family_name, gender, sub]).then(response=> {
-            
+            db.create_user([given_name, family_name, gender, sub]).then(response => {
+
                 done(null, response[0].id);
             })
         }
@@ -52,12 +56,12 @@ passport.use(new Auth0Strategy({
 app.use((req, res, next) => {
     if (!req.session.user) {
         req.session.user = {
-            id:4,
+            id: 4,
             first_name: "stuffify",
-            last_name:"you",
-            age:34,
-            gender:"male",
-            auth_id:"google-oauth2|104169181473731414256",
+            last_name: "you",
+            age: 34,
+            gender: "male",
+            auth_id: "google-oauth2|104169181473731414256",
             email: "B32alls@gmail.com",
             current_height: "234",
             // profile_picture: "http://www.placekitten.com/200/250",
@@ -72,34 +76,34 @@ app.use((req, res, next) => {
 
 //////////////////////////////////////////
 
-passport.serializeUser((id, done)=> {
+passport.serializeUser((id, done) => {
     done(null, id)
 })
-passport.deserializeUser((id, done)=> {
+passport.deserializeUser((id, done) => {
     const db = app.get('db');
-    db.find_logged_in_user([id]).then(res=> {
+    db.find_logged_in_user([id]).then(res => {
         done(null, res[0])
     })
 });
 
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect:'http://localhost:3000/#/dashboard'
+    successRedirect: 'http://localhost:3000/#/dashboard'
 }))
 ////
 //change req.user to req.session.user so you don't have to login and out all the time. 
 //
 //Change this back when you're done updating the site;
 ////
-app.get('/auth/me', (req, res)=> {
-    if(!req.session.user) {
+app.get('/auth/me', (req, res) => {
+    if (!req.session.user) {
         res.status(404).send('Not Logged In')
     } else {
         res.status(200).send(req.session.user)
     }
 })
 
-app.get('/logout', (req,res)=> {
+app.get('/logout', (req, res) => {
     req.logOut();
     res.redirect('http://localhost:3000/')
 })
@@ -111,4 +115,30 @@ app.put('/api/edit/:id', ctrl.updateUser);
 
 // app.post('/api/create_challenge', challenge_ctrl.generateNewChallengeID);
 
-app.listen(SERVER_PORT, () => {console.log(`Listening on port:${ SERVER_PORT }`)})
+AWS.config.update({
+    accessKeyId: AWS_ACCESS_KEY_ID,
+    secretAccessKey: AWS_SECRET_ACCESS_KEY,
+    AWS_REGION: AWS_REGION
+})
+
+const S3 = new AWS.S3();
+
+app.post('/api/photo/:userID', (req, res) => {
+    console.log(req)
+    const buffer = new Buffer(req.body.file.replace(/^data.*;base64,/, ""), 'base64');
+    const params = {
+        bucket: AWS_BUCKET,
+        body: buffer,
+        key: req.body.filename,
+        contentType: req.body.filetype,
+        ACL: 'public-read'
+    };
+    console.log(buffer)
+
+    S3.upload(params, (err, data) => { // image is uploaded to s3
+        if (err) return res.status(500).send(err);
+        else res.status(200).send(data);
+    });
+});
+
+app.listen(SERVER_PORT, () => { console.log(`Listening on port:${SERVER_PORT}`) })

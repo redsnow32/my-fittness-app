@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getUser } from '../../ducks/reducer.js';
-import Header from '../Header/Header';
-import Create_Challenge from '../Create_Challenge/Create_Challenge'
-import './Dashboard.css';
+import { getUser } from '../ducks/reducer';
+import Header from './Header';
+import Create_Challenge from './Create_Challenge';
 
 class Dashboard extends Component {
     constructor(props) {
@@ -39,6 +38,7 @@ class Dashboard extends Component {
     render() {
         let { userData } = this.props
         let {newID } = this.state 
+        console.log(userData)
         
         return (
             <div className="dashboard_container">
@@ -74,7 +74,7 @@ class Dashboard extends Component {
                             <div className="dashboard_profileinfo_email">
                                 <h3>Email</h3>
                             </div>
-                            <div className="dashboard_profileinfo_email_props">
+                            <div className="dashboard_profileinfo_email_props" >
                                 <h3>{userData.email}</h3>
                             </div>
                             <div className="dashboard_profileinfo_birthday">

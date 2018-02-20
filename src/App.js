@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from './components/Home/Home';
-import Dashboard from './components/Dashboard/Dashboard';
-import Edit from './components/Edit/Edit';
-import Create_Challenge from './components/Create_Challenge/Create_Challenge';
-import Join_Challenge from './components/Join_Challenge/Join_Challenge';
-import Group from './components/Group/Group';
-import './App.css';
+import Home from './components/Home';
+import Dashboard from './components/Dashboard';
+import Edit from './components/Edit';
+import Create_Challenge from './components/Create_Challenge';
+import Join_Challenge from './components/Join_Challenge';
+import Group from './components/Group';
+import FileUpload from './components/FileUpload';
+import './styles/main.css';
 
 
 class App extends Component {
@@ -21,6 +22,7 @@ class App extends Component {
             <Route path="/create_challenge" component={Create_Challenge} newID/>
             <Route path="/join_challenge" component={Join_Challenge} />
             <Route path="/group" component={Group} />
+            <Route path="/fileUpload" component={FileUpload} />
           </Switch>
         </Router>
       </div>

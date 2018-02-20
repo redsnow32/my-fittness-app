@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import Header from '../Header/Header';
+import Header from './Header';
 import { connect } from 'react-redux';
-import { getUser, updateUser } from '../../ducks/reducer';
+import { getUser, updateUser } from '../ducks/reducer';
 import { Link } from 'react-router-dom';
-import './Edit.css';
+import FileUpload from './FileUpload';
 
 class Edit extends Component {
     constructor(props) {
@@ -47,7 +47,7 @@ class Edit extends Component {
                                 <h1>{userData.first_name}  {userData.last_name}</h1>
                             </div>
                             <div className="edit_grandchild_profile_right">
-                                Image
+                                <div className="image_container"><FileUpload /></div>
                             </div>
                             <div className="edit_profile_first_name">First Name:</div>
                             <div className="edit_profile_first_name_props">

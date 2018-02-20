@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 // import axios from 'axios';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { createChallenge } from '../../ducks/challenge_reducer';
-import Header from '../Header/Header';
-
-
-import './Create_Challenge.css';
+import { createChallenge } from '../ducks/challenge_reducer';
+import Header from './Header';
 
 
 class Create extends Component {

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link }  from 'react-router-dom';
-import './Header.css';
-import Button from '../Button/Button';
+import Button from './Button';
 
 
 export default class Header extends Component {

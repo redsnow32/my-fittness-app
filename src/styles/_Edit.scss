@@ -37,13 +37,13 @@
 
 }
 .image_container {
-    height: 250px;
-    width: 250px;
+    height: 300px;
+    width: 300px;
     background:red;
     display: flex;
 }
 .edit_grandchild_profile_right {
-    grid-row: 1/3;
+    grid-row: 1/5;
     grid-column: 4;
 }
 
@@ -93,7 +93,25 @@
 }
 .edit_profile_birthday_props {
     grid-row:9;
-    grid-column:3; 
+    grid-column:3/5; 
+}
+.react-date-picker__button {
+    width:200px;
+}
+.edit_birthdate {
+//     all:initial;
+//     * {
+//         all:unset;
+//     }
+}
+.react-date-picker__button__input__input .react-date-picker__button__input__day {
+    width:20px;
+}
+.react-date-picker__button__input__input .react-date-picker__button__input__month {
+    width:20px;
+}
+.react-date-picker__button__input__input .react-date-picker__button__input__year {
+    width:10px;
 }
 .edit_profile_gender {
     grid-row:10;

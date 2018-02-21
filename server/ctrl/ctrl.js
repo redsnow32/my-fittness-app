@@ -15,7 +15,7 @@ module.exports = {
         console.log(req.body)
         console.log(req.user)
         // console.log("ID", req.params.id)
-        // console.log("REQ BODY", req.body)
+        console.log("REQ BODY", req.body)
         const db = req.app.get('db');
         const { id, first_name, last_name, age, height_cm, current_weight, birthday } = req.body
         //    const {id, first_name, last_name, age, height_cm, current_weight, birthday}= req.user
@@ -25,11 +25,14 @@ module.exports = {
         //        return 
         //    }
 
-        db.update_user([id, first_name, last_name, age, height_cm, current_weight])
+        db.update_user([id, first_name, last_name, age, height_cm, current_weight, birthday])
             .then((resp) => {
                 console.log("UPDATE RESP", resp)
                 res.status(200).send(resp)
-            }).catch(() => res.status(500).send("Error"))
+            }).catch((err) => {
+                console.log(err)
+                res.status(500).send("Error")
+            })
     }
-    
+
 }

@@ -10,8 +10,8 @@ const randtoken = require('rand-token');
 const challenge_ctrl = require('./ctrl/challenge_ctrl');
 const ctrl = require('./ctrl/ctrl');
 const cors = require('cors');
-const AWS = require('aws-sdk')
-// const S3 = require('./S3.js');
+// const AWS = require('aws-sdk')
+const S3 = require('./S3.js');
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING, DOMAIN, CLIENTID, CLIENT_SECRET, CALLBACK_URL, AWS_SECRET_ACCESS_KEY, AWS_ACCESS_KEY_ID, AWS_REGION, AWS_BUCKET } = process.env;
 
 const app = express();
@@ -108,37 +108,45 @@ app.get('/logout', (req, res) => {
     res.redirect('http://localhost:3000/')
 })
 app.put('/api/edit/:id', ctrl.updateUser);
-// axios.get('/api/create_challenge').then(res=>{
-//     let token = randtoken.generate(16)
-//     return res.status(200).send(token)
-// })
+app.put('/api/create_challenge/:id', ((req,res)=>{
+    console.log(req.params)
+    let token = randtoken.generate(16)
+    const db  = req.app.get('db')
+    const { userid } = req.params
+
+    db.create_new_challenge([token, userid ]).then(resp => {
+        console.log("CREATE CHALLENGE", resp)
+        res.status(200).send(resp)
+    }).catch(() => res.status(500).send("Error"))
+}))
 
 // app.post('/api/create_challenge', challenge_ctrl.generateNewChallengeID);
 
-AWS.config.update({
-    accessKeyId: AWS_ACCESS_KEY_ID,
-    secretAccessKey: AWS_SECRET_ACCESS_KEY,
-    AWS_REGION: AWS_REGION
-})
+// AWS.config.update({
+//     accessKeyId: AWS_ACCESS_KEY_ID,
+//     secretAccessKey: AWS_SECRET_ACCESS_KEY,
+//     AWS_REGION: AWS_REGION
+// })
 
-const S3 = new AWS.S3();
+// const S3 = new AWS.S3();
 
-app.post('/api/photo/:userID', (req, res) => {
-    console.log(req)
-    const buffer = new Buffer(req.body.file.replace(/^data.*;base64,/, ""), 'base64');
-    const params = {
-        bucket: AWS_BUCKET,
-        body: buffer,
-        key: req.body.filename,
-        contentType: req.body.filetype,
-        ACL: 'public-read'
-    };
-    console.log(buffer)
+// app.post('/api/photo/:userID', (req, res) => {
+//     console.log(req)
+//     const buffer = new Buffer(req.body.file.replace(/^data.*;base64,/, ""), 'base64');
+//     const params = {
+//         bucket: AWS_BUCKET,
+//         body: buffer,
+//         key: req.body.filename,
+//         contentType: req.body.filetype,
+//         ACL: 'public-read'
+//     };
+//     console.log(buffer)
 
-    S3.upload(params, (err, data) => { // image is uploaded to s3
-        if (err) return res.status(500).send(err);
-        else res.status(200).send(data);
-    });
-});
+//     S3.upload(params, (err, data) => { // image is uploaded to s3
+//         if (err) return res.status(500).send(err);
+//         else res.status(200).send(data);
+//     });
+// });
+S3(app)
 
 app.listen(SERVER_PORT, () => { console.log(`Listening on port:${SERVER_PORT}`) })

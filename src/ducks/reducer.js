@@ -10,20 +10,26 @@ const initialState = {
         height_cm: '',
         current_weight: '',
         challenge_id: '',
-        birthday:''
+        birthday: ''
+    },
+    challenge: {
+        challenge_id: ''
     }
 }
 
 
 const GET_USER = 'GET_USER';
 const UPDATE_USER = 'UPDATE_USER';
+const CREATE_NEW_CHALLENGE_ID = 'CREATE_NEW_CHALLENGE_ID'
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case GET_USER + '_FULFILLED':
             return Object.assign({}, state, { user: action.payload });
-        case UPDATE_USER +'_FULLFILLED':
-            return Object.assign({}, state, {updatedUser:action.payload})
+        case UPDATE_USER + '_FULLFILLED':
+            return Object.assign({}, state, { updatedUser: action.payload })
+        case CREATE_NEW_CHALLENGE_ID:
+            return Object.assign({}, state, { challenge_id: action.payload })
         default:
             return state
     }
@@ -42,10 +48,10 @@ export function getUser() {
 
 export function updateUser(user) {
     console.log(user)
-    let body={
+    let body = {
         id: user.id,
-        first_name:user.first_name,
-        last_name:user.last_name,
+        first_name: user.first_name,
+        last_name: user.last_name,
         age: user.age,
         // gender: user.gender,
         // auth_id:user.auth_id,
@@ -53,15 +59,25 @@ export function updateUser(user) {
         height_cm: user.height_cm,
         current_weight: user.current_weight,
         // challenge_id: user.challenge_id,
-        birthday:user.birthday
+        birthday: user.birthday
 
     }
-    
-    const updatedUser = axios.put(`/api/edit/${user.id}`, body).then(res=>{
+
+    const updatedUser = axios.put(`/api/edit/${user.id}`, body).then(res => {
         return res.data
     })
-    return{
-        type:UPDATE_USER,
-        payload:updatedUser
+    return {
+        type: UPDATE_USER,
+        payload: updatedUser
+    }
+}
+
+export function createChallenge(challenge_id) {
+    const newChallengeID = axios.post(`/api/create_challenge`).then(res=>{
+        res.data
+    })
+    return {
+        type: CREATE_NEW_CHALLENGE_ID,
+        payload: challenge_id
     }
 }

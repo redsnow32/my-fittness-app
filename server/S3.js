@@ -1,33 +1,38 @@
 require('dotenv').config();
-const { AWS_SECRET_ACCESS_KEY, AWS_ACCESS_KEY_ID, AWS_REGION, AWS_BUCKET } = process.env
 
 const AWS = require('aws-sdk');
 
 AWS.config.update({
-    accessKeyId: AWS_ACCESS_KEY_ID,
-    secretAccessKey: AWS_SECRET_ACCESS_KEY,
-    AWS_REGION: AWS_REGION
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    AWS_REGION: process.env.AWS_REGION
 })
 
 const S3 = new AWS.S3();
 
-    app.post('/api/photo/:userID', (req, res) => {
-        const buffer = new Buffer(req.body.file.replace(/^data:image\/\w+;base64,/, ""), 'base64'),
-        const params = {
-            bucket: AWS_BUCKET,
-            body: buffer,
-            key: req.body.filename,
-            contentType: req.body.filetype,
+function uploadPhoto(req, res) {
+    let photo = req.body,
+        buffer = new Buffer(photo.file.replace(/^data:image\/\w+;base64,/, ""), 'base64'),
+        params = {
+            Bucket: process.env.AWS_BUCKET,
+            Body: buffer,
+            Key: photo.filename,
+            ContentType: photo.filetype,
             ACL: 'public-read'
-        };
-        console.log(buffer)
+        }
 
-        S3.upload(params, (err, data) => { // image is uploaded to s3
-            if (err) return res.status(500).send(err);
-            else res.status(200).send(data);
-        });
-    });
+    S3.upload(params, (err, data) => {
+        console.log(params)
+        if (err) {
+            console.log(err)
+        } else {
+            (response = data.Location, code = 200)
+            res.status(code).send(response)
+            console.log('S3 response', data)
+        }
+    })
+}
 
 module.exports = function (app) {
-    app.post('/api/edit', uploadPhoto)
+    app.post('/api/fileupload/:id', uploadPhoto)
 }

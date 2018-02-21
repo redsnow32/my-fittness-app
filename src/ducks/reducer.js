@@ -13,7 +13,15 @@ const initialState = {
         birthday: ''
     },
     challenge: {
-        challenge_id: ''
+        challenge_id:'',
+        user_id:'',
+        group_name:'',
+        start_date:'',
+        end_date:'',
+        options_id:'',
+        daily_points:'',
+        total_points:'',
+        reward_amount:''
     }
 }
 

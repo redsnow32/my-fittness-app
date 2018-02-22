@@ -18,7 +18,13 @@ const initialState = {
         group_name:'',
         start_date:'',
         end_date:'',
-        options_id:'',
+        water_intake:false,
+        calorie_intake:false,
+        daily_weight:false,
+        weight_loss:false,
+        exercise:false,
+        collection_type:'',
+        collection_required:false,
         daily_points:'',
         total_points:'',
         reward_amount:''
@@ -80,12 +86,31 @@ export function updateUser(user) {
     }
 }
 
-export function createChallenge(challenge_id) {
-    const newChallengeID = axios.post(`/api/create_challenge`).then(res=>{
+export function createChallenge(challenge) {
+console.log(challenge)
+    let body = {
+        challenge_id:'',
+        user_id:'',
+        group_name:challenge.groupName,
+        start_date:challenge.startDate,
+        end_date:challenge.endDate,
+        water_intake:challenge.waterIntake,
+        calorie_intake:challenge.calorieIntake,
+        daily_weight:challenge.dailyWeight,
+        weight_loss:challenge.weightLoss,
+        exercise:challenge.exercise,
+        collection_type:challenge.collectionType,
+        payment_required:challenge.paymentRequired,
+        daily_points:'',
+        total_points:'',
+        reward_amount:challenge.rewardAmount,
+
+    }
+    const newChallengeID = axios.put(`/api/create_challenge`, body).then(res=>{
         res.data
     })
     return {
         type: CREATE_NEW_CHALLENGE_ID,
-        payload: challenge_id
+        payload: challenge
     }
 }

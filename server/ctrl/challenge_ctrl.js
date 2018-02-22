@@ -1,13 +1,10 @@
-// module.exports = {
-//     generateNewChallengeID: (req, res, next) => {
-//         const { db } = req.app.get('db')
-//         console.log(req.user)
-//         //use .includes to find the challenge id use while loop
-//         //
+module.exports={
+    getAllOptions: (req,res)=>{
+        const db = req.app.get('db')
 
-//         db.create_new_challenge_id([req.user]).then(resp => {
-//             console.log("CREATE CHALLENGE", resp)
-//             res.status(200).send(resp)
-//         }).catch(() => res.status(500).send("Error"))
-//     }
-// }
+        db.get_all_options().then(resp=> {
+            console.log(resp)
+            res.status(200).send(resp)
+        }).catch((err)=>res.status(500).send(err))
+    }
+}

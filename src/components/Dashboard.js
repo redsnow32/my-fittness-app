@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getUser } from '../ducks/reducer';
+import axios from 'axios';
 import Header from './Header';
 import Create_Challenge from './Create_Challenge';
 
@@ -15,26 +16,10 @@ class Dashboard extends Component {
     }
     componentDidMount() {
         this.props.getUser();
-
+        let groupChallenges = axios.get('/api/dashboard/groups').then(res=>{
+            res.data
+        })
     }
-    // handleCreateChallengeClick(e) {
-    //     function generateChallengeID() {
-    //         var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
-    //         var challenge_length = 10;
-    //         var randID = '';
-    //         for (var i = 0; i < challenge_length; i++) {
-    //             var rnum = Math.floor(Math.random() * chars.length);
-    //             randID += chars.substring(rnum, rnum + 1);
-
-    //         }
-    //         console.log(randID)
-    //         return randID  
-    //     }
-    //     let newChallengeID = generateChallengeID()
-    //     console.log(newChallengeID)
-    //     this.setState({challengeID:newChallengeID})
-        
-    // }
     render() {
         let { userData } = this.props
         let {newID } = this.state 
@@ -109,6 +94,7 @@ class Dashboard extends Component {
 
                     </div>
                     <div className="dashboard_parent_profile_right">
+                        <div>{this.props.groupChallenges}</div>
                         <div className="dashboard_image_container">
                             <div className="dashboard_left_image"></div>
                             <div className="dashboard_right_image"></div>

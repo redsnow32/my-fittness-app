@@ -108,21 +108,35 @@ app.get('/logout', (req, res) => {
     res.redirect('http://localhost:3000/')
 })
 app.put('/api/edit/:id', ctrl.updateUser);
-app.put('/api/create_challenge', ((req,res)=>{
+app.put('/api/create_challenge', ((req, res, next) => {
     const { user } = req.session
     const { group_name, start_date, end_date, reward_amount, water_intake, caloric_intake, daily_weight, exercise, collection_type, payment_required } = req.body
     let token = randtoken.generate(16)
-    const db  = req.app.get('db')
-    console.log(req.body)
-
-    // db.create_new_challenge([token, user.id, group_name, start_date, end_date, reward_amount ]).then(resp => {
-    //     console.log("CREATE CHALLENGE", resp)
-    //     res.status(200).send(resp)
-    // }).catch(() => res.status(500).send("Error"))
+    const db = req.app.get('db')
+    // console.log(req.body)
+    // console.log(token)
+    let stack = []
+    console.log(stack)
+    db.create_new_challenge([token, user.id, group_name, start_date, end_date, reward_amount]).then(resp => {
+        console.log("CREATE CHALLENGE", resp)
+        req.body.options.forEach((option, i) => {
+            stack.push(db.input_option(token, option))
+        })
+        Promise.all(stack).then(response => {
+            console.log('Options were added!')
+            res.status(200).send(resp)
+        }).catch((err) => {
+            console.log(err)
+            res.status(500).send("Error")
+    })
+    }).catch((err) => {
+            console.log(err)
+            res.status(500).send("Error")
+})
 }))
 
 app.get('/api/create_challenge/options', challenge_ctrl.getAllOptions)
-
+app.get('/api/dashboard/groups', challenge_ctrl.getGroupsById)
 
 
 

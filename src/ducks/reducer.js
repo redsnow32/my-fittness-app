@@ -13,28 +13,23 @@ const initialState = {
         birthday: ''
     },
     challenge: {
-        challenge_id:'',
-        user_id:'',
-        group_name:'',
-        start_date:'',
-        end_date:'',
-        water_intake:false,
-        calorie_intake:false,
-        daily_weight:false,
-        weight_loss:false,
-        exercise:false,
-        collection_type:'',
-        collection_required:false,
-        daily_points:'',
-        total_points:'',
-        reward_amount:''
-    }
+        challenge_id: '',
+        user_id: '',
+        group_name: '',
+        start_date: '',
+        end_date: '',
+        daily_points: '',
+        total_points: '',
+        reward_amount: ''
+    },
+    options: []
 }
 
 
 const GET_USER = 'GET_USER';
 const UPDATE_USER = 'UPDATE_USER';
-const CREATE_NEW_CHALLENGE_ID = 'CREATE_NEW_CHALLENGE_ID'
+const CREATE_NEW_CHALLENGE_ID = 'CREATE_NEW_CHALLENGE_ID';
+const CREATE_OPTIONS = 'CREATE_OPTIONS';
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
@@ -43,7 +38,9 @@ export default function reducer(state = initialState, action) {
         case UPDATE_USER + '_FULLFILLED':
             return Object.assign({}, state, { updatedUser: action.payload })
         case CREATE_NEW_CHALLENGE_ID:
-            return Object.assign({}, state, { challenge_id: action.payload })
+            return Object.assign({}, state, { challenge: action.payload })
+        case CREATE_OPTIONS + '_FULLFILLED':
+            return Object.assign({}, state, { options: action.payload })
         default:
             return state
     }
@@ -86,31 +83,39 @@ export function updateUser(user) {
     }
 }
 
-export function createChallenge(challenge) {
-console.log(challenge)
+export function createChallenge(challenge, options) {
+    // console.log(challenge, options)
     let body = {
-        challenge_id:'',
-        user_id:'',
-        group_name:challenge.groupName,
-        start_date:challenge.startDate,
-        end_date:challenge.endDate,
-        water_intake:challenge.waterIntake,
-        calorie_intake:challenge.calorieIntake,
-        daily_weight:challenge.dailyWeight,
-        weight_loss:challenge.weightLoss,
-        exercise:challenge.exercise,
-        collection_type:challenge.collectionType,
-        payment_required:challenge.paymentRequired,
-        daily_points:'',
-        total_points:'',
-        reward_amount:challenge.rewardAmount,
+        challenge_id: '',
+        user_id: '',
+        group_name: challenge.groupName,
+        start_date: challenge.startDate,
+        end_date: challenge.endDate,
+        collection_type: challenge.collectionType,
+        daily_points: '',
+        total_points: '',
+        reward_amount: challenge.rewardAmount,
+        options:options
 
     }
-    const newChallengeID = axios.put(`/api/create_challenge`, body).then(res=>{
+    const newChallengeID = axios.put(`/api/create_challenge`, body).then(res => {
         res.data
     })
     return {
         type: CREATE_NEW_CHALLENGE_ID,
         payload: challenge
     }
+}
+
+
+export function createOptions(option) {
+    console.log(option)
+axios.put(`/api/create_challenge`, option).then(res=>{
+    console.log(option)
+    res.data
+})
+return {
+    type: CREATE_OPTIONS,
+    payload: option
+}
 }

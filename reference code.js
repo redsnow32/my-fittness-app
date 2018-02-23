@@ -64,3 +64,23 @@
         //     return randID
         // }
         // let newChallengeID = generateChallengeID()
+
+
+            // handleCreateChallengeClick(e) {
+    //     function generateChallengeID() {
+    //         var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";
+    //         var challenge_length = 10;
+    //         var randID = '';
+    //         for (var i = 0; i < challenge_length; i++) {
+    //             var rnum = Math.floor(Math.random() * chars.length);
+    //             randID += chars.substring(rnum, rnum + 1);
+
+    //         }
+    //         console.log(randID)
+    //         return randID  
+    //     }
+    //     let newChallengeID = generateChallengeID()
+    //     console.log(newChallengeID)
+    //     this.setState({challengeID:newChallengeID})
+        
+    // }

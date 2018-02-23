@@ -45,7 +45,7 @@ class Create extends Component {
         let options = this.state.selected
         
 
-        this.props.createChallenge(challenge,options)
+        this.props.createChallenge(challenge, options)
         // this.props.createOptions(options)
     }
     handleClicked(value) {
@@ -98,7 +98,6 @@ class Create extends Component {
     render() {
         let { userData } = this.props
         console.log(this.state)
-        
 
         let options = this.state.challengeOptions.map((option, i) => {
             return <h2 style={{ color: this.state.selected.includes(option.id) ? 'red' : 'black' }} key={i} onClick={(e) => this.handleClicked(option.id)}>{option.challenge_option.split("_").join(' ')}</h2>

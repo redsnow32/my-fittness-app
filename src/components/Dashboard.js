@@ -10,20 +10,23 @@ class Dashboard extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            challengeID:''
+            challenges:[]
         }
         // this.handleCreateChallengeClick = this.handleCreateChallengeClick.bind(this)
     }
     componentDidMount() {
         this.props.getUser();
-        let groupChallenges = axios.get('/api/dashboard/groups').then(res=>{
-            res.data
+        axios.get('/api/dashboard/groups').then(res=>{
+            // return res.data
+            console.log(res.data)
+            // this.setState({challenges:res.data})
         })
     }
     render() {
         let { userData } = this.props
         let {newID } = this.state 
         console.log(userData)
+        console.log(this.state)
         
         return (
             <div className="dashboard_container">
@@ -94,7 +97,7 @@ class Dashboard extends Component {
 
                     </div>
                     <div className="dashboard_parent_profile_right">
-                        <div>{this.props.groupChallenges}</div>
+                        <div>{this.state.challenges}</div>
                         <div className="dashboard_image_container">
                             <div className="dashboard_left_image"></div>
                             <div className="dashboard_right_image"></div>

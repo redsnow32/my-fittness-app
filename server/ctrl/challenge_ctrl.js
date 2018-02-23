@@ -20,14 +20,16 @@ module.exports = {
     // },
     getGroupsById: (req,res)=>{
         const db = req.app.get('db')
-        console.log(req.session.user.id)
-        let id = req.session.user.auth_id
-        console.log(id)
+        console.log(req.user)
+        console.log(req.session.passport.user)
 
-        db.get_challenge_info_by_id([id]).then(resp=>{
+        db.get_challenge_info_by_id([req.session.passport.user]).then(resp=>{
             res.status(200).send(resp)
+            console.log("GROUPS RESPONSE", resp)
         }).catch((err) => {
             console.log(err)
             res.status(500).send("Error")
-        })}
+        }
+    )
+}
 }

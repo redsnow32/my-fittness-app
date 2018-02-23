@@ -53,23 +53,23 @@ passport.use(new Auth0Strategy({
 
 //////////////
 
-app.use((req, res, next) => {
-    if (!req.session.user) {
-        req.session.user = {
-            id: 4,
-            first_name: "stuffify",
-            last_name: "you",
-            age: 34,
-            gender: "male",
-            auth_id: "google-oauth2|104169181473731414256",
-            email: "B32alls@gmail.com",
-            current_height: "234",
-            // profile_picture: "http://www.placekitten.com/200/250",
-        }
-    }
+// app.use((req, res, next) => {
+//     if (!req.session.user) {
+//         req.session.user = {
+//             id: 4,
+//             first_name: "stuffify",
+//             last_name: "you",
+//             age: 34,
+//             gender: "male",
+//             auth_id: "google-oauth2|104169181473731414256",
+//             email: "B32alls@gmail.com",
+//             current_height: "234",
+//             // profile_picture: "http://www.placekitten.com/200/250",
+//         }
+//     }
 
-    next()
-})
+//     next()
+// })
 
 
 
@@ -96,10 +96,10 @@ app.get('/auth/callback', passport.authenticate('auth0', {
 //Change this back when you're done updating the site;
 ////
 app.get('/auth/me', (req, res) => {
-    if (!req.session.user) {
+    if (!req.user) {
         res.status(404).send('Not Logged In')
     } else {
-        res.status(200).send(req.session.user)
+        res.status(200).send(req.user)
     }
 })
 
@@ -109,15 +109,15 @@ app.get('/logout', (req, res) => {
 })
 app.put('/api/edit/:id', ctrl.updateUser);
 app.put('/api/create_challenge', ((req, res, next) => {
-    const { user } = req.session
+    const { user } = req.session.passport
+    console.log("THIS IS THE USER"+"  "+user)
     const { group_name, start_date, end_date, reward_amount, water_intake, caloric_intake, daily_weight, exercise, collection_type, payment_required } = req.body
     let token = randtoken.generate(16)
     const db = req.app.get('db')
     // console.log(req.body)
     // console.log(token)
     let stack = []
-    console.log(stack)
-    db.create_new_challenge([token, user.id, group_name, start_date, end_date, reward_amount]).then(resp => {
+    db.create_new_challenge([token, user, group_name, start_date, end_date, reward_amount]).then(resp => {
         console.log("CREATE CHALLENGE", resp)
         req.body.options.forEach((option, i) => {
             stack.push(db.input_option(token, option))

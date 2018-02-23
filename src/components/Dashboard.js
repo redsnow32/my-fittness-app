@@ -16,18 +16,40 @@ class Dashboard extends Component {
     }
     componentDidMount() {
         this.props.getUser();
-        axios.get('/api/dashboard/groups').then(res=>{
-            // return res.data
-            console.log(res.data)
-            // this.setState({challenges:res.data})
+        let newGroup = []
+        let groups = axios.get('/api/dashboard/groups').then(res=>{
+            this.setState({challenges:res.data})
+        })
+        // let newGroup = []
+        // let groups = axios.get('/api/dashboard/groups').then(res=>{
+        //     this.setState({challenges:res.data})
+            // res.data.filter((group,i)=>{
+            //     return 
+            //     <li>{group}</li>
+            // })  
+            // newGroup.push(res.data)
+        // })
+        // this.setState({challenges:newGroup})
+    }
+    componentWillMount() {
+        
+    }
+    getAllChallenges(){
+        axios.get('/api/dashboard/get_all_challenges').then(res=>{
+            return res.data
         })
     }
     render() {
         let { userData } = this.props
-        let {newID } = this.state 
+        let { challenges } = this.state 
         console.log(userData)
-        console.log(this.state)
-        
+        console.log(challenges)
+        let group = this.state.challenges.map((obj,i)=>{
+            if(obj.id===1) {
+            }
+            return obj
+        })
+        console.log(group)
         return (
             <div className="dashboard_container">
                 <div className="header">
@@ -93,11 +115,12 @@ class Dashboard extends Component {
                         <div className="dashboard_left_parent_buttons">
                             <Link to="/create_challenge"><div><button>Create Challenge</button></div></Link>
                             <Link to="/join_challenge"><div><button>Join Challenge</button></div></Link>
+                            <button onClick={(e)=>this.getAllChallenges(e)}>onClick</button>
                         </div>
 
                     </div>
                     <div className="dashboard_parent_profile_right">
-                        <div>{this.state.challenges}</div>
+                        <div></div>
                         <div className="dashboard_image_container">
                             <div className="dashboard_left_image"></div>
                             <div className="dashboard_right_image"></div>
@@ -105,6 +128,7 @@ class Dashboard extends Component {
                         </div>
                     </div>
                 </div>
+                
                
             </div>
         )

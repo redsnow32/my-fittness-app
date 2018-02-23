@@ -25,11 +25,18 @@ module.exports = {
 
         db.get_challenge_info_by_id([req.session.passport.user]).then(resp=>{
             res.status(200).send(resp)
-            console.log("GROUPS RESPONSE", resp)
+            // console.log("GROUPS RESPONSE", resp)
         }).catch((err) => {
             console.log(err)
             res.status(500).send("Error")
         }
     )
-}
+},
+getAllChallenges:(req,res)=>{
+    const db = req.app.get('db')
+
+    db.get_all_challenges([req.session.passport.user]).then(resp=>{
+        console.log(resp)
+    }
+    )}
 }

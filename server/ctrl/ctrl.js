@@ -12,8 +12,7 @@ module.exports = {
     // .catch( () => res.status(500).send() );
     // console.log(res)
     updateUser: (req, res, next) => {
-        console.log(req.body)
-        console.log(req.user)
+        // console.log(req.body)
         // console.log("ID", req.params.id)
         console.log("REQ BODY", req.body)
         const db = req.app.get('db');

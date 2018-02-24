@@ -52,6 +52,8 @@ passport.use(new Auth0Strategy({
 }));
 
 //////////////
+//////!req.session.user) {
+//         req.session.user
 
 // app.use((req, res, next) => {
 //     if (!req.session.user) {
@@ -63,8 +65,12 @@ passport.use(new Auth0Strategy({
 //             gender: "male",
 //             auth_id: "google-oauth2|104169181473731414256",
 //             email: "B32alls@gmail.com",
+//             height: '',
+//             current_weight: '',
 //             current_height: "234",
-//             // profile_picture: "http://www.placekitten.com/200/250",
+//             challenge_id: '',
+//             birthdate: '',
+//             profile_picture:'',
 //         }
 //     }
 
@@ -91,7 +97,14 @@ app.get('/auth/callback', passport.authenticate('auth0', {
     successRedirect: 'http://localhost:3000/#/dashboard'
 }))
 ////
-//change req.user to req.session.user so you don't have to login and out all the time. 
+//change req.user to req.session.user so you don't have to login and out all the time. referrenced above
+// in the app.use you 
+
+// you changed all of your req.session.user to req.session.user in order to to all of your testing
+
+
+//IMPORTANT!!!!!!!!!!!!
+//when you're don change find and replace all with req.session.user
 //
 //Change this back when you're done updating the site;
 ////
@@ -110,12 +123,11 @@ app.get('/logout', (req, res) => {
 app.put('/api/edit/:id', ctrl.updateUser);
 app.put('/api/create_challenge', ((req, res, next) => {
     const { user } = req.session.passport
-    console.log("THIS IS THE USER"+"  "+user)
     const { group_name, start_date, end_date, reward_amount, water_intake, caloric_intake, daily_weight, exercise, collection_type, payment_required } = req.body
     let token = randtoken.generate(16)
     const db = req.app.get('db')
-    // console.log(req.body)
-    // console.log(token)
+
+
     let stack = []
     db.create_new_challenge([token, user, group_name, start_date, end_date, reward_amount]).then(resp => {
         console.log("CREATE CHALLENGE", resp)
@@ -128,16 +140,18 @@ app.put('/api/create_challenge', ((req, res, next) => {
         }).catch((err) => {
             console.log(err)
             res.status(500).send("Error")
-    })
+        })
     }).catch((err) => {
-            console.log(err)
-            res.status(500).send("Error")
-})
+        console.log(err)
+        res.status(500).send("Error")
+    })
 }))
 
 app.get('/api/create_challenge/options', challenge_ctrl.getAllOptions)
 app.get('/api/dashboard/groups', challenge_ctrl.getGroupsById)
 app.get('/api/dashboard/get_all_challenges', challenge_ctrl.getAllChallenges)
+app.get('/api/dashboard/group_name', challenge_ctrl.getUserChallenges)
+
 
 
 

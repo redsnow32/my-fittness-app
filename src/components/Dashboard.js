@@ -10,53 +10,78 @@ class Dashboard extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            challenges:[]
+            challenges: []
         }
         // this.handleCreateChallengeClick = this.handleCreateChallengeClick.bind(this)
     }
     componentDidMount() {
         this.props.getUser();
-        let newGroup = []
-        let groups = axios.get('/api/dashboard/groups').then(res=>{
+        axios.get('/api/dashboard/group_name').then(res=> {
+            console.log(res.data)
             this.setState({challenges:res.data})
         })
+
+
+
+
+        // let newGroup = []
+        // let groups = axios.get('/api/dashboard/groups').then(res => {
+        //     this.setState({ challenges: res.data })
+        // })
         // let newGroup = []
         // let groups = axios.get('/api/dashboard/groups').then(res=>{
         //     this.setState({challenges:res.data})
-            // res.data.filter((group,i)=>{
-            //     return 
-            //     <li>{group}</li>
-            // })  
-            // newGroup.push(res.data)
+        // res.data.filter((group,i)=>{
+        //     return 
+        //     <li>{group}</li>
+        // })  
+        // newGroup.push(res.data)
         // })
         // this.setState({challenges:newGroup})
     }
     componentWillMount() {
-        
+
     }
-    getAllChallenges(){
-        axios.get('/api/dashboard/get_all_challenges').then(res=>{
-            return res.data
-        })
+    getAllChallenges() {
+        // axios.get('/api/dashboard/get_all_challenges').then(res => {
+        //     return res.data
+        // })
     }
     render() {
         let { userData } = this.props
-        let { challenges } = this.state 
-        console.log(userData)
+        let { challenges } = this.state
         console.log(challenges)
-        let group = this.state.challenges.map((obj,i)=>{
-            if(obj.id===1) {
-            }
-            return obj
-        })
-        console.log(group)
+        // console.log(userData)
+        // console.log(challenges)
+        // let group = this.state.challenges.map((obj, i) => {
+        //     if (obj.id === 1) {
+        //     }
+        //     return obj
+        // })
+        // console.log(group)
+
+        // let groupNames = []
+        //  function newArr(challenges) {
+        //   for(let i = 0; i<challenges.length;i++) {
+        //     if(challenges[i].user_id===1) {
+        //      groupNames.push(challenges[i].group_name)
+        //     }
+          
+        //   }
+        //     let finalNames = groupNames.filter((name,index, self)=>{
+        //   return index == self.indexOf(name)
+        // })
+        // return <li>{finalNames}</li>
+        // }
+        // console.log(newArr(challenges))
+
         return (
             <div className="dashboard_container">
                 <div className="header">
                     <Header />
-                    
+
                 </div>
-               
+
                 <div className="dashboard_parent_container">
                     <div className="dashboard_parent_profile_left">
                         <div className="dashboard_child_profile">
@@ -68,7 +93,10 @@ class Dashboard extends Component {
                             </div>
                             <div className="dashboard_grandchild_profile_right">
                                 <div className="dashboard_points_container">
+                                    {/* {newArr(challenges)} */}
 
+
+                                    this is a test
                                 </div>
                                 <div className="dashboard_points">Points</div>
                             </div>
@@ -115,7 +143,7 @@ class Dashboard extends Component {
                         <div className="dashboard_left_parent_buttons">
                             <Link to="/create_challenge"><div><button>Create Challenge</button></div></Link>
                             <Link to="/join_challenge"><div><button>Join Challenge</button></div></Link>
-                            <button onClick={(e)=>this.getAllChallenges(e)}>onClick</button>
+                            <button onClick={(e) => this.getAllChallenges(e)}>onClick</button>
                         </div>
 
                     </div>
@@ -128,8 +156,8 @@ class Dashboard extends Component {
                         </div>
                     </div>
                 </div>
-                
-               
+
+
             </div>
         )
     }

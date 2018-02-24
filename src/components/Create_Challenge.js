@@ -30,11 +30,11 @@ class Create extends Component {
             challengeOptions: [],
             selected: []
         }
-        // this.handleClicked=this.handleClicked.bind(this)
     }
     componentDidMount() {
         this.props.getUser();
         axios.get('/api/create_challenge/options').then(res => {
+            console.log(res.data)
             this.setState({ challengeOptions: res.data })
         })
     }
@@ -44,9 +44,7 @@ class Create extends Component {
         let userData = this.props
         let options = this.state.selected
         
-
         this.props.createChallenge(challenge, options)
-        // this.props.createOptions(options)
     }
     handleClicked(value) {
         let sel = this.state.selected.slice();

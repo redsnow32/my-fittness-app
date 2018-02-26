@@ -14,7 +14,7 @@ function uploadPhoto(req, res) {
     const db = req.app.get('db')
     const { name, selectedChallengeId } = req.params
     //need to change this to req.user
-    const { id } = req.session.user
+    const { user_id } = req.session.user
 
     let photo = req.body,
         buffer = new Buffer(photo.file.replace(/^data:image\/\w+;base64,/, ""), 'base64'),
@@ -32,18 +32,21 @@ function uploadPhoto(req, res) {
         if (err) {
             console.log(err)
         } else {
-            (response = data.Location, code = 200)
-            res.status(code).send(response)
-            console.log('S3 response', data)
+            response = data.Location, code = 200
+            console.log(response)
+            db.upload_scale_img([selectedChallengeId, user_id, name, response]).then(resp=>{
+                res.status(200).send(resp)
+            }).catch((err)=>{
+                console.log(err)
+                res.status(500).send(err)
+            }) 
+            // (response = data.Location, code = 200)
+            // res.status(code).send(response)
+            // console.log('S3 response', data)
         }
        
     })
-    db.upload_scale_img([id, ]).then(resp=>{
-           res.status(200).send(resp)
-       }).catch((err)=>{
-           console.log(err)
-           res.status(500).send(err)
-       }) 
+    ///start herer challenge_id, user_id, option_id, option_value
 }
 
 module.exports = function (app) {

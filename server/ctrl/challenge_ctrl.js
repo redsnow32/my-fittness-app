@@ -70,7 +70,14 @@ getAllChallenges:(req,res)=>{
             res.status(500).send(err)
         })
     },
-    // addScaleImg:(req,res)=>{
+    addChallengeInfo:(req,res)=>{
+        const db = req.app.get('db')
 
-    // }
+        db.add_challenge_log().then(resp=>{
+            res.status(200).send(resp)
+        }).catch((err)=>{
+            console.log(err)
+            res.status(500).send(err)
+        })
+    }
 }

@@ -26,6 +26,7 @@ const initialState = {
 
     ],
     selectedChallengeId:'',
+    daily_log:[]
 }
 
 const GET_USER = 'GET_USER';
@@ -33,6 +34,7 @@ const UPDATE_USER = 'UPDATE_USER';
 const CREATE_NEW_CHALLENGE_ID = 'CREATE_NEW_CHALLENGE_ID';
 const CREATE_OPTIONS = 'CREATE_OPTIONS';
 const GET_CHALLENGE_ID = 'GET_CHALLENGE_ID';
+const ADD_DAILY_LOG = 'ADD_DAILY_LOG';
 
 export default function reducer(state = initialState, action) {
     console.log(state)
@@ -47,6 +49,8 @@ export default function reducer(state = initialState, action) {
             return Object.assign({}, state, { options: action.payload })
         case GET_CHALLENGE_ID:
             return Object.assign({}, state, { selectedChallengeId: action.payload})
+        case ADD_DAILY_LOG + '_FULLFILLED':
+            return Object.assign({}, state, {daily_log: action.payload})
         default:
             return state
     }
@@ -139,7 +143,13 @@ export function selectChallenge(selectedChallengeId) {
 }
 
 export function dailyLog(log) {
-    axios.put(`/api/daily/daily_log`).then(res=>{
+    console.log(log)
+    const daily_log = axios.put(`/api/daily/daily_log/${log}`).then(res=>{
         return res.data
     })
+    return {
+        type: ADD_DAILY_LOG,
+        payload: daily_log
+    }
 }
+

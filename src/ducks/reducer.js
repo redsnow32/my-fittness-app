@@ -22,16 +22,20 @@ const initialState = {
         total_points: '',
         reward_amount: ''
     },
-    options: []
-}
+    options: [
 
+    ],
+    selectedChallengeId:'',
+}
 
 const GET_USER = 'GET_USER';
 const UPDATE_USER = 'UPDATE_USER';
 const CREATE_NEW_CHALLENGE_ID = 'CREATE_NEW_CHALLENGE_ID';
 const CREATE_OPTIONS = 'CREATE_OPTIONS';
+const GET_CHALLENGE_ID = 'GET_CHALLENGE_ID';
 
 export default function reducer(state = initialState, action) {
+    console.log(state)
     switch (action.type) {
         case GET_USER + '_FULFILLED':
             return Object.assign({}, state, { user: action.payload });
@@ -41,6 +45,8 @@ export default function reducer(state = initialState, action) {
             return Object.assign({}, state, { challenge: action.payload })
         case CREATE_OPTIONS + '_FULLFILLED':
             return Object.assign({}, state, { options: action.payload })
+        case GET_CHALLENGE_ID:
+            return Object.assign({}, state, { selectedChallengeId: action.payload})
         default:
             return state
     }
@@ -58,7 +64,7 @@ export function getUser() {
 }
 
 export function updateUser(user) {
-    console.log(user)
+    // console.log(user)
     let body = {
         id: user.id,
         first_name: user.first_name,
@@ -99,7 +105,7 @@ export function createChallenge(challenge, options) {
 
     }
     const newChallengeID = axios.put(`/api/create_challenge`, body).then(res => {
-        res.data
+        return res.data
     })
     return {
         type: CREATE_NEW_CHALLENGE_ID,
@@ -110,12 +116,30 @@ export function createChallenge(challenge, options) {
 
 export function createOptions(option) {
     console.log(option)
-axios.put(`/api/create_challenge`, option).then(res=>{
+const selectedChallenge = axios.put(`/api/create_challenge`, option).then(res=>{
     console.log(option)
-    res.data
+    return res.data
 })
 return {
     type: CREATE_OPTIONS,
     payload: option
 }
+}
+
+export function selectChallenge(selectedChallengeId) {
+    console.log(selectedChallengeId)
+    // const selectedChallengeId = axios.get(`/api/group/${challenge}`).then(res=>{
+    //     return res.data
+    // })
+    return {
+        type: GET_CHALLENGE_ID,
+        payload: selectedChallengeId
+    }
+
+}
+
+export function dailyLog(log) {
+    axios.put(`/api/daily/daily_log`).then(res=>{
+        return res.data
+    })
 }

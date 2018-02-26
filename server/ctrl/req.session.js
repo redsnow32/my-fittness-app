@@ -17,4 +17,4 @@ app.use((req, res, next) => {
 /////////
 
 // in your controller, use this so you don't have to login and out of auth 0 everytime you need to login. 
-// do a search and replace all req.user to console.log(req.session.user)
+// do a search and replace all req.session.user to console.log(req.session.user)

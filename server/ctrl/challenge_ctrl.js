@@ -20,11 +20,11 @@ module.exports = {
     // },
     getGroupsById: (req,res)=>{
         const db = req.app.get('db')
-        console.log("THIS IS GET GROUPS BY ID" + " " + req.session.user.id)
+        // console.log("THIS IS GET GROUPS BY ID" + " " + req.session.user.id)
 
-        console.log(req.session.user)
+        // console.log(req.session.user)
 
-        db.get_challenge_info_by_id([req.user.id]).then(resp=>{
+        db.get_challenge_info_by_id([req.session.user]).then(resp=>{
             res.status(200).send(resp)
             // console.log("GROUPS RESPONSE", resp)
         }).catch((err) => {
@@ -35,8 +35,8 @@ module.exports = {
 },
 getAllChallenges:(req,res)=>{
     const db = req.app.get('db')
-    console.log("THIS IS THE GET CHALLENGE REQ.USER", req.user)
-    db.get_all_challenges([req.session.passport.user]).then(resp=>{
+    console.log("THIS IS THE GET CHALLENGE REQ.USER", req.session.user)
+    db.get_all_challenges([req.session.user]).then(resp=>{
         res.status.send(resp)
     }).catch((err)=>{
         console.log(err)
@@ -46,17 +46,31 @@ getAllChallenges:(req,res)=>{
     getUserChallenges: (req, res)=>{
         const db = req.app.get('db')
         //change this to req.session.user
-        const { id } = req.user
-        console.log(id)
-        console.log("THIS IS THE user by challenge"+req.user.id)
+        const { id } = req.session.user
+        // console.log(id)
+        // console.log("THIS IS THE user by challenge"+req.session.user.id)
 
         db.get_group_name_by_id([id]).then(resp=>{
-            console.log(resp)
+            // console.log(resp)
             res.status(200).send(resp)
         }).catch((err)=>{
             console.log(err)
             res.status(500).send(err)
         })
     },
+    selectChallengeId:(req,res)=>{
+        const db = req.app.get('db')
+        const { challenge_id } = req.params
+    
+        db.get_challenge_by_challenge_id([challenge_id]).then(resp=>{
+            
+            res.status(200).send(resp)
+        }).catch((err)=>{
+            console.log(err)
+            res.status(500).send(err)
+        })
+    },
+    // addScaleImg:(req,res)=>{
 
+    // }
 }

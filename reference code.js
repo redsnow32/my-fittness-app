@@ -82,5 +82,52 @@
     //     let newChallengeID = generateChallengeID()
     //     console.log(newChallengeID)
     //     this.setState({challengeID:newChallengeID})
+
+     // console.log(userData)
+        // console.log(challenges)
+        // let group = this.state.challenges.map((obj, i) => {
+        //     if (obj.id === 1) {
+        //     }
+        //     return obj
+        // })
+        // console.log(group)
+
+        // let groupNames = []
+        //  function newArr(challenges) {
+        //   for(let i = 0; i<challenges.length;i++) {
+        //     if(challenges[i].user_id===1) {
+        //      groupNames.push(challenges[i].group_name)
+        //     }
+
+        //   }
+        //     let finalNames = groupNames.filter((name,index, self)=>{
+        //   return index == self.indexOf(name)
+        // })
+        // return <li>{finalNames}</li>
+        // }
+        // console.log(newArr(challenges))
         
     // }
+
+    
+    let groupNames = challenges.map((group, index, self) => {
+        return <li key={index} value={index} onClick={(e) => this.handleRedirectByChallengeId(e)}>Group Name:{group.group_name} groupID:{group.challenge_id}</li>    
+
+
+
+        handleRedirectByChallengeId(e) {
+            console.log(e.target.value)
+            // console.log(this.state)
+            const { challenges } = this.state
+            console.log(challenges)
+            let selectedIndex = e.target.value
+    
+            let selectedChallengeId = this.state.challenges.filter((group, i) => {
+                return i == selectedIndex
+            })
+            selectedChallengeId.map((group, i) => {
+                return group.challenge_id
+            })
+            this.setState({ selectedChallenge: selectedChallengeId })
+    
+        }

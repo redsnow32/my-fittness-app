@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
-import { getUser } from '../ducks/reducer';
+import { getUser, selectChallenge } from '../ducks/reducer';
 import axios from 'axios';
 import Header from './Header';
 import Create_Challenge from './Create_Challenge';
@@ -10,78 +11,51 @@ class Dashboard extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            challenges: []
+            challenges: [],
+            selectedChallenge: '',
+            fireRedirect: false
         }
-        // this.handleCreateChallengeClick = this.handleCreateChallengeClick.bind(this)
+        this.handleRedirectByChallengeId = this.handleRedirectByChallengeId.bind(this)
     }
     componentDidMount() {
         this.props.getUser();
-        axios.get('/api/dashboard/group_name').then(res=> {
-            console.log(res.data)
-            this.setState({challenges:res.data})
+        axios.get('/api/dashboard/group_name').then(res => {
+            this.setState({ challenges: res.data })
         })
-
-
-
-
-        // let newGroup = []
-        // let groups = axios.get('/api/dashboard/groups').then(res => {
-        //     this.setState({ challenges: res.data })
-        // })
-        // let newGroup = []
-        // let groups = axios.get('/api/dashboard/groups').then(res=>{
-        //     this.setState({challenges:res.data})
-        // res.data.filter((group,i)=>{
-        //     return 
-        //     <li>{group}</li>
-        // })  
-        // newGroup.push(res.data)
-        // })
-        // this.setState({challenges:newGroup})
     }
-    componentWillMount() {
+    handleRedirectByChallengeId(e) {
+        console.log(e.target.value)
+        // console.log(this.state)
+        const { challenges } = this.state
+        // console.log(challenges)
+        let selectedIndex = e.target.value
+        // console.log(selectedIndex)
 
-    }
-    getAllChallenges() {
-        // axios.get('/api/dashboard/get_all_challenges').then(res => {
-        //     return res.data
+        // let selectedChallengeId = this.state.challenges.forEach((challenges,index)=>{
+        //     if(index === selectedIndex) {
+        //         return index
+        //     }
         // })
+        let selectedChallengeId = this.state.challenges.filter((group, i) => {
+            if (i === selectedIndex) {
+                return this.props.selectChallenge( group.challenge_id )
+            }
+        })
     }
     render() {
         let { userData } = this.props
-        let { challenges } = this.state
-        console.log(challenges)
-        // console.log(userData)
-        // console.log(challenges)
-        // let group = this.state.challenges.map((obj, i) => {
-        //     if (obj.id === 1) {
-        //     }
-        //     return obj
-        // })
-        // console.log(group)
-
-        // let groupNames = []
-        //  function newArr(challenges) {
-        //   for(let i = 0; i<challenges.length;i++) {
-        //     if(challenges[i].user_id===1) {
-        //      groupNames.push(challenges[i].group_name)
-        //     }
-          
-        //   }
-        //     let finalNames = groupNames.filter((name,index, self)=>{
-        //   return index == self.indexOf(name)
-        // })
-        // return <li>{finalNames}</li>
-        // }
-        // console.log(newArr(challenges))
-
+        let { challenges, fireRedirect } = this.state
+        // console.log(this.state.selectedChallenge)
+        const { selectedChallenge } = this.state.selectedChallenge
+        let groupNames = challenges.map((group, index, self) => {
+            return <Link key={index} to="/group"><li  value={index} onClick={(e) => this.handleRedirectByChallengeId(e)}>Group Name:{group.group_name}</li></Link>
+        })
         return (
             <div className="dashboard_container">
                 <div className="header">
                     <Header />
-
+                    {groupNames}
                 </div>
-
                 <div className="dashboard_parent_container">
                     <div className="dashboard_parent_profile_left">
                         <div className="dashboard_child_profile">
@@ -96,12 +70,12 @@ class Dashboard extends Component {
                                     {/* {newArr(challenges)} */}
 
 
-                                    this is a test
+                                   
                                 </div>
                                 <div className="dashboard_points">Points</div>
                             </div>
                             <div className="dashboard_profileinfo_button">
-                                <Link to="/edit"><button>Update</button></Link>
+                                <Link to="/edit"><button>Edit Profile</button></Link>
                             </div>
                             <div className="dashboard_profileinfo_gender">
                                 <h3>Gender</h3>
@@ -143,7 +117,8 @@ class Dashboard extends Component {
                         <div className="dashboard_left_parent_buttons">
                             <Link to="/create_challenge"><div><button>Create Challenge</button></div></Link>
                             <Link to="/join_challenge"><div><button>Join Challenge</button></div></Link>
-                            <button onClick={(e) => this.getAllChallenges(e)}>onClick</button>
+                            {/* <Link to="/daily"><div><button></button></div></Link> */}
+                            {/* <button onClick={(e) => this.getAllChallenges(e)}>onClick</button> */}
                         </div>
 
                     </div>
@@ -155,6 +130,7 @@ class Dashboard extends Component {
 
                         </div>
                     </div>
+
                 </div>
 
 
@@ -164,8 +140,9 @@ class Dashboard extends Component {
 }
 function mapStateToProps(state) {
     return {
-        userData: state.user
+        userData: state.user,
+        userChallenge: state.selected_challenge
     }
 }
 
-export default connect(mapStateToProps, { getUser })(Dashboard);
+export default connect(mapStateToProps, { getUser, selectChallenge })(Dashboard);

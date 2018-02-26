@@ -12,6 +12,7 @@ const ctrl = require('./ctrl/ctrl');
 const cors = require('cors');
 // const AWS = require('aws-sdk')
 const S3 = require('./S3.js');
+const ScaleS3 = require('./ScaleS3');
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING, DOMAIN, CLIENTID, CLIENT_SECRET, CALLBACK_URL, AWS_SECRET_ACCESS_KEY, AWS_ACCESS_KEY_ID, AWS_REGION, AWS_BUCKET } = process.env;
 
 const app = express();
@@ -51,31 +52,31 @@ passport.use(new Auth0Strategy({
     })
 }));
 
-//////////////
+////////////// 
 //////!req.session.user) {
 //         req.session.user
 
-// app.use((req, res, next) => {
-//     if (!req.session.user) {
-//         req.session.user = {
-//             id: 4,
-//             first_name: "stuffify",
-//             last_name: "you",
-//             age: 34,
-//             gender: "male",
-//             auth_id: "google-oauth2|104169181473731414256",
-//             email: "B32alls@gmail.com",
-//             height: '',
-//             current_weight: '',
-//             current_height: "234",
-//             challenge_id: '',
-//             birthdate: '',
-//             profile_picture:'',
-//         }
-//     }
+app.use((req, res, next) => {
+    if (!req.session.user) {
+        req.session.user = {
+            id: 4,
+            first_name: "Brandon",
+            last_name: "Allred",
+            age: 34,
+            gender: "male",
+            auth_id: "google-oauth2|104169181473731414256",
+            email: "B32alls@gmail.com",
+            height: '',
+            current_weight: '',
+            current_height: "234",
+            challenge_id: '',
+            birthdate: '',
+            profile_picture:'',
+        }
+    }
 
-//     next()
-// })
+    next()
+})
 
 
 
@@ -109,10 +110,10 @@ app.get('/auth/callback', passport.authenticate('auth0', {
 //Change this back when you're done updating the site;
 ////
 app.get('/auth/me', (req, res) => {
-    if (!req.user) {
+    if (!req.session.user) {
         res.status(404).send('Not Logged In')
     } else {
-        res.status(200).send(req.user)
+        res.status(200).send(req.session.user)
     }
 })
 
@@ -122,7 +123,8 @@ app.get('/logout', (req, res) => {
 })
 app.put('/api/edit/:id', ctrl.updateUser);
 app.put('/api/create_challenge', ((req, res, next) => {
-    const { user } = req.session.passport
+    const { user } = req.session.user
+    console.log(user)
     const { group_name, start_date, end_date, reward_amount, water_intake, caloric_intake, daily_weight, exercise, collection_type, payment_required } = req.body
     let token = randtoken.generate(16)
     const db = req.app.get('db')
@@ -130,7 +132,7 @@ app.put('/api/create_challenge', ((req, res, next) => {
 
     let stack = []
     db.create_new_challenge([token, user, group_name, start_date, end_date, reward_amount]).then(resp => {
-        console.log("CREATE CHALLENGE", resp)
+        // console.log("CREATE CHALLENGE", resp)
         req.body.options.forEach((option, i) => {
             stack.push(db.input_option(token, option))
         })
@@ -151,13 +153,11 @@ app.get('/api/create_challenge/options', challenge_ctrl.getAllOptions)
 app.get('/api/dashboard/groups', challenge_ctrl.getGroupsById)
 app.get('/api/dashboard/get_all_challenges', challenge_ctrl.getAllChallenges)
 app.get('/api/dashboard/group_name', challenge_ctrl.getUserChallenges)
-
-
-
-
-
+// app.get('/api/group/:challenge_id', challenge_ctrl.getChallengeById)
+app.get('/api/group/:challenge_id', challenge_ctrl.selectChallengeId)
 
 S3(app)
+ScaleS3(app)
 
 
 

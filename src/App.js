@@ -5,6 +5,7 @@ import Dashboard from './components/Dashboard';
 import Edit from './components/Edit';
 import Create_Challenge from './components/Create_Challenge';
 import Join_Challenge from './components/Join_Challenge';
+import Daily from './components/Daily';
 import Group from './components/Group';
 import FileUpload from './components/FileUpload';
 import Scale_Img from './components/Scale_Img';
@@ -26,7 +27,8 @@ class App extends Component {
             <Route path="/group/:challenge_id" component={Group} />
             <Route path="/fileUpload" component={FileUpload} />
             <Route path="/scale_img_upload" component={Scale_Img} />
-            <Route path="group/daily_log" component={Group} />
+            <Route path="/daily" component={Daily} />
+            <Route path="/daily/daily_log" component={Daily} />
           </Switch>
         </Router>
       </div>

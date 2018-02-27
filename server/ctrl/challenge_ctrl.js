@@ -76,30 +76,8 @@ module.exports = {
         const { id } = req.session.user
         console.log(id + "   THIS OS DESTRUCTURED CHAL ID")
         const db = req.app.get('db')
-        // let params = {  }
-        // req.body.filter((val, i)=>{
-        //     return Object.assign({}, params, option)
-        // })
-
-
-        // console.log(id+"THIS is The destrucTIRED BODY")
-        // const { id } = req.body
-        // console.log(id)
-        // console.log(req.body)
-        // let bodyArr = req.body
-        // console.log(challenge_id)
-
-        // let body = req.body.reduce((result, item)=>{
-        //     var key = Object.keys(item)[0]
-        //     result[key] = item[key];
-        //     return result
-        // })
-        // const { id } = body
-        // console.log(id)
 
         let stack = []
-
-
         db.select_challenge_options_by_challenge_id([challenge_id]).then(resp => {
             resp.map((option, i) => {
                 req.body.map((challenge, i) => {
@@ -121,6 +99,38 @@ module.exports = {
         }).catch((err) => {
             console.log(err)
             res.status(500).send("ERROR")
+        })
+    },
+    joinChallenge: (req, res) => {
+        const db = req.app.get('db')
+        const { challenge_id } = req.params
+        const { id } = req.session.user
+        console.log(challenge_id)
+
+        let stack = []
+        db.get_challenge_by_challenge_id([challenge_id]).then(resp => {
+            resp.map((option, i) => {
+                // if(challenge_id === option.challenge_id && id === option.user_id){
+                //     console.log("THIS IS TRUE!")
+                //     res.status(404).send("user already exists")
+                // } 
+                challenge_id === option.challenge_id && id === option.user_id ? stack.push(res.status(202).send("User Already Existst On Challenge")) :
+                stack.push(db.join_challenge_by_challenge_id([challenge_id, id, option.option_id]))
+                
+            })
+
+            Promise.all(stack).then(resp => {
+                res.status(202).send("User Already Existst On Challenge")
+                console.log('Joined Challenge Successfully!') 
+                res.status(200).send(resp)
+                console.log(resp)
+            }).catch((err) => {
+                console.log(err)
+                res.status(500).send('ERROR')
+            })
+        }).catch((err) => {
+            console.log(err)
+            res.status(500).send('ERROR')
         })
     }
 }

@@ -26,7 +26,8 @@ const initialState = {
 
     ],
     selectedChallengeId: '',
-    daily_log: []
+    daily_log: [],
+    join_challengeId:{}
 }
 
 const GET_USER = 'GET_USER';
@@ -35,6 +36,8 @@ const CREATE_NEW_CHALLENGE_ID = 'CREATE_NEW_CHALLENGE_ID';
 const CREATE_OPTIONS = 'CREATE_OPTIONS';
 const GET_CHALLENGE_ID = 'GET_CHALLENGE_ID';
 const ADD_DAILY_LOG = 'ADD_DAILY_LOG';
+const JOIN_CHALLENGE = 'JOIN_CHALLENGE';
+
 
 export default function reducer(state = initialState, action) {
     console.log(state)
@@ -51,6 +54,8 @@ export default function reducer(state = initialState, action) {
             return Object.assign({}, state, { selectedChallengeId: action.payload })
         case ADD_DAILY_LOG + '_FULLFILLED':
             return Object.assign({}, state, { daily_log: action.payload })
+        case JOIN_CHALLENGE + '_FULLFILLED':
+            return Object.assign({}, state, {join_challengeId:action.payload})
         default:
             return state
     }
@@ -115,6 +120,7 @@ export function createChallenge(challenge, options) {
         type: CREATE_NEW_CHALLENGE_ID,
         payload: challenge
     }
+    
 }
 
 
@@ -152,13 +158,27 @@ export function dailyLog(changeLog) {
     })
 let challenge_id = selectedId.pop().challenge_id
 console.log(body)
-    const daily_log = axios.put(`/api/group/daily_log/${challenge_id}`, body).then(res=>{
+    const daily_log = axios.put(`/api/daily/daily_log/${challenge_id}`, body).then(res=>{
         return res.data
     })
     console.log(body)
     return {
         type: ADD_DAILY_LOG,
-        // payload: daily_log
+        payload: daily_log
+    }
+}
+
+export function joinChallenge(chalID){
+    console.log(chalID)
+
+    const join_challengeId = axios.put(`/api/join_challenge/${chalID}`).then(res=>{
+        console.log(res.data)
+        return res.data
+
+    })
+    return {
+        type: JOIN_CHALLENGE,
+        payload: join_challengeId
     }
 }
 

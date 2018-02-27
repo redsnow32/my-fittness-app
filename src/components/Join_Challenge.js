@@ -1,19 +1,49 @@
 import React, { Component } from 'react';
-import { connect } from '../ducks/reducer';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { joinChallenge } from '../ducks/reducer';
 import Header from './Header';
 
-class Join extends Component {
+class Join_Challenge extends Component {
+    constructor(props){
+        super(props)
+        this.state={
+            join_challenge_id:''
+        }
+        this.handleChallengeSubmit = this.handleChallengeSubmit.bind(this)
+    }
+    handleChallengeId(e){
+        this.setState({join_challenge_id:e.target.value})
+    }
+    handleChallengeSubmit(event){
+        console.log(event)
+        console.log(this.props)
+        event.preventDefault();
+        const {join_challenge_id} = this.state
+        console.log(join_challenge_id)
+       this.props.joinChallenge(join_challenge_id) 
+    }
     render() {
+        const { joinChallenge } = this.props
+        console.log(this.props)
+        console.log(this.state)
         return (
             <div className="Join_Challenge">
                 <div><Header /></div>
                 <div className="join_container">
-                    <form>
-                        <label>Enter Challenge ID:  </label><input />
+                    <form onSubmit={this.handleChallengeSubmit}>
+                        <label>Enter Challenge ID:  <input onChange={(e)=>this.handleChallengeId(e)}/></label>
+                        <Link to="/group"><input type="submit" /></Link>
                     </form>
+                    
                 </div>
             </div>
         )
     }
 }
-export default Join
+function mapStateToProps(state){
+    return {
+        joinChallenge: state.challenge
+    }
+}
+export default connect(mapStateToProps, {joinChallenge})(Join_Challenge)

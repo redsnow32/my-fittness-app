@@ -71,7 +71,7 @@ app.use((req, res, next) => {
             current_height: "234",
             challenge_id: '',
             birthdate: '',
-            profile_picture:'',
+            profile_picture: '',
         }
     }
 

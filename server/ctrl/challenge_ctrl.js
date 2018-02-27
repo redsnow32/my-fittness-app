@@ -73,13 +73,22 @@ module.exports = {
     },
     addChallengeInfo: (req, res) => {
         const { challenge_id } = req.params
+        const { id } = req.session.user
+        console.log(id + "   THIS OS DESTRUCTURED CHAL ID")
         const db = req.app.get('db')
+        // let params = {  }
+        // req.body.filter((val, i)=>{
+        //     return Object.assign({}, params, option)
+        // })
+
+
+        // console.log(id+"THIS is The destrucTIRED BODY")
         // const { id } = req.body
         // console.log(id)
         // console.log(req.body)
         // let bodyArr = req.body
         // console.log(challenge_id)
-        
+
         // let body = req.body.reduce((result, item)=>{
         //     var key = Object.keys(item)[0]
         //     result[key] = item[key];
@@ -90,53 +99,28 @@ module.exports = {
 
         let stack = []
 
+
         db.select_challenge_options_by_challenge_id([challenge_id]).then(resp => {
-            console.log("THIS IS THE DB RESP" + resp)
-            resp.forEach((option, i) => {
-                req.body.forEach((challenge, i) => {
-                    if (challenge.id == option.option_id) {
-            //             stack.push(db.log_daily_values(challenge.challenge_id, option.option.id))
+            resp.map((option, i) => {
+                req.body.map((challenge, i) => {
+                    if (option.option_id == challenge.id) {
+                        console.log(challenge.id + "CHALLENGEID")
+                        console.log(option.option_id + "OPTIONID")
+                        console.log(challenge.value + "VALUE")
+                        stack.push(db.log_daily_values(challenge_id, id, challenge.id, challenge.value))
                     }
-            //     Promise.all(stack).then(response => {
-            //         console.log("Daily Values Added!")
-            //         res.status(200).send(resp)
-            //     }).catch((err) => {
-            //         console.log(err)
-            //         res.status(500).send("Error")
-            //     }).catch((err) => {
-            //         console.log(err)
-            //         res.status(500).send("Error")
-            //     })
-
+                })
             })
-        // })
-        //     req.body.challenge_options.forEach((challenge, i) => {
-        //         stack.push(db.log_daily_values(challenge_id, option_id))
-        // })
-        // Promise.all(stack.then(response =>{
-        //     console.log('options were added')
-        //     res.status(200).send(resp)
-        // }))
-
+            Promise.all(stack).then(response => {
+                console.log('Daily Log Added')
+                res.status(200).send(response)
+            }).catch((err) => {
+                console.log(err)
+                res.status(500).send("ERROR")
+            })
+        }).catch((err) => {
+            console.log(err)
+            res.status(500).send("ERROR")
         })
-
-
-    })
-    // req.body.filter((option,i)=>{
-
-
-
-    // for(let i = 0; i<option.length;i++) {
-    //     if(options[i]) {
-    //         console.log(options[i])
-    // }
-    // }
-
-    // db.add_challenge_log([req]).then(resp=>{
-    //     res.status(200).send(resp)
-    // }).catch((err)=>{
-    //     console.log(err)
-    //     res.status(500).send(err)
-    // })
-}
+    }
 }

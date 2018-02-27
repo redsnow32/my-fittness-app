@@ -29,6 +29,7 @@ class Scale_Img extends Component {
 
     savePhoto(e) {
         e.preventDefault()
+        console.log(this.props)
         // '/api/scale_img_upload/:id/:selectedChallengeId'
         const {name, selectedChallengeId } =this.props
         console.log(name, selectedChallengeId)
@@ -39,7 +40,6 @@ class Scale_Img extends Component {
     }
 
     render() {
-        console.log(this.props)
         return (
             <div className="ScaleImg">
                 <input type="file" onChange={this.handlePhotoUpload} />

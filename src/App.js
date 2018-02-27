@@ -25,7 +25,8 @@ class App extends Component {
             <Route path="/group" component={Group} />
             <Route path="/group/:challenge_id" component={Group} />
             <Route path="/fileUpload" component={FileUpload} />
-            <Route path="/scale_img_upload}" component={Scale_Img} />
+            <Route path="/scale_img_upload" component={Scale_Img} />
+            <Route path="group/daily_log" component={Group} />
           </Switch>
         </Router>
       </div>

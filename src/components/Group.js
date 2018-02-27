@@ -9,7 +9,7 @@ class Group extends Component {
         super()
         this.state = {
             challenge: [],
-            dailyLog: []
+            options: ['', '', '', '', '', '', '', '', '']
         }
     }
     componentDidMount() {
@@ -18,53 +18,60 @@ class Group extends Component {
         })
     }
     handleUpdate(e) {
-        this.state.challenge.map((challenge, i) => {
+        const { value } = e.target
+        
+        let newOptions = this.state.options.slice();
+
+        let values = this.state.challenge.map((challenge, i) => {
+            const { id, challenge_option, units } = challenge
             if (challenge.id == e.target.name) {
-                this.setState({ [challenge.id]: e.target.value })
+                newOptions.splice([i], 1, { id: id, value: e.target.value })
+                this.setState({ options: newOptions })
+            
+
+                // Object.assign(obj,{challenge:{[challenge.id]:e.target.value}})
+                // this.setState({[this.state.challenge]:{[challenge.units]: e.target.value }})
+                //  let options = Object.assign({},  this.state.options, {[challenge_option]:e.target.value}, {[id+"_value"]:e.target.value})
+                //  this.setState({options: options })
+
+            } else if(i===0){
+                newOptions.splice(0, 1, {challenge_id:challenge.challenge_id})
             }
+            return values
         })
+        console.log(newOptions)
     }
     handleUpload(e) {
         console.log(e.target.value)
-        this.state.challenge.map((challenge, i) => {
+        const { challenge } = this.state
+        challenge.forEach((challenge, i) => {
             if (challenge.id == e.target.name) {
-                this.setState({ [challenge.id]: e.target.value })
+                this.setState({ [this.state.options]: { id: [challenge.id], value: e.target.value } })
             }
         })
     }
     handleSettingState(e) {
-        let challengeLog = this.state.challenge;
-        this.props.dailyLog(challengeLog);
+        let challengeLog = this.state.options
+        this.props.dailyLog(challengeLog)
+
+    }
+    handleCancel() {
+        let { challenge } = this.state
+        challenge.forEach((challenge, i) => {
+            if (challenge.id) {
+                this.setState({ [challenge.id]: '' })
+            }
+        })
     }
     render() {
-        // const styles = {
-        //     row: {
-        //         display: 'flex',
-        //         flexDirection: 'row',
-        //         alignItems: 'center',
-        //         justifyContent: 'space-between'
-        //     }
-        // }
-        // const options = this.props.selectChallenge()
-        // let challengeOption = this.props.selectChallenge().map((challenge, i) => {
-
-        //     if (challenge.id) {
-        //         return <li key={i} value={challenge.option_id}
-        //             onChange={(e) => this.handleChange(e)}>{}</li>
-
-        //     }
-        // })
-        // console.log(challengeInfo)
         console.log(this.state)
         const { challenge } = this.state
         let challengeOptions = challenge.map((chal, i, self) => {
-            // console.log(chal.id)
-            return chal.id!==4 ? <li key={i}>{chal.challenge_option}<input name={chal.id} onChange={(e) => this.handleUpdate(e)}></input></li> : <li key={i}>{chal.challenge_option}<Scale_Img name={chal.id} onChange={(e) => this.handleUpload(e)} /></li>
-            
-            
-            // if (chal.id === 4) {
-            // } else if (chal.id !== 7) {
-            // }
+            if (chal.id === 4) {
+                return <li key={i}>{chal.challenge_option}<Scale_Img name={chal.id} onChange={(e) => this.handleUpload(e)} /></li>
+            } else if (chal.id !== 7) {
+                return <li key={i}>{chal.challenge_option}<input name={chal.id} onChange={(e) => this.handleUpdate(e)}></input></li>
+            }
 
         })
 
@@ -75,6 +82,7 @@ class Group extends Component {
                 <h1>{this.props.selectedChallengeId}Test</h1>
                 <div>{challengeOptions}</div>
                 <div><button onClick={(e) => this.handleSettingState(e)}>save</button></div>
+                <div><button onClick={(e) => this.handleCancel(e)}>cancel</button></div>
             </div>
         )
     }

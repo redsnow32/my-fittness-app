@@ -138,12 +138,6 @@ export function createOptions(option) {
 
 export function selectChallenge(selectedChallengeId) {
     console.log(selectedChallengeId)
-    //    let options = selectedChallengeId.map((option,i)=>{
-    //        return option
-    //    })
-    // const selectedChallengeId = axios.get(`/api/group/${challenge}`).then(res=>{
-    //     return res.data
-    // })
     return {
         type: GET_CHALLENGE_ID,
         payload: selectedChallengeId

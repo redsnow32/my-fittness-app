@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { getUser, selectChallenge } from '../ducks/reducer';
 import axios from 'axios';
@@ -13,7 +12,6 @@ class Dashboard extends Component {
         this.state = {
             challenges: [],
             selectedChallenge: '',
-            fireRedirect: false
         }
         this.handleRedirectByChallengeId = this.handleRedirectByChallengeId.bind(this)
     }

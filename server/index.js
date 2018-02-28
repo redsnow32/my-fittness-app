@@ -157,7 +157,8 @@ app.get('/api/dashboard/group_name', challenge_ctrl.getUserChallenges)
 app.get('/api/daily/:challenge_id', challenge_ctrl.selectChallengeId)
 app.put('/api/daily/daily_log/:challenge_id', challenge_ctrl.addChallengeInfo)
 app.put('/api/join_challenge/:challenge_id', challenge_ctrl.joinChallenge)
-app.get('/api/group', challenge_ctrl.getUserChallenges)
+app.get('/api/group/:challenge_id', challenge_ctrl.getAllUsersOnChallege)
+
 
 S3(app)
 ScaleS3(app)

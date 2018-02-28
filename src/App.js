@@ -29,6 +29,7 @@ class App extends Component {
             <Route path="/scale_img_upload" component={Scale_Img} />
             <Route path="/daily" component={Daily} />
             <Route path="/daily/daily_log" component={Daily} />
+            {/* <Route path="/group/group_members" component={Group}/> */}
           </Switch>
         </Router>
       </div>

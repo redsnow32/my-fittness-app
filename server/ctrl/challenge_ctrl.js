@@ -132,5 +132,21 @@ module.exports = {
             console.log(err)
             res.status(500).send('ERROR')
         })
+    },
+    getAllUsersOnChallege:(req,res)=>{
+        const db = req.app.get('db');
+        const { challenge_id } = req.params
+        console.log(challenge_id)
+
+        let stack = []
+        db.get_join_challeng_by_id(['awhNhouZWaEr1Wg1']).then(resp=>{
+            resp.filter((person,index,self)=>{
+                return index == self.indexOf(person.first_name && person.last_name)
+            })
+            res.status(200).send(resp)
+        }).catch((err)=>{
+            console.log(err)
+            res.status(500).send('ERROR')
+        })
     }
 }

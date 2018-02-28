@@ -1,25 +1,42 @@
 import React, { Component } from 'react';
-import Header from './Header';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { dailyLog } from '../ducks/reducer';
+import { dailyLog, selectChallenge } from '../ducks/reducer';
 import Scale_Img from './Scale_Img';
+
+const initialState = {
+    challenge: [],
+    options: ['', '', '', '', '', '', '', '', '', '', '', '', ''],
+    filter: false
+}
 class Daily extends Component {
     constructor() {
         super()
-        this.state = {
-            challenge: [],
-            options: ['', '', '', '', '', '', '', '', '','','','',''],
+        this.state = initialState
+        // {
+        //     challenge: [],
+        //     options: ['', '', '', '', '', '', '', '', '', '', '', '', ''],
+        //     selectedChallenge: '',
+        //     filter: false
+        // }
+    }
+    componentDidMount() {
+        const { selectedChallengeId } = this.props
+        if ((`/api/group/${selectedChallengeId}`)) {
+
+            let challengeInfo = axios.get(`/api/daily/${selectedChallengeId}`).then(res => {
+                return this.setState({ challenge: res.data, filter:true })
+            })
+
+        } else {
+            this.setState({ challenge: [], selectedChallenge: '', filter: false })
         }
+    
     }
-    componentWillMount() {
-        let challengeInfo = axios.get(`/api/daily/${this.props.selectedChallengeId}`).then(res => {
-            return this.setState({ challenge: res.data })
-        })
-    }
+    
     handleUpdate(e) {
         const { value } = e.target
-        
+
         let newOptions = this.state.options.slice();
 
         let values = this.state.challenge.map((challenge, i) => {
@@ -27,8 +44,8 @@ class Daily extends Component {
             if (challenge.id == e.target.name) {
                 newOptions.splice([i], 1, { id: id, value: e.target.value })
                 this.setState({ options: newOptions })
-            } else if(i===0){
-                newOptions.splice(0, 1, {challenge_id:challenge.challenge_id})
+            } else if (i === 0) {
+                newOptions.splice(0, 1, { challenge_id: challenge.challenge_id })
             }
             return values
         })
@@ -46,6 +63,7 @@ class Daily extends Component {
     handleSettingState(e) {
         let challengeLog = this.state.options
         this.props.dailyLog(challengeLog)
+        this.setState({state:initialState})
 
     }
     handleCancel() {
@@ -58,6 +76,7 @@ class Daily extends Component {
     }
     render() {
         console.log(this.state)
+        const { selectedChallengeId } = this.props
         const { challenge } = this.state
         let challengeOptions = challenge.map((chal, i, self) => {
             if (chal.id === 4) {
@@ -70,12 +89,30 @@ class Daily extends Component {
 
         return (
             <div>
-                {/* <div><Header /></div> */}
+                {
+                    this.state.filter === true
+                        ?
+                        <h1>{this.props.selectedChallengeId}Test</h1>
+                        :
+                        null
+                }
 
-                <h1>{this.props.selectedChallengeId}Test</h1>
                 <div>{challengeOptions}</div>
-                <div><button onClick={(e) => this.handleSettingState(e)}>save</button></div>
-                <div><button onClick={(e) => this.handleCancel(e)}>cancel</button></div>
+                {
+                    this.state.filter === true
+                        ?
+                        <div><button onClick={(e) => this.handleSettingState(e)}>save</button></div>
+                        :
+                        null
+                }
+                {
+                    this.state.filter === true
+                        ?
+                        <div><button onClick={(e) => this.handleCancel(e)}>cancel</button></div>
+                        :
+                        null
+                }
+
             </div>
         )
     }
@@ -83,7 +120,8 @@ class Daily extends Component {
 function mapStateToProps(state) {
     return {
         selectedChallengeId: state.selectedChallengeId,
-        dailyLog: state.daily_log
+        dailyLog: state.daily_log,
+        userChallenge: state.selected_challenge
     }
 }
-export default connect(mapStateToProps, { dailyLog })(Daily);
+export default connect(mapStateToProps, { dailyLog, selectChallenge })(Daily);

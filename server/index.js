@@ -17,7 +17,7 @@ const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING, DOMAIN, CLIENTID, CLIENT
 
 
 const app = express();
-app.use( express.static( `${__dirname}/../build` ) );
+
 app.use(cors());
 app.use(bodyParser.json());
 
@@ -168,6 +168,6 @@ app.get('/api/group/:challenge_id', challenge_ctrl.getAllUsersOnChallege)
 
 S3(app)
 ScaleS3(app)
-
+app.use( express.static( `${__dirname}/../build` ) );
 
 app.listen(SERVER_PORT, () => { console.log(`Listening on port:${SERVER_PORT}`) })

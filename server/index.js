@@ -150,6 +150,7 @@ app.put('/api/create_challenge', ((req, res, next) => {
 }))
 
 app.get('/api/create_challenge/options', challenge_ctrl.getAllOptions)
+app.get('/api/create_challenge/points', challenge_ctrl.getAllPoints)
 app.get('/api/dashboard/groups', challenge_ctrl.getGroupsById)
 app.get('/api/dashboard/get_all_challenges', challenge_ctrl.getAllChallenges)
 app.get('/api/dashboard/group_name', challenge_ctrl.getUserChallenges)

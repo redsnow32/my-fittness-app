@@ -1,41 +1,31 @@
 import React, { Component } from 'react';
-import { Link, Route }  from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from './Button';
 
 
 export default class Header extends Component {
-    constructor(){
+    constructor() {
         super()
-        this.state={
-            initialState:null
+        this.state = {
+            initialState: null
         }
-        this.handleResetGroupState = this.handleResetGroupState.bind(this)
-        
-    }
-    componentWillReceiveProps() {
-        
-
     }
 
-    handleResetGroupState(e) {
-        console.log(e)
-        this.setState({initialState:e})
-    }
     render() {
         return (
             <div className="header_container">
                 <div className="header_parent_container">
 
-                    
+
                     <div className="header_child_left">
                         <div className="header_image"><img src="" alt=""></img>Logo</div>
                     </div>
-                        
+
                     <div className="header_child_right">
                         <Link to="/dashboard"><h3>Dashboard</h3></Link>
                         <Link to="/create_challenge"><h3>Create</h3></Link>
                         <Link to="/join_challenge"><h3>Join</h3></Link>
-                        <Link to={'/group/group_members'} onClick={(e)=>this.handleResetGroupState(e)} resetState = {this.handleResetGroupState}><h3>Groups</h3></Link>
+                        <Link to={'/group/group_members'}><h3>Groups</h3></Link>
                         <div className="header_button">
                             <Button />
                         </div>

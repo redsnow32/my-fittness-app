@@ -27,26 +27,37 @@ class Create extends Component {
             //     { id: 5, optionName: 'weight', units: 'lbs', points: 5 },
             //     { id: 6, optionName: 'collection_required', units: false, points: 5 }
             // ],
+            options:{},
             challengeOptions: [],
-            selected: []
+            challengePoints: [],
+            selected: [],
+            points:[]
         }
     }
     componentDidMount() {
         this.props.getUser();
-        axios.get('/api/create_challenge/options').then(res => {
-            console.log(res.data)
-            this.setState({ challengeOptions: res.data })
-        })
+        axios.all([
+            axios.get('/api/create_challenge/options'),
+            axios.get('/api/create_challenge/points')
+        ])
+            // axios.get('/api/create_challenge/options')
+            .then(axios.spread((options, points) => {
+                console.log(options.data)
+                this.setState({ challengeOptions: options.data, challengePoints: points.data })
+            })
+
+            )
     }
 
     createChallengeID(props) {
         let challenge = this.state
         let userData = this.props
         let options = this.state.selected
-        
+
         this.props.createChallenge(challenge, options)
     }
     handleClicked(value) {
+        console.log(value)
         let sel = this.state.selected.slice();
         if (sel.includes(value)) {
             sel.splice(sel.indexOf(value), 1)
@@ -57,6 +68,19 @@ class Create extends Component {
             selected: sel
         })
 
+    }
+    handlePoints (value){
+        console.log(value)
+        
+        let poi = this.state.points.slice();
+        if (poi.includes(value)) {
+            poi.splice(poi.indexOf(value), 1)
+        } else {
+            poi.push(value)
+        }
+        this.setState({
+            points: poi
+        })
     }
     checkForMultiples(selected) {
         console.log(this.selected)
@@ -96,10 +120,39 @@ class Create extends Component {
     render() {
         let { userData } = this.props
         console.log(this.state)
+        // let objArr = {}
+        
+    //     let points = this.state.challengePoints.map((point,i)=>{
+    //         console.log(point.id)
+    //         return <option key = {point.id} value={point.id}>{point.id}</option>
+                    
+    //     })
+        
+    //     let options = this.state.challengeOptions.map((option, i) => {
+    //         const {challenge_option} = option
+    //         console.log(points[i])
 
-        let options = this.state.challengeOptions.map((option, i) => {
-            return <h2 style={{ color: this.state.selected.includes(option.id) ? 'red' : 'black' }} key={i} onClick={(e) => this.handleClicked(option.id)}>{option.challenge_option.split("_").join(' ')}</h2>
+    //         return <div key={i} style={{color: this.state.selected.includes({id:option.id}) ? 'red':'black'}}><h2 key={option.id} onClick={(e) => this.handleClicked(option.id)}>{option.challenge_option.split("_").join(' ')}</h2><select style={{color: this.state.points.includes(points.id) ? 'pink':'black'}} key={points[i]} value={points.id} onChange={(e)=>this.handlePoints({[points]:option.id})}><option key={points[i]}>--Select Option</option>{points}</select></div>
+    // })
+    
+        let points = this.state.challengePoints.map((point,i)=>{
+            return <option key = {i} value={point[i]}>{point.id}</option>
+                    
         })
+        // console.log(objArr)
+        let options = this.state.challengeOptions.map((option, i) => {
+            const {id} = option
+            return <div key={i} style={{color: this.state.selected.includes(option.id) ? 'red':'black'}}><h2 key={option.id} onClick={(e) => this.handleClicked(option.id)}>{option.challenge_option.split("_").join(' ')}</h2><select style={{color: this.state.points.includes(points.id) ? 'pink':'black'}} key={points.id} value={points.id} onChange={(e)=>this.handlePoints(e.target.value)}><option key={parseInt(points[i],10)}>--Select Option</option>{points}</select></div>
+         })
+        //  let newstate= Object.assign({},options, points)
+        //  console.log(newstate[0])
+
+        
+        //  console.log(obj.options)
+        //  let options = this.state.challengeOptions.map((option, i) => {
+        //      return <div key={i}><h2 style={{ color: this.state.selected.includes(option.id) ? 'red' : 'black' }} key={option[i]} onClick={(e) => this.handleClicked(option.id)}>{option.challenge_option.split("_").join(' ')}</h2></div>
+              /* <select style={{color: this.state.points.includes(points.id) ? 'lightgray':'black'}} key={points[i]}onChange={(e)=>this.handlePoints(e.target.value)}>{points}</select></div>   */
+        //   })
         return (
             <div className="create_container">
                 <div><Header /></div>
@@ -135,6 +188,8 @@ class Create extends Component {
                         <div className="create_child_left2">Select Point Options:</div>
                         <div className="create_child_left2_props">
                             <div>{options}</div>
+                            <br />
+                            
                         </div>
                         <div className="create_child_left5">
                             <Link to="/dashboard"><button onClick={(e) => this.createChallengeID(e)}>Create Challenge!</button></Link>
@@ -149,7 +204,7 @@ function mapStateToProps(state) {
     return {
         challengeData: state.challenge,
         userData: state.user,
-        optionData:state.options
+        optionData: state.options
     }
 }
 export default connect(mapStateToProps, { createChallenge, getUser, createOptions })(Create) 

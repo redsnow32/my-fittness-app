@@ -1,4 +1,4 @@
-SELECT * 
-FROM users as u
-JOIN challenges as c on u.challenge_id = c.challenge_id 
+SELECT first_name, last_name, jc.challenge_id
+FROM join_challenges jc
+JOIN users u on jc.challenge_id = u.challenge_id
 WHERE u.challenge_id = $1;

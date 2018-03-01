@@ -27,22 +27,22 @@ function uploadPhoto(req, res) {
         }
 
     S3.upload(params, (err, data) => {
-        
         console.log(params)
         if (err) {
             console.log(err)
         } else {
             response = data.Location, code = 200
             console.log(response)
+            (response = data.Location, code = 200)
+            res.status(code).send(response)
+            console.log('S3 response', data)
             db.upload_scale_img([selectedChallengeId, user_id, name, response]).then(resp=>{
                 res.status(200).send(resp)
             }).catch((err)=>{
                 console.log(err)
                 res.status(500).send(err)
             }) 
-            // (response = data.Location, code = 200)
-            // res.status(code).send(response)
-            // console.log('S3 response', data)
+            
         }
        
     })

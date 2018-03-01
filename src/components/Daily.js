@@ -4,39 +4,31 @@ import { connect } from 'react-redux';
 import { dailyLog, selectChallenge } from '../ducks/reducer';
 import Scale_Img from './Scale_Img';
 
-const initialState = {
-    challenge: [],
-    options: ['', '', '', '', '', '', '', '', '', '', '', '', ''],
-    filter: false
-}
 class Daily extends Component {
     constructor() {
         super()
-        this.state = initialState
-        // {
-        //     challenge: [],
-        //     options: ['', '', '', '', '', '', '', '', '', '', '', '', ''],
-        //     selectedChallenge: '',
-        //     filter: false
-        // }
+        this.state = {
+
+            challenge: [],
+            options: ['', '', '', '', '', '', '', '', '', '', '', '', ''],
+            selectedChallenge: ''
+        }
+
     }
     componentDidMount() {
         const { selectedChallengeId } = this.props
         if ((`/api/group/${selectedChallengeId}`)) {
 
-            let challengeInfo = axios.get(`/api/daily/${selectedChallengeId}`).then(res => {
-                return this.setState({ challenge: res.data, filter:true })
+            axios.get(`/api/daily/${selectedChallengeId}`).then(res => {
+                this.setState({ challenge: res.data })
             })
 
-        } else {
-            this.setState({ challenge: [], selectedChallenge: '', filter: false })
-        }
-    
-    }
-    
-    handleUpdate(e) {
-        const { value } = e.target
 
+        }
+
+    }
+
+    handleUpdate(e) {
         let newOptions = this.state.options.slice();
 
         let values = this.state.challenge.map((challenge, i) => {
@@ -63,7 +55,7 @@ class Daily extends Component {
     handleSettingState(e) {
         let challengeLog = this.state.options
         this.props.dailyLog(challengeLog)
-        this.setState({state:initialState})
+
 
     }
     handleCancel() {
@@ -89,30 +81,10 @@ class Daily extends Component {
 
         return (
             <div>
-                {
-                    this.state.filter === true
-                        ?
-                        <h1>{this.props.selectedChallengeId}Test</h1>
-                        :
-                        null
-                }
-
+                <h1>Challenge ID:  {this.props.selectedChallengeId}</h1>
                 <div>{challengeOptions}</div>
-                {
-                    this.state.filter === true
-                        ?
-                        <div><button onClick={(e) => this.handleSettingState(e)}>save</button></div>
-                        :
-                        null
-                }
-                {
-                    this.state.filter === true
-                        ?
-                        <div><button onClick={(e) => this.handleCancel(e)}>cancel</button></div>
-                        :
-                        null
-                }
-
+                <div><button onClick={(e) => this.handleSettingState(e)}>save</button></div>
+                <div><button onClick={(e) => this.handleCancel(e)}>cancel</button></div>
             </div>
         )
     }

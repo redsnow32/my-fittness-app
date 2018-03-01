@@ -24,9 +24,6 @@ class Join_Challenge extends Component {
        this.props.joinChallenge(join_challenge_id) 
     }
     render() {
-        const { joinChallenge } = this.props
-        console.log(this.props)
-        console.log(this.state)
         return (
             <div className="Join_Challenge">
                 <div><Header /></div>

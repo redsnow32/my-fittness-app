@@ -8,6 +8,7 @@ import Join_Challenge from './components/Join_Challenge';
 import Daily from './components/Daily';
 import Group from './components/Group';
 import FileUpload from './components/FileUpload';
+import Group_Members from './components/Group_Members';
 import Scale_Img from './components/Scale_Img';
 import './styles/main.css';
 
@@ -29,7 +30,7 @@ class App extends Component {
             <Route path="/scale_img_upload" component={Scale_Img} />
             <Route path="/daily" component={Daily} />
             <Route path="/daily/daily_log" component={Daily} />
-            {/* <Route path="/group/group_members" component={Group}/> */}
+            <Route path="/group/group_members" component={Group_Members}/>
           </Switch>
         </Router>
       </div>

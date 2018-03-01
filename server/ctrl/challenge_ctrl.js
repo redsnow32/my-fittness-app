@@ -7,17 +7,17 @@ module.exports = {
             res.status(200).send(resp)
         }).catch((err) => res.status(500).send(err))
     },
-    // insertOptions: (req, res) => {
-    //     const db = req.app.get('db')
-    //     let challengeOption = req.body.sort().filter((id, i) => {
-    //         if (id) {
-    //             db.input_option_one(['newsdfasdftuff', id]).then(resp => {
-    //                 res.status(200).send()
-    //             }).catch((err) => res.status(500).send(err))
-    //         }
-    //     })
+    getAllPoints:(req, res)=> {
+        const db = req.app.get('db')
 
-    // },
+        db.get_all_point_options().then(resp=>{
+            console.log(resp)
+            res.status(200).send(resp)
+        }).catch((err)=>{
+            console.log(err)
+            res.status(500).send('ERROR')
+        })
+    },
     getGroupsById: (req, res) => {
         const db = req.app.get('db')
         // console.log("THIS IS GET GROUPS BY ID" + " " + req.session.user.id)
@@ -138,11 +138,11 @@ module.exports = {
         const { challenge_id } = req.params
         console.log(challenge_id)
 
-        let stack = []
-        db.get_join_challeng_by_id(['awhNhouZWaEr1Wg1']).then(resp=>{
-            resp.filter((person,index,self)=>{
-                return index == self.indexOf(person.first_name && person.last_name)
-            })
+        // let stack = []
+        db.get_join_challeng_by_id([challenge_id]).then(resp=>{
+         resp.map((user, i)=>{
+             return user
+         })
             res.status(200).send(resp)
         }).catch((err)=>{
             console.log(err)

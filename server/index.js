@@ -15,9 +15,11 @@ const S3 = require('./S3.js');
 const ScaleS3 = require('./ScaleS3');
 const { SERVER_PORT, SESSION_SECRET, CONNECTION_STRING, DOMAIN, CLIENTID, CLIENT_SECRET, CALLBACK_URL, AWS_SECRET_ACCESS_KEY, AWS_ACCESS_KEY_ID, AWS_REGION, AWS_BUCKET } = process.env;
 
+
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
+
 
 app.use(session({
     secret: SESSION_SECRET,
@@ -95,7 +97,8 @@ passport.deserializeUser((id, done) => {
 
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
-    successRedirect: 'http://localhost:3000/#/dashboard'
+    successRedirect: process.env.REACT_APP_SUCCESSREDIRECT
+    // 'http://localhost:3000/#/dashboard'
 }))
 ////
 //change req.user to req.session.user so you don't have to login and out all the time. referrenced above
@@ -119,7 +122,8 @@ app.get('/auth/me', (req, res) => {
 
 app.get('/logout', (req, res) => {
     req.logOut();
-    res.redirect('http://localhost:3000/')
+    res.redirect(process.env.REACT_APP_LOCALHOST)
+    // ('http://localhost:3000/')
 })
 app.put('/api/edit/:id', ctrl.updateUser);
 app.put('/api/create_challenge', ((req, res, next) => {
@@ -163,8 +167,6 @@ app.get('/api/group/:challenge_id', challenge_ctrl.getAllUsersOnChallege)
 
 S3(app)
 ScaleS3(app)
-
-
-
+app.use( express.static( `${__dirname}/../build` ) );
 
 app.listen(SERVER_PORT, () => { console.log(`Listening on port:${SERVER_PORT}`) })

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getUser } from '../ducks/reducer';
+// require('dotenv').config();
 
 class Button extends Component {
     componentDidMount() {
@@ -23,7 +24,8 @@ class Button extends Component {
                             <div className="button_hamburger_bottom" />
                         </div>
                         <div className="button_child_right">
-                        <a href="http:localhost:3223/logout"> <div className="button_child_logout">| LOG OUT</div>
+                        <a href={process.env.REACT_APP_LOGOUT}> <div className="button_child_logout">| LOG OUT</div>
+                        {/* "http:localhost:3223/logout" */}
                         </a>
                         </div>
                     {/* </div> */}

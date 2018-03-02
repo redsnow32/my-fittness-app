@@ -127,7 +127,6 @@ export function createChallenge(challenge, options) {
 export function createOptions(option) {
     console.log(option)
     const selectedChallenge = axios.put(`/api/create_challenge`, option).then(res => {
-        console.log(option)
         return res.data
     })
     return {

@@ -19,19 +19,11 @@ class Create extends Component {
             rewardAmount: 0,
             collectionType: '',
             paymentRequired: false,
-            // options: [
-            //     { id: 1, optionName: 'water_intake', units: 'mL', points: 5 },
-            //     { id: 2, optionName: 'caloric_intake', units: 'lbs', points: 5 },
-            //     { id: 3, optionName: 'exercise', units: false, points: 5 },
-            //     { id: 4, optionName: 'scale_img', units: false, points: 5 },
-            //     { id: 5, optionName: 'weight', units: 'lbs', points: 5 },
-            //     { id: 6, optionName: 'collection_required', units: false, points: 5 }
-            // ],
-            options:{},
+            options: {},
             challengeOptions: [],
             challengePoints: [],
             selected: [],
-            points:[]
+            points: []
         }
     }
     componentDidMount() {
@@ -58,29 +50,37 @@ class Create extends Component {
     }
     handleClicked(value) {
         console.log(value)
-        let sel = this.state.selected.slice();
-        if (sel.includes(value)) {
-            sel.splice(sel.indexOf(value), 1)
+        let coppied = this.state.selected.slice()
+        let copt = coppied.find(c => c.id === value)
+        if (copt) {
+            coppied = coppied.filter(c => c.id !== copt.id)
         } else {
-            sel.push(value)
+            coppied.push({ id: value, value: 0 })
         }
-        this.setState({
-            selected: sel
-        })
+        this.setState({ selected: coppied })
 
     }
-    handlePoints (value){
-        console.log(value)
-        
-        let poi = this.state.points.slice();
-        if (poi.includes(value)) {
-            poi.splice(poi.indexOf(value), 1)
-        } else {
-            poi.push(value)
-        }
-        this.setState({
-            points: poi
+    handlePoints(e) {
+        let { name, value } = e.target
+        name = name * 1
+        let coppied = this.state.selected.slice()
+        let index
+        let copt = coppied.find((c, i) => {
+            if (c.id === name) {
+                index = i
+                return true
+            } else {
+                return false
+            }
         })
+        if (copt) {
+            coppied[index].value = value * 1
+        } else {
+            coppied.push({ id: name, value: value * 1 })
+        }
+
+        this.setState({ selected: coppied })
+
     }
     checkForMultiples(selected) {
         console.log(this.selected)
@@ -120,39 +120,11 @@ class Create extends Component {
     render() {
         let { userData } = this.props
         console.log(this.state)
-        // let objArr = {}
-        
-    //     let points = this.state.challengePoints.map((point,i)=>{
-    //         console.log(point.id)
-    //         return <option key = {point.id} value={point.id}>{point.id}</option>
-                    
-    //     })
-        
-    //     let options = this.state.challengeOptions.map((option, i) => {
-    //         const {challenge_option} = option
-    //         console.log(points[i])
-
-    //         return <div key={i} style={{color: this.state.selected.includes({id:option.id}) ? 'red':'black'}}><h2 key={option.id} onClick={(e) => this.handleClicked(option.id)}>{option.challenge_option.split("_").join(' ')}</h2><select style={{color: this.state.points.includes(points.id) ? 'pink':'black'}} key={points[i]} value={points.id} onChange={(e)=>this.handlePoints({[points]:option.id})}><option key={points[i]}>--Select Option</option>{points}</select></div>
-    // })
-    
-        let points = this.state.challengePoints.map((point,i)=>{
-            return <option key = {i} value={point[i]}>{point.id}</option>
-                    
-        })
-        // console.log(objArr)
+        let { selected } = this.state
         let options = this.state.challengeOptions.map((option, i) => {
-            const {id} = option
-            return <div key={i} style={{color: this.state.selected.includes(option.id) ? 'red':'black'}}><h2 key={option.id} onClick={(e) => this.handleClicked(option.id)}>{option.challenge_option.split("_").join(' ')}</h2><select style={{color: this.state.points.includes(points.id) ? 'pink':'black'}} key={points.id} value={points.id} onChange={(e)=>this.handlePoints(e.target.value)}><option key={parseInt(points[i],10)}>--Select Option</option>{points}</select></div>
-         })
-        //  let newstate= Object.assign({},options, points)
-        //  console.log(newstate[0])
-
-        
-        //  console.log(obj.options)
-        //  let options = this.state.challengeOptions.map((option, i) => {
-        //      return <div key={i}><h2 style={{ color: this.state.selected.includes(option.id) ? 'red' : 'black' }} key={option[i]} onClick={(e) => this.handleClicked(option.id)}>{option.challenge_option.split("_").join(' ')}</h2></div>
-              /* <select style={{color: this.state.points.includes(points.id) ? 'lightgray':'black'}} key={points[i]}onChange={(e)=>this.handlePoints(e.target.value)}>{points}</select></div>   */
-        //   })
+            const { id } = option
+            return <div><div key={i} style={{ color: selected.map(c => c.id).includes(option.id) ? 'red' : 'black' }} key={option.id} onClick={(e) => this.handleClicked(option.id)}>{selected.map(c => c.id).includes(option.id) && '✓'}{option.challenge_option.split("_").join(' ')}</div><input type="number" name={option.id} value={selected.find(c => c.id === option.id) && selected.find(c => c.id === option.id).value} onChange={(e) => this.handlePoints(e)} /></div>
+        })
         return (
             <div className="create_container">
                 <div><Header /></div>
@@ -189,7 +161,7 @@ class Create extends Component {
                         <div className="create_child_left2_props">
                             <div>{options}</div>
                             <br />
-                            
+
                         </div>
                         <div className="create_child_left5">
                             <Link to="/dashboard"><button onClick={(e) => this.createChallengeID(e)}>Create Challenge!</button></Link>

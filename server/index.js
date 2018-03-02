@@ -169,4 +169,4 @@ app.get('/api/group/:challenge_id', challenge_ctrl.getAllUsersOnChallege)
 S3(app)
 ScaleS3(app)
 
-app.listen(SERVER_PORT, () => { console.log(`Listening on port:${SERVER_PORT}`) })
+app.listen(SERVER_PORT, () => { console.log(`Listening on port:${SERVER_PORT}`) });

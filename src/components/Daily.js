@@ -17,14 +17,16 @@ class Daily extends Component {
     }
     componentDidMount() {
         const { selectedChallengeId } = this.props
-        if ((`/api/group/${selectedChallengeId}`)) {
+
+        // if ((`/api/group/${selectedChallengeId}`)) {
 
             axios.get(`/api/daily/${selectedChallengeId}`).then(res => {
+                console.log(res.data)
                 this.setState({ challenge: res.data })
             })
 
-
-        }
+            // axios.get(`/api/daily/points${selectedChallengeId}`)
+        // }
 
     }
 
@@ -41,7 +43,6 @@ class Daily extends Component {
             }
             return values
         })
-        console.log(newOptions)
     }
     handleUpload(e) {
         console.log(e.target.value)
@@ -71,10 +72,11 @@ class Daily extends Component {
         const { selectedChallengeId } = this.props
         const { challenge } = this.state
         let challengeOptions = challenge.map((chal, i, self) => {
+            console.log(chal)
             if (chal.id === 4) {
                 return <li key={i}>{chal.challenge_option}<Scale_Img name={chal.id} onChange={(e) => this.handleUpload(e)} /></li>
             } else if (chal.id !== 7) {
-                return <li key={i}>{chal.challenge_option}<input name={chal.id} onChange={(e) => this.handleUpdate(e)}></input></li>
+                return <li key={i}>{chal.challenge_option} ({chal.units})<input type="number" name={chal.id} onChange={(e) => this.handleUpdate(e)} /></li>
             }
 
         })

@@ -23,11 +23,13 @@ class Create extends Component {
             challengeOptions: [],
             challengePoints: [],
             selected: [],
-            points: []
+            points: [],
+            customOptions:[]
         }
     }
     componentDidMount() {
         this.props.getUser();
+
         axios.all([
             axios.get('/api/create_challenge/options'),
             axios.get('/api/create_challenge/points')
@@ -116,6 +118,26 @@ class Create extends Component {
         console.log(this.props.user)
         this.setState({ user_id: this.props.userData.id })
     }
+    handleCustom(e){
+        
+        // console.log(e)
+        // let coppied = this.state.customOptions.slice()
+        // let copt = coppied.find(c => c)
+        // if (copt) {
+        //     coppied = coppied.filter(c => c)
+        //     coppied.push({ id: c.id, [name]: e.target.name })
+        // }
+        // if(id){
+        //     coppied.push({[id]:e.target.value})
+        // }
+        // let coppied = this.state.customOptions.slice()
+        // if(id===1) {
+        //     coppied.push({id:1, pionts:e.target.value})
+        // } else if(id===2){
+        //     coppied.push({id:2 })
+        // }
+        // this.setState({customOptions:copt})
+    }
 
     render() {
         let { userData } = this.props
@@ -125,6 +147,9 @@ class Create extends Component {
             const { id } = option
             return <div><div key={i} style={{ color: selected.map(c => c.id).includes(option.id) ? 'red' : 'black' }} key={option.id} onClick={(e) => this.handleClicked(option.id)}>{selected.map(c => c.id).includes(option.id) && '✓'}{option.challenge_option.split("_").join(' ')}</div><input type="number" name={option.id} value={selected.find(c => c.id === option.id) && selected.find(c => c.id === option.id).value} onChange={(e) => this.handlePoints(e)} /></div>
         })
+        // let customOpt = this.state.customOptions.map((opt,i)=>{
+        //     <div key={opt.id} >{}<input type="text" /></div>
+        // })
         return (
             <div className="create_container">
                 <div><Header /></div>
@@ -161,7 +186,7 @@ class Create extends Component {
                         <div className="create_child_left2_props">
                             <div>{options}</div>
                             <br />
-
+                        <div className="create_child_left3">Add custom option (optional):<input type="text" name="option"onChange={(e)=>this.handleCustom({id:1, option:e.target.value})}/><input type="number" name="points" onChange={(e)=>this.handleCustom({id:2, points:e.target.value})}/></div>
                         </div>
                         <div className="create_child_left5">
                             <Link to="/dashboard"><button onClick={(e) => this.createChallengeID(e)}>Create Challenge!</button></Link>

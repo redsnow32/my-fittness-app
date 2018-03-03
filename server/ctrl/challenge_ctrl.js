@@ -7,13 +7,13 @@ module.exports = {
             res.status(200).send(resp)
         }).catch((err) => res.status(500).send(err))
     },
-    getAllPoints:(req, res)=> {
+    getAllPoints: (req, res) => {
         const db = req.app.get('db')
 
-        db.get_all_point_options().then(resp=>{
+        db.get_all_point_options().then(resp => {
             console.log(resp)
             res.status(200).send(resp)
-        }).catch((err)=>{
+        }).catch((err) => {
             console.log(err)
             res.status(500).send('ERROR')
         })
@@ -75,23 +75,24 @@ module.exports = {
         const { challenge_id } = req.params
         const { id } = req.session.user
         console.log(id + "   THIS OS DESTRUCTURED CHAL ID")
+        console.log(req.body)
         const db = req.app.get('db')
 
         let stack = []
         db.select_challenge_options_by_challenge_id([challenge_id]).then(resp => {
             resp.map((option, i) => {
                 req.body.map((challenge, i) => {
+                    console.log(challenge.value)
                     if (option.option_id == challenge.id) {
-                        console.log(challenge.id + "CHALLENGEID")
-                        console.log(option.option_id + "OPTIONID")
-                        console.log(challenge.value + "VALUE")
-                        stack.push(db.log_daily_values(challenge_id, id, challenge.id, challenge.value))
+                        stack.push(db.log_daily_values(challenge_id, id, challenge.id, challenge.value * 1))
+                        console.log(resp)
                     }
                 })
             })
             Promise.all(stack).then(response => {
                 console.log('Daily Log Added')
                 res.status(200).send(response)
+                console.log(response + "THIS IS THE DAILY INPUT RESPONSE")
             }).catch((err) => {
                 console.log(err)
                 res.status(500).send("ERROR")
@@ -104,49 +105,55 @@ module.exports = {
     joinChallenge: (req, res) => {
         const db = req.app.get('db')
         const { challenge_id } = req.params
-        const { id } = req.session.user
         console.log(challenge_id)
+        const { id } = req.session.user
 
         let stack = []
-        db.get_challenge_by_challenge_id([challenge_id]).then(resp => {
-            resp.map((option, i) => {
-                // if(challenge_id === option.challenge_id && id === option.user_id){
-                //     console.log("THIS IS TRUE!")
-                //     res.status(404).send("user already exists")
-                // } 
-                challenge_id === option.challenge_id && id === option.user_id ? stack.push(res.status(202).send("User Already Existst On Challenge")) :
-                stack.push(db.join_challenge_by_challenge_id([challenge_id, id, option.option_id]))
-                
-            })
+        ///CHANGE THIS CHALLENGE ID BACK TO challenge_id
 
-            Promise.all(stack).then(resp => {
-                res.status(202).send("User Already Existst On Challenge")
-                console.log('Joined Challenge Successfully!') 
-                res.status(200).send(resp)
-                console.log(resp)
-            }).catch((err) => {
-                console.log(err)
-                res.status(500).send('ERROR')
-            })
+        db.get_challenge_by_challenge_id([challenge_id]).then(resp => {
+            resp.forEach((option, i) => {
+                stack.push(db.join_challenge_by_challenge_id([challenge_id, id, option.option_id]))
+        })
+        Promise.all(stack).then(resp => {
+            console.log('Joined Challenge Successfully!')
+            res.status(200).send(resp)
+            console.log(resp)
         }).catch((err) => {
             console.log(err)
             res.status(500).send('ERROR')
         })
-    },
-    getAllUsersOnChallege:(req,res)=>{
-        const db = req.app.get('db');
-        const { challenge_id } = req.params
-        console.log(challenge_id)
+    }).catch((err) => {
+    console.log(err)
+    res.status(500).send('ERROR')
+})
+    
+},
+getAllUsersOnChallege: (req, res) => {
+    const db = req.app.get('db');
+    const { challenge_id } = req.params
+    console.log(challenge_id)
 
-        // let stack = []
-        db.get_join_challeng_by_id([challenge_id]).then(resp=>{
-         resp.map((user, i)=>{
-             return user
-         })
-            res.status(200).send(resp)
-        }).catch((err)=>{
-            console.log(err)
-            res.status(500).send('ERROR')
+    db.get_join_challeng_by_id([challenge_id]).then(resp => {
+        resp.map((user, i) => {
+            resp.map((user, i) => {
+            })
+        })
+        res.status(200).send(resp)
+    }).catch((err) => {
+        console.log(err)
+        res.status(500).send('ERROR')
+    })
+},
+    getAllUsersPointsOnChallege:(req, res) => {
+        const db = req.app.get('db')
+        const { challenge_id } = req.params
+        const { id } = req.session.user
+
+        db.get_user_points_by_challenge_id([challenge_id]).then(resp => {
+            resp.map((user, i) => {
+                console.log(user + "THIS IS THE USER")
+            })
         })
     }
 }

@@ -27,7 +27,7 @@ const initialState = {
     ],
     selectedChallengeId: '',
     daily_log: [],
-    join_challengeId:{}
+    join_challengeId:''
 }
 
 const GET_USER = 'GET_USER';
@@ -145,6 +145,7 @@ export function selectChallenge(selectedChallengeId) {
 }
 
 export function dailyLog(changeLog) {
+    // console.log(changeLog)
     let body = changeLog
     let selectedId = body.filter((value, i)=>{
         return value.challenge_id

@@ -7,9 +7,6 @@ class Button extends Component {
     componentDidMount() {
         this.props.getUser();
     }
-    componentWillReceiveProps() {
-
-    }
     render() {
         const { userData } = this.props
         // console.log(this.props)

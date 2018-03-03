@@ -5,4 +5,4 @@ user_id INTEGER,
 log_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 points INTEGER,
 option_id INTEGER,
-option_value TEXT)
+option_value INTEGER)

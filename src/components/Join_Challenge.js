@@ -13,24 +13,26 @@ class Join_Challenge extends Component {
         this.handleChallengeSubmit = this.handleChallengeSubmit.bind(this)
     }
     handleChallengeId(e){
+        console.log(e.target.value)
         this.setState({join_challenge_id:e.target.value})
     }
-    handleChallengeSubmit(event){
-        console.log(event)
-        console.log(this.props)
-        event.preventDefault();
-        const {join_challenge_id} = this.state
-        console.log(join_challenge_id)
-       this.props.joinChallenge(join_challenge_id) 
+    handleChallengeSubmit(e){
+        console.log(e)
+       this.props.joinChallenge(this.state) 
+    }
+    handleSettingRedux(e){
+        this.props.joinChallenge(this.state) 
     }
     render() {
         return (
             <div className="Join_Challenge">
                 <div><Header /></div>
                 <div className="join_container">
-                    <form onSubmit={this.handleChallengeSubmit}>
+                    <form onSubmit={(e)=>this.handleChallengeSubmit(e)}>
                         <label>Enter Challenge ID:  <input onChange={(e)=>this.handleChallengeId(e)}/></label>
-                        <Link to="/group"><input type="submit" /></Link>
+                        
+                        <input type="submit" />
+                        
                     </form>
                     
                 </div>
@@ -40,7 +42,7 @@ class Join_Challenge extends Component {
 }
 function mapStateToProps(state){
     return {
-        joinChallenge: state.challenge
+        joinChallenge: state.join_challengeId
     }
 }
 export default connect(mapStateToProps, {joinChallenge})(Join_Challenge)

@@ -128,49 +128,24 @@ app.get('/logout', (req, res) => {
 })
 app.put('/api/edit/:id', ctrl.updateUser);
 app.put('/api/create_challenge', ((req, res, next) => {
-    console.log(req.body.options.map((op, i) => {
-        console.log(op)
-        console.log(op.id)
-        console.log(op.value)
-    }) + "this is WHERE YOU ETNER OPTIONS" + req.body.options.value)
-
-
-
-
-
-
-
-
-
-
-
-
 
     const { user } = req.session.user
     const { group_name, start_date, end_date, reward_amount, water_intake, caloric_intake, daily_weight, exercise, collection_type, payment_required } = req.body
     let token = randtoken.generate(16)
     const db = req.app.get('db')
-    // let challenge = options.map((chal,i)=>{
-    //     db.create_new_challenge([token, chal.id])
-    //     console.log(chal.id, chal.value)
-    //     return chal.id, chal.value
-    // })
 
     let stack = []
     db.create_new_challenge([token, user, group_name, start_date, end_date, reward_amount]).then(resp => {
-        console.log("CREATE CHALLENGE", resp)
         req.body.options.forEach((option, i) => {
             const { id, value } = option
-            console.log(id + "THIS IST THE ID " + value + "THIS IS THE VALUE")
             stack.push(db.input_option(token, id))
-            stack.push(db.input_point_values(value, id, token))
+            stack.push(db.input_point_values( value, id, token))
         })
         Promise.all(stack).then(response => {
             console.log('Options were added!')
             res.status(200).send(resp)
         }).catch((err) => {
             console.log(err)
-            console.log(resp + "Point values were added!")
             res.status(500).send("Error")
         })
     }).catch((err) => {
@@ -190,6 +165,7 @@ app.get('/api/daily/:challenge_id', challenge_ctrl.selectChallengeId)
 app.put('/api/daily/daily_log/:challenge_id', challenge_ctrl.addChallengeInfo)
 app.put('/api/join_challenge/:challenge_id', challenge_ctrl.joinChallenge)
 app.get('/api/group/:challenge_id', challenge_ctrl.getAllUsersOnChallege)
+app.get('/api/group/:challenge_id', challenge_ctrl.getAllUsersPointsOnChallege)
 
 
 S3(app)

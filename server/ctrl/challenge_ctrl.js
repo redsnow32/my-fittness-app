@@ -80,17 +80,32 @@ module.exports = {
 
         let stack = []
         db.select_challenge_options_by_challenge_id([challenge_id]).then(resp => {
-            resp.map((option, i) => {
-                req.body.map((challenge, i) => {
+            resp.forEach((option, i) => {
+                console.log(option +"THIS IS THE OPTION")
+                req.body.forEach((challenge, i) => {
                     console.log(challenge.value)
                     if (option.option_id == challenge.id) {
-                        stack.push(db.log_daily_values(challenge_id, id, challenge.id, challenge.value * 1))
+                        console.log(option.option_id +"this is the option", challenge,"this is the challenge")
+                        stack.push(db.log_daily_values(challenge_id, id, challenge.id, challenge.value))
                         console.log(resp)
                     }
                 })
             })
             Promise.all(stack).then(response => {
                 console.log('Daily Log Added')
+                response.map((points, i) => {
+                    console.log(points)
+                    points.map((opt, i) => {
+                        console.log(opt)
+                        if(opt.option_value!==''||null) {
+                            console.log(opt
+                            // db.update_points([])
+                            )}
+                    })
+                    // db.add_points([]).then(re=>{
+
+                    // })
+                })
                 res.status(200).send(response)
                 console.log(response + "THIS IS THE DAILY INPUT RESPONSE")
             }).catch((err) => {
@@ -114,38 +129,38 @@ module.exports = {
         db.get_challenge_by_challenge_id([challenge_id]).then(resp => {
             resp.forEach((option, i) => {
                 stack.push(db.join_challenge_by_challenge_id([challenge_id, id, option.option_id]))
-        })
-        Promise.all(stack).then(resp => {
-            console.log('Joined Challenge Successfully!')
-            res.status(200).send(resp)
-            console.log(resp)
+            })
+            Promise.all(stack).then(resp => {
+                console.log('Joined Challenge Successfully!')
+                res.status(200).send(resp)
+                console.log(resp)
+            }).catch((err) => {
+                console.log(err)
+                res.status(500).send('ERROR')
+            })
         }).catch((err) => {
             console.log(err)
             res.status(500).send('ERROR')
         })
-    }).catch((err) => {
-    console.log(err)
-    res.status(500).send('ERROR')
-})
-    
-},
-getAllUsersOnChallege: (req, res) => {
-    const db = req.app.get('db');
-    const { challenge_id } = req.params
-    console.log(challenge_id)
 
-    db.get_join_challeng_by_id([challenge_id]).then(resp => {
-        resp.map((user, i) => {
+    },
+    getAllUsersOnChallege: (req, res) => {
+        const db = req.app.get('db');
+        const { challenge_id } = req.params
+        console.log(challenge_id)
+
+        db.get_join_challeng_by_id([challenge_id]).then(resp => {
             resp.map((user, i) => {
+                resp.map((user, i) => {
+                })
             })
+            res.status(200).send(resp)
+        }).catch((err) => {
+            console.log(err)
+            res.status(500).send('ERROR')
         })
-        res.status(200).send(resp)
-    }).catch((err) => {
-        console.log(err)
-        res.status(500).send('ERROR')
-    })
-},
-    getAllUsersPointsOnChallege:(req, res) => {
+    },
+    getAllUsersPointsOnChallege: (req, res) => {
         const db = req.app.get('db')
         const { challenge_id } = req.params
         const { id } = req.session.user

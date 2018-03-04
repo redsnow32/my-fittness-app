@@ -9,12 +9,16 @@ export default class Home extends Component {
 
                 <div className="home_img_container">
                     <div className="home_child_right">
-                        {/* <div className="nav_container"> */}
+                        <div className="nav_container">
                             <nav>
                                 <h1>MY FITNESS CHALLENGE</h1>
+                                <br />
+                                <br />
+                                <h2>ABOUT</h2>
+                                <br />
                                 <a href={process.env.REACT_APP_LOGIN}><button>Login / Register</button></a>
                             </nav>
-                        {/* </div> */}
+                        </div>
                     </div>
                     <div className="homechild_left">
                     </div>

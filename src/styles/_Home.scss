@@ -1,13 +1,25 @@
-font * {
-    font-size:1.0em;
-    font-family: './fonts/DoppioOne-Regular.ttf';
+font {
+    font-size:1rem;
+    color:ffffff;
 }
-
+button {
+    background:none;
+    border-radius: none;
+    color:#ffffff;
+    border:none;
+}
+a {
+    text-decoration: none;
+}
+h1 {
+    color:#ffffff;
+}
 .home_container {
     margin: 0px;
     padding: 0px;
     height: 100vh;
     width: 100vw;
+    
 }
 .home_img_container {
     height:100vh;
@@ -15,7 +27,7 @@ font * {
     margin:auto;
     display: grid;  
     align-items:center; 
-    justify-items:start;
+    justify-items:center;
     background-image:url(IMG_5270.jpeg);
     background-size: cover;
     background-position: bottom 50% right 50%;
@@ -26,12 +38,76 @@ font * {
     display: grid;
     align-content: center;
     justify-content: center;
-    margin-left: 300px; 
 }
-// .nav_container {
-//     height: 500px;
-//     width: 300px;
-//     background: red;
-//     justify-content: center;
-//     align-content: center;
-// }
+.nav_container {
+    height: 100%;
+    width:100%;
+    padding-right:30px;
+    align-content: center;
+    justify-content: start;
+}
+
+.home_child_right button{
+    // display: grid;
+    // justify-content: start;
+    // height: 100px;
+    // width:350px;
+    // background:none;
+    // border:none;
+    // font-size:1.5em;
+    // font-color:#ffffff;
+    // text-transform:uppercase;
+
+}
+.home_child_right h1 {
+    font-size: 2rem;
+}
+
+nav {
+
+}
+@media (max-width:1200px) {
+    font {
+        font-size:1rem;
+    }
+    button {
+        background:none;
+        border-radius: none;
+        font-color:white;
+    }
+    a {
+        color:#ffffff;
+        text-decoration: none;
+    }
+    .home_container {
+        margin: 0px;
+        padding: 0px;
+        height: 100vh;
+        width: 100vw;
+        display:grid;
+        justify-content: start;
+
+    }
+    .home_img_container h1{
+        grid-template-columns: 1fr;
+        font-size:1.5rem;
+    }
+    .home_child_right {
+
+    }
+    @media(max-width:600px) {
+
+    }
+    .home_container {
+        height:100vh;
+        width:100vw;
+        margin:0;
+        padding:0;
+        display:grid;
+        justify-content: start;
+    }
+    @media(max-width:400px) {
+        
+    }
+}
+

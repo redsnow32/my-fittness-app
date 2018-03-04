@@ -12,7 +12,7 @@ class Group extends Component {
 
         }
     }
-    componentWillMount() {
+    componentDidMount() {
         const { selectedChallengeId } = this.props
         axios.get(`/api/group/${selectedChallengeId}`).then(res => {
             console.log(res.data)

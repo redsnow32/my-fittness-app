@@ -18,41 +18,39 @@ class Dashboard extends Component {
     componentDidMount() {
         this.props.getUser();
         axios.get('/api/dashboard/group_name').then(res => {
+            console.log(res.data)
             this.setState({ challenges: res.data })
         })
     }
     handleRedirectByChallengeId(e) {
-        console.log(e.target.value)
+        console.log(e)
         // console.log(this.state)
         const { challenges } = this.state
         // console.log(challenges)
-        let selectedIndex = e.target.value
-        // console.log(selectedIndex)
+        let selectedIndex = e
+        console.log(selectedIndex)
 
-        // let selectedChallengeId = this.state.challenges.forEach((challenges,index)=>{
-        //     if(index === selectedIndex) {
-        //         return index
-        //     }
-        // })
-        let selectedChallengeId = this.state.challenges.filter((group, i) => {
+        let selectedChallengeId = this.state.challenges.map((group, i) => {
             if (i === selectedIndex) {
                 return this.props.selectChallenge( group.challenge_id )
             }
         })
+        this.setState({selectedChallenge:selectedChallengeId})
     }
     render() {
         let { userData } = this.props
-        let { challenges, fireRedirect } = this.state
+        let { challenges } = this.state
         // console.log(this.state.selectedChallenge)
         const { selectedChallenge } = this.state.selectedChallenge
         let groupNames = challenges.map((group, index, self) => {
-            return <Link key={index} to="/group"><li  value={index} onClick={(e) => this.handleRedirectByChallengeId(e)}>Group Name:{group.group_name}</li></Link>
+            return <Link key={[index]}  to="/group"><div value={index} onClick={(e) => this.handleRedirectByChallengeId(index)}>Group Name: {group.group_name}</div></Link>
         })
         return (
             <div className="dashboard_container">
+                <div className="image_header">
                 <div className="header">
                     <Header />
-                    {groupNames}
+                </div>
                 </div>
                 <div className="dashboard_parent_container">
                     <div className="dashboard_parent_profile_left">
@@ -66,9 +64,6 @@ class Dashboard extends Component {
                             <div className="dashboard_grandchild_profile_right">
                                 <div className="dashboard_points_container">
                                     {/* {newArr(challenges)} */}
-
-
-                                   
                                 </div>
                                 <div className="dashboard_points">Points</div>
                             </div>
@@ -121,10 +116,16 @@ class Dashboard extends Component {
 
                     </div>
                     <div className="dashboard_parent_profile_right">
-                        <div></div>
+                        
                         <div className="dashboard_image_container">
-                            <div className="dashboard_left_image"></div>
-                            <div className="dashboard_right_image"></div>
+                            <div className="dashboard_left_image">
+                            <h4>Challenges You've Created</h4>
+                            <div>{groupNames}</div>
+
+                            </div>
+                            <div className="dashboard_right_image">
+                                <h4>Challenges You've Joined</h4>
+                            </div>
 
                         </div>
                     </div>

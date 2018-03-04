@@ -17,7 +17,7 @@ class Daily extends Component {
     }
     componentDidMount() {
         const { selectedChallengeId } = this.props
-
+ 
         // if ((`/api/group/${selectedChallengeId}`)) {
 
             axios.get(`/api/daily/${selectedChallengeId}`).then(res => {

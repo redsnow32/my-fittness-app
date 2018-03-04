@@ -129,17 +129,18 @@ app.get('/logout', (req, res) => {
 app.put('/api/edit/:id', ctrl.updateUser);
 app.put('/api/create_challenge', ((req, res, next) => {
 
-    const { user } = req.session.user
+    const { id } = req.session.user
+    console.log(id)
     const { group_name, start_date, end_date, reward_amount, water_intake, caloric_intake, daily_weight, exercise, collection_type, payment_required } = req.body
     let token = randtoken.generate(16)
     const db = req.app.get('db')
 
     let stack = []
-    db.create_new_challenge([token, user, group_name, start_date, end_date, reward_amount]).then(resp => {
+    db.create_new_challenge([token, id, group_name, start_date, end_date, reward_amount]).then(resp => {
         req.body.options.forEach((option, i) => {
-            const { id, value } = option
-            stack.push(db.input_option(token, id))
-            stack.push(db.input_point_values( value, id, token))
+            const { value } = option
+            stack.push(db.input_option(token, option.id))
+            stack.push(db.input_point_values( value, option.id, token))
         })
         Promise.all(stack).then(response => {
             console.log('Options were added!')
@@ -164,7 +165,7 @@ app.get('/api/dashboard/group_name', challenge_ctrl.getUserChallenges)
 app.get('/api/daily/:challenge_id', challenge_ctrl.selectChallengeId)
 app.put('/api/daily/daily_log/:challenge_id', challenge_ctrl.addChallengeInfo)
 app.put('/api/join_challenge/:challenge_id', challenge_ctrl.joinChallenge)
-app.get('/api/group/:challenge_id', challenge_ctrl.getAllUsersOnChallege)
+app.get('/api/group/:challenge_id', challenge_ctrl.getAllUsersOnChallenge)
 app.get('/api/group/:challenge_id', challenge_ctrl.getAllUsersPointsOnChallege)
 
 

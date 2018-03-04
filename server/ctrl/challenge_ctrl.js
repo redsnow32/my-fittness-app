@@ -80,9 +80,9 @@ module.exports = {
 
         let stack = []
         db.select_challenge_options_by_challenge_id([challenge_id]).then(resp => {
-            resp.map((option, i) => {
+            resp.forEach((option, i) => {
                 console.log(option +"THIS IS THE OPTION")
-                req.body.map((challenge, i) => {
+                req.forEach.map((challenge, i) => {
                     console.log(challenge.value)
                     if (option.option_id == challenge.id) {
                         console.log(option.option_id +"this is the option", challenge,"this is the challenge")
@@ -92,20 +92,6 @@ module.exports = {
                 })
             })
             Promise.all(stack).then(response => {
-                // console.log('Daily Log Added')
-                // response.map((points, i) => {
-                //     console.log(points)
-                //     points.map((opt, i) => {
-                //         console.log(opt)
-                //         if(opt.option_value!==''||null) {
-                //             console.log(opt
-                            // db.update_points([])
-                    //         )}
-                    // })
-                    // db.add_points([]).then(re=>{
-            // }
-                    
-                // })
                 res.status(200).send(response)
                 console.log(response + "THIS IS THE DAILY INPUT RESPONSE")
             }).catch((err) => {

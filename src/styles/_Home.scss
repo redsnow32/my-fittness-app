@@ -1,6 +1,5 @@
-font {
+.home_containter font {
     font-size:1rem;
-    color:ffffff;
 }
 button {
     background:none;
@@ -47,25 +46,10 @@ h1 {
     justify-content: start;
 }
 
-.home_child_right button{
-    // display: grid;
-    // justify-content: start;
-    // height: 100px;
-    // width:350px;
-    // background:none;
-    // border:none;
-    // font-size:1.5em;
-    // font-color:#ffffff;
-    // text-transform:uppercase;
-
-}
 .home_child_right h1 {
     font-size: 2rem;
 }
 
-nav {
-
-}
 @media (max-width:1200px) {
     font {
         font-size:1rem;
@@ -73,7 +57,7 @@ nav {
     button {
         background:none;
         border-radius: none;
-        font-color:white;
+        font:white;
     }
     a {
         color:#ffffff;
@@ -92,9 +76,7 @@ nav {
         grid-template-columns: 1fr;
         font-size:1.5rem;
     }
-    .home_child_right {
 
-    }
     @media(max-width:600px) {
 
     }

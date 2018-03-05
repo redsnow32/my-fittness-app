@@ -38,8 +38,6 @@ export default class Header extends Component {
                         </div>
                 </div>
             </div>
-
-
         return (
             <div className="header_container">
                 <div className="header_parent_container">

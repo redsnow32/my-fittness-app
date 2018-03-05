@@ -5,21 +5,21 @@ import { joinChallenge } from '../ducks/reducer';
 import Header from './Header';
 
 class Join_Challenge extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state={
-            join_challenge_id:''
+        this.state = {
+            join_challenge_id: ''
         }
         this.handleChallengeSubmit = this.handleChallengeSubmit.bind(this)
     }
-    handleChallengeId(e){
+    handleChallengeId(e) {
         console.log(e.target.value)
-        this.setState({join_challenge_id:e.target.value})
+        this.setState({ join_challenge_id: e.target.value })
     }
-    handleChallengeSubmit(e){
+    handleChallengeSubmit(e) {
         console.log(e)
         let challenge_id = this.state.join_challenge_id
-       this.props.joinChallenge(challenge_id) 
+        this.props.joinChallenge(challenge_id)
     }
     // handleSettingRedux(e){
     //     this.props.joinChallenge(this.state) 
@@ -27,22 +27,27 @@ class Join_Challenge extends Component {
     render() {
         return (
             <div className="Join_Challenge">
-                <div><Header /></div>
-                <div className="join_container">
-                    <form onSubmit={(e)=>this.handleChallengeSubmit(e)}>
-                        <label>Enter Challenge ID:  <input onChange={(e)=>this.handleChallengeId(e)}/></label>
-                        <input type="submit" />
-                        
-                    </form>
-                    
+            
+                <div className="join_image_container">
+                {/* <div className="image_overlay"> */}
+                        <Header />
+                        <div className="join_container">
+                            <form className="join_form" onSubmit={(e) => this.handleChallengeSubmit(e)}>
+                                <label/>Enter Challenge ID:  <input onChange={(e) => this.handleChallengeId(e)} />
+                                <div className="form_space">
+                                    <Link to="/dashboard"><input className="submit"type="submit" /></Link>
+                                </div>
+                            </form>
+                        {/* </div> */}
+                    </div>
                 </div>
             </div>
         )
     }
 }
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
         joinChallenge: state.join_challengeId
     }
 }
-export default connect(mapStateToProps, {joinChallenge})(Join_Challenge)
+export default connect(mapStateToProps, { joinChallenge })(Join_Challenge)

@@ -1,24 +1,27 @@
 .home_containter font {
     font-size:1rem;
 }
-// button {
-//     background:none;
-//     border-radius: none;
-//     color:#ffffff;
-//     border:none;
-// }
-// a {
-//     text-decoration: none;
-// }
-// h1 {
-//     color:#ffffff;
-// }
+.home_container {
+    background:none;
+    border-radius: none;
+    color:#ffffff;
+    
+
 .home_container {
     margin: 0px;
     padding: 0px;
     height: 100vh;
-    width: 100vw;
-    
+    width: 100vw;  
+}
+.home_button {
+        background:none;
+        border-radius: none;
+        color:#ffffff;
+        // border:none;
+        border:2px solid #ffffff;
+        height: 50px;
+        width:200px;
+        border-radius: 12px;
 }
 .home_img_container {
     height:100vh;
@@ -90,5 +93,6 @@
     }
     @media(max-width:400px) {
         
+    }
 }
 

@@ -7,12 +7,12 @@
     height: 100%;
     width: 100%;
 }
-.edit_parent_container {
+// .edit_parent_container {
     // display:grid;
     // grid-template-columns: 1fr 1fr;
     // grid-auto-rows: minmax(400px, auto);
     // grid-gap: 10px;
-}
+// }
 
 .edit_parent_container_left {
     grid-row: 1/3;
@@ -98,12 +98,12 @@
 .react-date-picker__button {
     width:200px;
 }
-.edit_birthdate {
+// .edit_birthdate {
 //     all:initial;
 //     * {
 //         all:unset;
 //     }
-}
+// }
 .react-date-picker__button__input__input .react-date-picker__button__input__day {
     width:20px;
 }
@@ -121,5 +121,13 @@
     grid-row:10;
     grid-column:3;
 }
-.edit_parent_container_right {
+.edit_profile_email {
+    grid-row:11;
+    grid-column: 2;
 }
+.edit_profile_email_props {
+    grid-row:11;
+    grid-column:3;
+}
+// .edit_parent_container_right {
+// }

@@ -82,7 +82,7 @@ class Edit extends Component {
                                 
                                 {/* <input name="birthday" value={this.state.birthday} type="text" onChange={e=>this.handleInput(e)}/> */}
                             </div>
-                            <div className="edit_profile_email">email:</div>
+                            <div className="edit_profile_email">Email:</div>
                             <div className="edit_profile_email_props">
                                 <input name="email" value={this.state.email} type="text"  onChange={e=>this.handleInput(e)}/>
                             </div>
@@ -90,7 +90,6 @@ class Edit extends Component {
                             <div className="edit_profile_gender_props">
                                 <input name="gender" value={this.state.gender} type="text"  onChange={e=>this.handleInput(e)}/>
                             </div>
-                            
                         </div>
                         <Link to="/dashboard" ><div><button onClick={()=>this.submitChanges()}>Update</button></div></Link>
                     </div>

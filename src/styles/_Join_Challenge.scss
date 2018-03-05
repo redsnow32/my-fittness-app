@@ -1,15 +1,76 @@
 .Join_Challenge {
     height: 100vh;
     width: 100vw;
+    background: none;
 }
+
+.join_image_container {
+    height: 100vh;
+    width: 100vw;
+    margin: auto;
+    align-items: center;
+    justify-items: center;
+    background-image: url(pexels-photo.jpg);
+    background-size: cover;
+    background-position: bottom 50% right 50%;
+}
+
 .join_container {
-    display:flex;
-    justify-content: center;
-    // align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    margin-top:125px;
+    
 }
-.join_container form {
+
+.join_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+    align-items: center;
     height: 400px;
-    width: 400px;
+    width: 500px;
     align-content: center;
     justify-content: center;
+    background:black;
+    opacity: .75;
+    border-radius: 12px;
+    font-size:1.5rem;
+}
+
+.form_space {
+    margin-top: 75px;
+
+}
+.submit {
+    background:none;
+    color:#ffffff;
+    font-size:1.5rem;
+    font-style:uppercase;
+    border: 2px solid #ffffff;
+    padding:10px 60px;
+}
+@media(max-width:650px) {
+    .join_form {
+        height: 300px;
+        width: 300px;
+        font-size:1rem;
+    }
+    @media only screen
+    and (max-width:700px)
+    and (orientation:landscape) {
+        .join_container {
+            height: 100vh;
+            width:100vw;
+            display: flex;
+        }
+        .join_form {
+            height: 200px;
+            width: 400px;
+            display: flex;
+        }
+    }
 }

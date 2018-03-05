@@ -34,7 +34,7 @@ overflow: hidden;
     margin-top:100px;
     height:500px;
     width: 500px;
-    grid-row: 1/4;
+    grid-row: 1/5;
     grid-column: 1;
     /* background: red; */
     margin-left: 10px;
@@ -48,7 +48,15 @@ overflow: hidden;
     justify-items: start;
     overflow: hidden;
 }
-
+.dashboard_profile_image{
+    height:200px;
+    width: 200px;
+    display:contain;
+    overflow:hidden;
+    grid-row: 1;
+    grid-column:3;
+    margin-left:30px;
+}
 .dashboard_grandchild_profile_left {
     grid-row: 1/3;
     grid-column: 1/3;
@@ -58,7 +66,7 @@ overflow: hidden;
 .dashboard_grandchild_profile_right {
     grid-row: 1/3;
     grid-column: 4/5;
-    /* background: teal; */
+    // background: teal;
 }
 
 .dashboard_parent_profile_right {
@@ -139,8 +147,42 @@ overflow: hidden;
     grid-row:11;
     grid-column: 3;
 }
+.group_names {
+    display: flex;
+    height:50px;
+    width: 300px;
+    border-radius: 30px;
+    color:#ffffff;
+    background:#07020d;
+    margin-top:50px;
+    // border:2px solid #07020d;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+.profile {
+    height:100px;
+    width: 200px;
+    color:#07020d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+}
+.dashboard_right_image{
+    height:200px;
+    width:200px;
+}
+.created_challenges_header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:1.2rem;
+    height: 100px;
+    width:300px;
+}
 
-@media (max-width:1400px) {
+@media (max-width:1200px) {
     .dashboard_parent_container {
         grid-template-columns: 1fr;
     }
@@ -157,3 +199,9 @@ overflow: hidden;
         margin-left: 10px;
     }
 }
+@media(max-width:1000px) {
+    .dashboard_parent_container {
+        grid-template-columns: 1fr;
+
+    }
+} 

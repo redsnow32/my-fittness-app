@@ -16,7 +16,7 @@ export default class Home extends Component {
                                 <br />
                                 <h2>ABOUT</h2>
                                 <br />
-                                <a href={process.env.REACT_APP_LOGIN}><button>Login / Register</button></a>
+                                <a href={process.env.REACT_APP_LOGIN}><button className="home_button">Login / Register</button></a>
                             </nav>
                         </div>
                     </div>

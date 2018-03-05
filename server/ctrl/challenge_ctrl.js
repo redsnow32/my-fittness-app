@@ -3,7 +3,6 @@ module.exports = {
         const db = req.app.get('db')
 
         db.get_all_options().then(resp => {
-            // console.log(resp)
             res.status(200).send(resp)
         }).catch((err) => res.status(500).send(err))
     },
@@ -11,7 +10,7 @@ module.exports = {
         const db = req.app.get('db')
 
         db.get_all_point_options().then(resp => {
-            console.log(resp)
+
             res.status(200).send(resp)
         }).catch((err) => {
             console.log(err)
@@ -20,11 +19,11 @@ module.exports = {
     },
     getGroupsById: (req, res) => {
         const db = req.app.get('db')
-        // console.log("THIS IS GET GROUPS BY ID" + " " + req.session.user.id)
+        // console.log("THIS IS GET GROUPS BY ID" + " " + req.user.id)
+        const { id } = req.user
+        console.log(req.user.id)
 
-        // console.log(req.session.user)
-
-        db.get_challenge_info_by_id([req.session.user]).then(resp => {
+        db.get_challenge_info_by_id([id]).then(resp => {
             res.status(200).send(resp)
             // console.log("GROUPS RESPONSE", resp)
         }).catch((err) => {
@@ -35,8 +34,8 @@ module.exports = {
     },
     getAllChallenges: (req, res) => {
         const db = req.app.get('db')
-        console.log("THIS IS THE GET CHALLENGE REQ.USER", req.session.user)
-        db.get_all_challenges([req.session.user]).then(resp => {
+        console.log("THIS IS THE GET CHALLENGE REQ.USER", req.user)
+        db.get_all_challenges([req.user]).then(resp => {
             res.status.send(resp)
         }).catch((err) => {
             console.log(err)
@@ -45,13 +44,14 @@ module.exports = {
     },
     getUserChallenges: (req, res) => {
         const db = req.app.get('db')
-        //change this to req.session.user
-        const { id } = req.session.user
+        //change this to req.user
+        console.log(req.user, "THIS IS THE USER")
+        const { id } = req.user
         // console.log(id)
-        // console.log("THIS IS THE user by challenge"+req.session.user.id)
+        // console.log("THIS IS THE user by challenge"+req.user.id)
 
         db.get_group_name_by_id([id]).then(resp => {
-            console.log(resp)
+            // console.log(resp)
             res.status(200).send(resp)
         }).catch((err) => {
             console.log(err)
@@ -61,11 +61,11 @@ module.exports = {
     selectChallengeId: (req, res) => {
         const db = req.app.get('db')
         const { challenge_id } = req.params
-        console.log(challenge_id ,"THIS IS THE ONE YOU WANT ------------")
-        
+        console.log(challenge_id, "THIS is THE CAHLLEN ID FOR SELECTED")
 
         db.get_challenge_by_challenge_id([challenge_id]).then(resp => {
             res.status(200).send(resp)
+            console.log(resp, "THIS IS THE RESP")
         }).catch((err) => {
             console.log(err)
             res.status(500).send(err)
@@ -73,27 +73,37 @@ module.exports = {
     },
     addChallengeInfo: (req, res) => {
         const { challenge_id } = req.params
-        const { id } = req.session.user
-        console.log(id + "   THIS OS DESTRUCTURED CHAL ID")
-        console.log(req.body, "THIS WAS HIT")
+        const { id } = req.user
+        // console.log(req.body, "THIS WAS HIT")
         const db = req.app.get('db')
 
         let stack = []
         db.select_challenge_options_by_challenge_id([challenge_id]).then(resp => {
-            resp.forEach((option, i) => {
-                console.log(option +"THIS IS THE OPTION")
-                req.forEach.map((challenge, i) => {
-                    console.log(challenge.value)
+            resp.filter((option, i) => {
+                req.body.filter((challenge, i) => {
+                    console.log(challenge, "THIS IS THE CHALLENGE===========================================")
                     if (option.option_id == challenge.id) {
-                        console.log(option.option_id +"this is the option", challenge,"this is the challenge")
+                        // console.log(option.option_id +"this is the option", challenge,"this is the challenge")
                         stack.push(db.log_daily_values(challenge_id, id, challenge.id, challenge.value))
-                        console.log(resp)
+                        // console.log(resp)
                     }
                 })
             })
             Promise.all(stack).then(response => {
-                res.status(200).send(response)
                 console.log(response + "THIS IS THE DAILY INPUT RESPONSE")
+                // response.map((user, i) => {
+                //     if (user.value) {
+                //         db.select_challenge_options_by_challenge_id([user.user_id, user.challenge_id]).then(resp => {
+                //             console.log(resp, "THIS IS THE RESP FROM POINTS")
+                //             return user
+                // })
+                //         db.insert_daily_points([])
+
+                // }
+                // console.log(user, "--------------------------------------iiiiuyujhdgfsdsaa")
+                // return user
+                // })
+                res.status(200).send(response)
             }).catch((err) => {
                 console.log(err)
                 res.status(500).send("ERROR")
@@ -106,19 +116,21 @@ module.exports = {
     joinChallenge: (req, res) => {
         const db = req.app.get('db')
         const { challenge_id } = req.params
-        const { id } = req.session.user
-
+        const { id } = req.user
+        console.log(challenge_id, "THIS WAS HIT FOR THE USER")
         let stack = []
         ///CHANGE THIS CHALLENGE ID BACK TO challenge_id
-
+        console.log(challenge_id)
         db.get_challenge_by_challenge_id([challenge_id]).then(resp => {
-            resp.forEach((option, i) => {
-                stack.push(db.join_challenge_by_challenge_id([challenge_id, id, option.option_id]))
+            resp.filter((option, i) => {
+                // if(option.id === id && challenge_id == option.challenge_id) {
+                stack.push(db.join_challenge_by_challenge_id([challenge_id, id]))
+                // }
             })
             Promise.all(stack).then(resp => {
                 console.log('Joined Challenge Successfully!')
                 res.status(200).send(resp)
-                console.log(resp)
+                // console.log(resp)
             }).catch((err) => {
                 console.log(err)
                 res.status(500).send('ERROR')
@@ -132,28 +144,39 @@ module.exports = {
     getAllUsersOnChallenge: (req, res) => {
         const db = req.app.get('db');
         const { challenge_id } = req.params
-        console.log(challenge_id)
+        console.log(req.params, "THESE ARE THE PARAMS")
+        console.log(challenge_id, "THIS IS THE OCHALLENSDFASDFLASDLKFNLAKSDNVLKASDNLKANSDVLKN")
 
-        db.get_join_challeng_by_id([challenge_id]).then(resp => {
-            resp.map((user, i) => {
-                console.log(user, "THIS IS THE USER ID")
-                return user
-            })
+        db.get_join_challenge_by_id([challenge_id]).then(resp => {
             res.status(200).send(resp)
         }).catch((err) => {
             console.log(err)
             res.status(500).send('ERROR')
         })
     },
-    getAllUsersPointsOnChallege: (req, res) => {
+    getUserPoints: (req, res) => {
+        console.log(req.user, "dsdfsdfsdfsdfsdfsd--------------")
         const db = req.app.get('db')
         const { challenge_id } = req.params
-        const { id } = req.session.user
+        const { id } = req.user
 
-        db.get_user_points_by_challenge_id([challenge_id]).then(resp => {
-            resp.map((user, i) => {
-                console.log(user + "THIS IS THE USER")
-            })
+        db.select_daily_points([challenge_id, id]).then(resp => {
+            // resp.map((user, i) => {
+            res.status(200).send(resp)
+            // })
+        }).catch((err) => {
+            console.log(err)
+            res.status(500).send(err)
         })
     }
+
+    // getUserPoints: (req,res) => {
+    //     const db = req.app.get('db')
+
+    //     db.select_daily_points([challenge_id, id]).then(resp=>{
+    //         resp.map((user,i)=>{
+    //             res.status(200).send(resp)
+    //         })
+    //     })
+    // }
 }

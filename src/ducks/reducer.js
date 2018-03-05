@@ -145,27 +145,25 @@ export function selectChallenge(selectedChallengeId) {
 }
 
 export function dailyLog(changeLog) {
-    // console.log(changeLog)
+    console.log(changeLog)
     let body = changeLog
     let selectedId = body.filter((value, i)=>{
         return value.challenge_id
     })
 let challenge_id = selectedId.pop().challenge_id
-console.log(body)
     const daily_log = axios.put(`/api/daily/daily_log/${challenge_id}`, body).then(res=>{
         return res.data
     })
-    console.log(body)
+
     return {
         type: ADD_DAILY_LOG,
         payload: daily_log
     }
 }
 
-export function joinChallenge(chalID){
-    console.log(chalID)
-
-    const join_challengeId = axios.put(`/api/join_challenge/${chalID}`).then(res=>{
+export function joinChallenge(challenge_id){
+    console.log(challenge_id)
+    const join_challengeId = axios.put(`/api/join_challenge/${challenge_id}`).then(res=>{
         console.log(res.data)
         return res.data
 

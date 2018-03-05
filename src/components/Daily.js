@@ -11,22 +11,27 @@ class Daily extends Component {
 
             challenge: [],
             options: ['', '', '', '', '', '', '', '', '', '', '', '', ''],
-            selectedChallenge: ''
+            selectedChallenge: '',
+            points: []
         }
 
     }
     componentDidMount() {
         const { selectedChallengeId } = this.props
- 
-        // if ((`/api/group/${selectedChallengeId}`)) {
+        axios.all([
+            axios.get(`/api/daily/${selectedChallengeId}`),
+            axios.get(`/api/daily/daily_points/${selectedChallengeId}`)
+        ])
+            .then(axios.spread((options, points) => {
+                console.log(points.data, "THIS IS THE POINTS", options.data, "THESE ARET THE OPTIONS")
 
-            axios.get(`/api/daily/${selectedChallengeId}`).then(res => {
-                console.log(res.data)
-                this.setState({ challenge: res.data })
+                this.setState({ challenge: options.data, points: points.data })
+
             })
 
-            // axios.get(`/api/daily/points${selectedChallengeId}`)
-        // }
+            )
+        // this.setState({ challenge: res.data })
+
 
     }
 
@@ -45,6 +50,7 @@ class Daily extends Component {
         })
     }
     handleUpload(e) {
+        console.log(this.state)
         console.log(e.target.value)
         const { challenge } = this.state
         challenge.forEach((challenge, i) => {
@@ -52,6 +58,7 @@ class Daily extends Component {
                 this.setState({ [this.state.options]: { id: [challenge.id], value: e.target.value } })
             }
         })
+
     }
     handleSettingState(e) {
         let challengeLog = this.state.options
@@ -60,19 +67,22 @@ class Daily extends Component {
 
     }
     handleCancel() {
-        let { challenge } = this.state
-        challenge.forEach((challenge, i) => {
+        let { options } = this.state
+        options.map((challenge, i) => {
             if (challenge.id) {
-                this.setState({ [challenge.id]: '' })
+                this.setState({ [challenge.value]: '' })
             }
         })
     }
     render() {
         console.log(this.state)
         const { selectedChallengeId } = this.props
-        const { challenge } = this.state
+        const { challenge, points } = this.state
+        let totalPoints = points.map((point, i) => {
+            return <h4 key={i}>{point.sum}</h4>
+        })
+
         let challengeOptions = challenge.map((chal, i, self) => {
-            console.log(chal)
             if (chal.id === 4) {
                 return <li key={i}>{chal.challenge_option}<Scale_Img name={chal.id} onChange={(e) => this.handleUpload(e)} /></li>
             } else if (chal.id !== 7) {
@@ -80,13 +90,17 @@ class Daily extends Component {
             }
 
         })
-
         return (
             <div>
-                <h1>Challenge ID:  {this.props.selectedChallengeId}</h1>
-                <div>{challengeOptions}</div>
-                <div><button onClick={(e) => this.handleSettingState(e)}>save</button></div>
-                <div><button onClick={(e) => this.handleCancel(e)}>cancel</button></div>
+                <div>
+                    <h1>Challenge ID:  {this.props.selectedChallengeId}</h1>
+                    <div>{challengeOptions}</div>
+                    <div><button onClick={(e) => this.handleSettingState(e)}>save</button></div>
+                    <div><button onClick={(e) => this.handleCancel(e)}>cancel</button></div>
+                </div>
+                <div>
+                    {totalPoints}
+                </div>
             </div>
         )
     }

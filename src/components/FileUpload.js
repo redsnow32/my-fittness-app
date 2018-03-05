@@ -46,7 +46,7 @@ class FileUpload extends Component {
             <div className="FileUpload">
             <input type="file" onChange={this.handlePhotoUpload}/>
             <br/>
-            {
+            { 
             this.state.file &&
             <img src={this.state.file} alt="" className="file-preview"/>  
             }

@@ -15,18 +15,19 @@
     } 
 }
 } */
+
 .header_container {
-    color:#ffffff;
+    color: #ffffff;
     height: 100px;
-    width: 100vw;
+    width: 100vw; 
     // background-color:#07020d;
-    background-color:none;
+    background-color: none;
     justify-content: center;
     align-items: center;
-    margin-bottom: 10px; 
-    padding-top: 10px; 
-  
+    margin-bottom: 10px;
+    padding-top: 10px;
 }
+
 .header_parent_container {
     display: flex;
     justify-content: space-between;
@@ -35,30 +36,30 @@
     height: 80px;
     margin: 0 20px 0 20px;
 }
+
 .header_image {
     display: flex;
     align-content: center;
     align-items: center;
-   
     margin: 0 20px 0 20px
 }
 
 .header_child_left {
     height: 80px;
-    width: 100px;
+    width: 200px;
     display: flex;
     justify-content: flex-start;
     align-content: center;
-   
 }
+
 .header_child_right {
     height: 80px;
     width: 100vw;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-
 }
+
 .hamburger_menu {
     height: 50px;
     width: 50px;
@@ -66,30 +67,62 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-
 }
+
 .hamburger_menu {
     height: 30px;
-    width:30px;
+    width: 30px;
 }
-.hamburger_top{ 
+
+.hamburger_top {
     height: 2px;
-    width:30px;
+    width: 30px;
     background: white;
     margin-top: 2px;
 }
-.hamburger_middle{ 
+
+.hamburger_middle {
     height: 2px;
-    width:30px;
+    width: 30px;
     background: white;
 }
-.hamburger_bottom{ 
+
+.hamburger_bottom {
     height: 2px;
-    width:30px;
+    width: 30px;
     background: white;
     margin-bottom: 2px;
 }
+
 .header_container h3 {
     color: white;
     margin-right: 30px
+}
+
+@media (max-width:850px) {
+    .header_child_right {
+        height: 80px;
+        width:40px;
+    }
+
+    .dropdownbtn{
+        height: 30px;
+        width:30px;
+        border: none;
+        outline: none;
+        background-image: url(hamburger.png);
+        background-repeat: none;
+        
+        /* Important for vertical align on mobile phones */
+        margin: 0;
+        /* Important for vertical align on mobile phones */
+    }
+    .dropdown-content {
+        display: none;
+        position: fixed;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: -1;
+    }
 }

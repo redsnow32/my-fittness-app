@@ -1,7 +1,4 @@
 
-h4 * {
-    color: black;
-}
 .dashboard_container {
     height: 100%;
     width: 100%;
@@ -148,8 +145,7 @@ overflow: hidden;
         grid-template-columns: 1fr;
     }
     .image_header {
-        width:100vw;
-        overflow: hidden;
+        width:100%;
         background-position: bottom 25% left 30%;
     }
     .dashboard_parent_profile_left {

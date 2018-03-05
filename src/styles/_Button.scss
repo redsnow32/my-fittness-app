@@ -66,3 +66,9 @@
     margin-right: 15px;
     
 }
+@media(max-width:850px) {
+    .button_parent {
+        background-image: url(hamburger.png);
+        background-repeat: no-repeat;
+    }
+}

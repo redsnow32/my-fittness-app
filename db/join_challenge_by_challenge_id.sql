@@ -1,4 +1,4 @@
 INSERT INTO join_challenge
-(challenge_id, user_id, option_id)
+(challenge_id, user_id)
 VALUES 
-($1, $2, $3)
+($1, $2);

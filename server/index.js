@@ -56,30 +56,30 @@ passport.use(new Auth0Strategy({
 }));
 
 ////////////// 
-//////!req.session.user) {
-//         req.session.user
+//////!req.user) {
+//         req.user
 
-app.use((req, res, next) => {
-    if (!req.session.user) {
-        req.session.user = {
-            id: 4,
-            first_name: "Brandon",
-            last_name: "Allred",
-            age: 34,
-            gender: "male",
-            auth_id: "google-oauth2|104169181473731414256",
-            email: "B32alls@gmail.com",
-            height: '',
-            current_weight: '',
-            current_height: "234",
-            challenge_id: '',
-            birthdate: '',
-            profile_picture: '',
-        }
-    }
+// app.use((req, res, next) => {
+//     if (!req.user) {
+//         req.user = {
+//             id: 4,
+//             first_name: "Brandon",
+//             last_name: "Allred",
+//             age: 34,
+//             gender: "male",
+//             auth_id: "google-oauth2|104169181473731414256",
+//             email: "B32alls@gmail.com",
+//             height: '',
+//             current_weight: '',
+//             current_height: "234",
+//             challenge_id: '',
+//             birthdate: '',
+//             profile_picture: '',
+//         }
+//     }
 
-    next()
-})
+//     next()
+// })
 
 
 
@@ -102,22 +102,22 @@ app.get('/auth/callback', passport.authenticate('auth0', {
     // 'http://localhost:3000/#/dashboard'
 }))
 ////
-//change req.user to req.session.user so you don't have to login and out all the time. referrenced above
+//change req.user to req.user so you don't have to login and out all the time. referrenced above
 // in the app.use you 
 
-// you changed all of your req.session.user to req.session.user in order to to all of your testing
+// you changed all of your req.user to req.user in order to to all of your testing
 
 
 //IMPORTANT!!!!!!!!!!!!
-//when you're don change find and replace all with req.session.user
+//when you're don change find and replace all with req.user
 //
 //Change this back when you're done updating the site;
 ////
 app.get('/auth/me', (req, res) => {
-    if (!req.session.user) {
+    if (!req.user) {
         res.status(404).send('Not Logged In')
     } else {
-        res.status(200).send(req.session.user)
+        res.status(200).send(req.user)
     }
 })
 
@@ -129,8 +129,8 @@ app.get('/logout', (req, res) => {
 app.put('/api/edit/:id', ctrl.updateUser);
 app.put('/api/create_challenge', ((req, res, next) => {
 
-    const { id } = req.session.user
-    console.log(id)
+    const { id } = req.user
+    // console.log(id)
     const { group_name, start_date, end_date, reward_amount, water_intake, caloric_intake, daily_weight, exercise, collection_type, payment_required } = req.body
     let token = randtoken.generate(16)
     const db = req.app.get('db')
@@ -166,7 +166,8 @@ app.get('/api/daily/:challenge_id', challenge_ctrl.selectChallengeId)
 app.put('/api/daily/daily_log/:challenge_id', challenge_ctrl.addChallengeInfo)
 app.put('/api/join_challenge/:challenge_id', challenge_ctrl.joinChallenge)
 app.get('/api/group/:challenge_id', challenge_ctrl.getAllUsersOnChallenge)
-app.get('/api/group/:challenge_id', challenge_ctrl.getAllUsersPointsOnChallege)
+// app.get('/api/group/:challenge_id', challenge_ctrl.getAllUsersPointsOnChallege)
+app.get('/api/daily/daily_points/:challenge_id', challenge_ctrl.getUserPoints)
 
 
 S3(app)

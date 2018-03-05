@@ -14,18 +14,17 @@ class Button extends Component {
             <div className="button_container">
                 <div className="button_parent">
                     {/* <div className="button_child_container"> */}
-                        <div className="button_child_left">HI, {userData.first_name}</div>
-                        <div className="hamburger_menu" >
-                            <div className="button_hamburger_top" />
-                            <div className="button_hamburger_middle" />
-                            <div className="button_hamburger_bottom" />
-                        </div>
-                        <div className="button_child_right">
+                    <div className="button_child_left">HI, {userData.first_name}</div>
+                    <div className="hamburger_menu" >
+                        <div className="button_hamburger_top" />
+                        <div className="button_hamburger_middle" />
+                        <div className="button_hamburger_bottom" />
+                    </div>
+                    <div className="button_child_right">
                         <a href={process.env.REACT_APP_LOGOUT}> <div className="button_child_logout">| LOG OUT</div>
-                        {/* "http:localhost:3223/logout" */}
                         </a>
-                        </div>
-                    {/* </div> */}
+                    </div>
+
 
                 </div>
 
@@ -35,7 +34,7 @@ class Button extends Component {
 }
 function mapStateToProps(state) {
     return {
-        userData:state.user
+        userData: state.user
     }
 }
-export default connect(mapStateToProps, {getUser})(Button);
+export default connect(mapStateToProps, { getUser })(Button);

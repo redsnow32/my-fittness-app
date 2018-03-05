@@ -186,7 +186,7 @@ class Create extends Component {
                         <div className="create_child_left2_props">
                             <div>{options}</div>
                             <br />
-                        <div className="create_child_left3">Add custom option (optional):<input type="text" name="option"onChange={(e)=>this.handleCustom({id:1, option:e.target.value})}/><input type="number" name="points" onChange={(e)=>this.handleCustom({id:2, points:e.target.value})}/></div>
+                        {/* <div className="create_child_left3">Add custom option (optional):<input type="text" name="option"onChange={(e)=>this.handleCustom({id:1, option:e.target.value})}/><input type="number" name="points" onChange={(e)=>this.handleCustom({id:2, points:e.target.value})}/></div> */}
                         </div>
                         <div className="create_child_left5">
                             <Link to="/dashboard"><button onClick={(e) => this.createChallengeID(e)}>Create Challenge!</button></Link>

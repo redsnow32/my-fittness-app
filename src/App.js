@@ -31,6 +31,8 @@ class App extends Component {
             <Route path="/daily" component={Daily} />
             <Route path="/daily/daily_log" component={Daily} />
             <Route path="/daily/daily_points" component={Daily} />
+            <Route path="/api/daily/images" component={Daily} />
+            <Route path="/api/daily/delete/:challenge_id" component={Daily} />
             <Route path="/group/group_members" component={Group_Members}/>
           </Switch>
         </Router>

@@ -19,13 +19,11 @@ module.exports = {
     },
     getGroupsById: (req, res) => {
         const db = req.app.get('db')
-        // console.log("THIS IS GET GROUPS BY ID" + " " + req.user.id)
         const { id } = req.user
         console.log(req.user.id)
 
         db.get_challenge_info_by_id([id]).then(resp => {
             res.status(200).send(resp)
-            // console.log("GROUPS RESPONSE", resp)
         }).catch((err) => {
             console.log(err)
             res.status(500).send("Error")
@@ -34,7 +32,6 @@ module.exports = {
     },
     getAllChallenges: (req, res) => {
         const db = req.app.get('db')
-        console.log("THIS IS THE GET CHALLENGE REQ.USER", req.user)
         db.get_all_challenges([req.user]).then(resp => {
             res.status.send(resp)
         }).catch((err) => {
@@ -45,7 +42,7 @@ module.exports = {
     getUserChallenges: (req, res) => {
         const db = req.app.get('db')
         //change this to req.user
-        console.log(req.user, "THIS IS THE USER")
+        // console.log(req.user, "THIS IS THE USER")
         const { id } = req.user
         // console.log(id)
         // console.log("THIS IS THE user by challenge"+req.user.id)
@@ -61,11 +58,11 @@ module.exports = {
     selectChallengeId: (req, res) => {
         const db = req.app.get('db')
         const { challenge_id } = req.params
-        console.log(challenge_id, "THIS is THE CAHLLEN ID FOR SELECTED")
+        // console.log(challenge_id, "THIS is THE CAHLLEN ID FOR SELECTED")
 
         db.get_challenge_by_challenge_id([challenge_id]).then(resp => {
             res.status(200).send(resp)
-            console.log(resp, "THIS IS THE RESP")
+            // console.log(resp, "THIS IS THE RESP")
         }).catch((err) => {
             console.log(err)
             res.status(500).send(err)
@@ -81,7 +78,7 @@ module.exports = {
         db.select_challenge_options_by_challenge_id([challenge_id]).then(resp => {
             resp.filter((option, i) => {
                 req.body.filter((challenge, i) => {
-                    console.log(challenge, "THIS IS THE CHALLENGE===========================================")
+                    // console.log(challenge, "THIS IS THE CHALLENGE===========================================")
                     if (option.option_id == challenge.id) {
                         // console.log(option.option_id +"this is the option", challenge,"this is the challenge")
                         stack.push(db.log_daily_values(challenge_id, id, challenge.id, challenge.value))
@@ -90,7 +87,7 @@ module.exports = {
                 })
             })
             Promise.all(stack).then(response => {
-                console.log(response + "THIS IS THE DAILY INPUT RESPONSE")
+                // console.log(response + "THIS IS THE DAILY INPUT RESPONSE")
                 // response.map((user, i) => {
                 //     if (user.value) {
                 //         db.select_challenge_options_by_challenge_id([user.user_id, user.challenge_id]).then(resp => {
@@ -122,7 +119,7 @@ module.exports = {
         ///CHANGE THIS CHALLENGE ID BACK TO challenge_id
         console.log(challenge_id)
         db.get_challenge_by_challenge_id([challenge_id]).then(resp => {
-            resp.filter((option, i) => {
+            resp.forEach((option, i) => {
                 // if(option.id === id && challenge_id == option.challenge_id) {
                 stack.push(db.join_challenge_by_challenge_id([challenge_id, id]))
                 // }
@@ -144,8 +141,7 @@ module.exports = {
     getAllUsersOnChallenge: (req, res) => {
         const db = req.app.get('db');
         const { challenge_id } = req.params
-        console.log(req.params, "THESE ARE THE PARAMS")
-        console.log(challenge_id, "THIS IS THE OCHALLENSDFASDFLASDLKFNLAKSDNVLKASDNLKANSDVLKN")
+
 
         db.get_join_challenge_by_id([challenge_id]).then(resp => {
             res.status(200).send(resp)
@@ -155,7 +151,7 @@ module.exports = {
         })
     },
     getUserPoints: (req, res) => {
-        console.log(req.user, "dsdfsdfsdfsdfsdfsd--------------")
+
         const db = req.app.get('db')
         const { challenge_id } = req.params
         const { id } = req.user
@@ -168,8 +164,35 @@ module.exports = {
             console.log(err)
             res.status(500).send(err)
         })
-    }
+    },
+    getUserPhotos: (req, res) => {
+        const { id } = req.user
+        const { challenge_id } = req.params
+        const db = req.app.get('db')
 
+        db.get_user_photos_by_challenge([id, challenge_id]).then(resp => {
+            console.log(resp)
+            res.status(200).send(resp)
+        }).catch((err) => {
+            console.log(err)
+            res.status(500).send(err)
+        })
+    },
+    deleteChallenge: (req, res) => {
+        const { id } = req.user
+        const { challenge_id } = req.params
+        console.log(req.params)
+        const db = req.app.get('db')
+
+        // console.log(challenge_id, "THIS IS THE CHALLENGE_ID")
+
+        db.delete_challenge_by_id([challenge_id]).then(resp => {
+            res.status(200).send(resp) 
+        }).catch((err) => {
+            console.log(err)
+            res.status(500).send(err)
+        })
+    }
     // getUserPoints: (req,res) => {
     //     const db = req.app.get('db')
 

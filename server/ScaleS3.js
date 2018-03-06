@@ -13,6 +13,7 @@ const S3 = new AWS.S3();
 function uploadPhoto(req, res) {
     const db = req.app.get('db')
     const { name, selectedChallengeId } = req.params
+    console.log(name, selectedChallengeId,"+++++==============++++++++++++++++++++++==============")
     //need to change this to req.user
     const { id } = req.user
 
@@ -31,17 +32,14 @@ function uploadPhoto(req, res) {
         if (err) {
             console.log(err)
         } else {
-            response = data.Location, code = 200
-            console.log(response)
             (response = data.Location, code = 200)
-            res.status(code).send(response)
-            console.log('S3 response', data)
+            console.log(response)
+            // res.status(code).send(response)
+            // const{ data } = response
             db.upload_scale_img([selectedChallengeId, id, name, response]).then(resp=>{
                 res.status(200).send(resp)
-            }).catch((err)=>{
-                console.log(err)
-                res.status(500).send(err)
-            }) 
+            })
+            // console.log('S3 response', data) 
             
         }
        

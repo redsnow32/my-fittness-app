@@ -1,0 +1,15 @@
+.Group_container {
+    height:60vh;
+    width:100vw;
+    margin:auto;
+    display: grid;  
+    align-items:center; 
+    justify-items:center;
+    background-image:url(deadlift.jpeg);
+    background-size: cover;
+    background-position: top 50% right 50%;
+    // display: flex;
+    // justify-content: center;
+    // align-content: center;
+    // align-items:center; 
+}

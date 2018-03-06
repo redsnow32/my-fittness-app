@@ -34,21 +34,21 @@ class Scale_Img extends Component {
         const {name, selectedChallengeId } =this.props
         console.log(name, selectedChallengeId)
         axios.post(`/api/scale_img_upload/${name}/${selectedChallengeId}`, this.state).then(resp => {
-            console.log('Your pic was uploaded!', resp.data.Location)
-            this.setState({ [name]: resp.data.Location })
+            console.log('Your pic was uploaded!', resp.data)
+            this.setState({ [name]: resp.data })
         }).catch(err => { console.log('ERROR:', err) });
     }
 
     render() {
         return (
             <div className="ScaleImg">
-                <input type="file" onChange={this.handlePhotoUpload} />
+                <input type="file" className="input_photo" onChange={this.handlePhotoUpload} />
                 <br />
                 {
                     this.state.file &&
                     <img src={this.state.file} alt="" className="file-preview" />
                 }
-                <button onClick={this.savePhoto}>Upload Image</button>
+                <button className="upload_button" onClick={this.savePhoto}>Upload Image</button>
             </div>
         )
     }

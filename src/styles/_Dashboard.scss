@@ -144,9 +144,17 @@ overflow: hidden;
     grid-column: 3;
 } 
 .dashboard_profileinfo_button {
-    grid-row:11;
+    grid-row:10;
     grid-column: 3;
 }
+// .dashboard_create_button_create {
+//     grid-row:11;
+//     grid-column:3
+// }
+// .dashboard_create_button_create {
+//     grid-row:11;
+//     grid-column:3
+// }
 .group_names {
     display: flex;
     height:50px;

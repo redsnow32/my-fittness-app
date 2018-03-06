@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import { dailyLog, selectChallenge } from '../ducks/reducer';
+import { dailyLog, selectChallenge, deleteChallenge } from '../ducks/reducer';
 import Scale_Img from './Scale_Img';
 
 class Daily extends Component {
@@ -12,27 +12,27 @@ class Daily extends Component {
             challenge: [],
             options: ['', '', '', '', '', '', '', '', '', '', '', '', ''],
             selectedChallenge: '',
-            points: []
+            points: [],
+            images: []
         }
 
     }
     componentDidMount() {
         const { selectedChallengeId } = this.props
+        this.setState({selectedChallenge:selectedChallengeId})
+        console.log(this.props)
         axios.all([
             axios.get(`/api/daily/${selectedChallengeId}`),
-            axios.get(`/api/daily/daily_points/${selectedChallengeId}`)
+            axios.get(`/api/daily/daily_points/${selectedChallengeId}`),
+            axios.get(`/api/daily/images/${selectedChallengeId}`)
         ])
-            .then(axios.spread((options, points) => {
-                console.log(points.data, "THIS IS THE POINTS", options.data, "THESE ARET THE OPTIONS")
+            .then(axios.spread((options, points, images) => {
+                console.log(points.data, "THIS IS THE POINTS", options.data, "THESE ARET THE OPTIONS", images.data, "THIs is sthe image data")
 
-                this.setState({ challenge: options.data, points: points.data })
+                this.setState({ challenge: options.data, points: points.data, images: images.data })
 
             })
-
-            )
-        // this.setState({ challenge: res.data })
-
-
+        )
     }
 
     handleUpdate(e) {
@@ -74,6 +74,12 @@ class Daily extends Component {
             }
         })
     }
+    handleDelete(e) {
+        console.log(e)
+        const { selectedChallengeId } = this.props
+        console.log(selectedChallengeId)
+        this.props.deleteChallenge(this.state.selectedChallenge);
+    }
     render() {
         console.log(this.state)
         const { selectedChallengeId } = this.props
@@ -81,25 +87,39 @@ class Daily extends Component {
         let totalPoints = points.map((point, i) => {
             return <h4 key={i}>{point.sum}</h4>
         })
-
+        let image = challenge.map((img, i) => {
+            if (img.id === 4) {
+                return <div className="uploader" key={i}>{img.challenge_option}<div className="options_div"><Scale_Img id="Scale" name={img.id} onChange={(e) => this.handleUpload(e)} /></div></div>
+            }
+        })
         let challengeOptions = challenge.map((chal, i, self) => {
             if (chal.id === 4) {
-                return <li key={i}>{chal.challenge_option}<Scale_Img name={chal.id} onChange={(e) => this.handleUpload(e)} /></li>
-            } else if (chal.id !== 7) {
-                return <li key={i}>{chal.challenge_option} ({chal.units})<input type="number" name={chal.id} onChange={(e) => this.handleUpdate(e)} /></li>
-            }
+                null// return <div className="uploader" key={i}>{chal.challenge_option}<div className="options_div"><Scale_Img id="Scale"name={chal.id} onChange={(e) => this.handleUpload(e)} /></div></div>
+            } else
+                if (chal.id !== 7) {
+                    return <div key={i} className="options"><div className="option" key={i}>{chal.challenge_option} ({chal.units})<div className="options_div"></div><input className="options_input" type="number" name={chal.id} onChange={(e) => this.handleUpdate(e)} /></div></div>
+                }
 
         })
         return (
-            <div>
-                <div>
-                    <h1>Challenge ID:  {this.props.selectedChallengeId}</h1>
-                    <div>{challengeOptions}</div>
-                    <div><button onClick={(e) => this.handleSettingState(e)}>save</button></div>
-                    <div><button onClick={(e) => this.handleCancel(e)}>cancel</button></div>
+            <div className="Daily">
+                <div className="Daily_container">
+                    <div>{totalPoints}</div>
+                    <h1>Challenge ID: {this.props.selectedChallengeId}</h1>
+                    <div className="image">{image}</div>
+                    {/* <div className="image_container"> */}
+                    <div className="images"></div>
+                    <div className="images"></div>
+                    <div className="images"></div>
+                    <div className="images"></div>
+                    <div className="images"></div>
+                    {/* </div> */}
+                    <div className="challenge_options">{challengeOptions}</div>
+                    <div className="daily_save"><button onClick={(e) => this.handleSettingState(e)}>SAVE</button></div>
+                    <div className="daily_cancel"><button onClick={(e) => this.handleCancel(e)}>CANCEL</button></div>
+                    <div className="daily_delete"><button onClick={(e) => this.handleDelete(e)}>DELETE</button></div>
                 </div>
                 <div>
-                    {totalPoints}
                 </div>
             </div>
         )
@@ -109,7 +129,8 @@ function mapStateToProps(state) {
     return {
         selectedChallengeId: state.selectedChallengeId,
         dailyLog: state.daily_log,
-        userChallenge: state.selected_challenge
+        userChallenge: state.selected_challenge,
+        deleteChallenge: state.selected_challenge
     }
 }
-export default connect(mapStateToProps, { dailyLog, selectChallenge })(Daily);
+export default connect(mapStateToProps, { dailyLog, selectChallenge, deleteChallenge })(Daily);

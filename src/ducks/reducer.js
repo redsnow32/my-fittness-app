@@ -37,6 +37,7 @@ const CREATE_OPTIONS = 'CREATE_OPTIONS';
 const GET_CHALLENGE_ID = 'GET_CHALLENGE_ID';
 const ADD_DAILY_LOG = 'ADD_DAILY_LOG';
 const JOIN_CHALLENGE = 'JOIN_CHALLENGE';
+const DELETE_CHALLENGE = 'DELETE_CHALLENGE';
 
 
 export default function reducer(state = initialState, action) {
@@ -56,6 +57,8 @@ export default function reducer(state = initialState, action) {
             return Object.assign({}, state, { daily_log: action.payload })
         case JOIN_CHALLENGE + '_FULLFILLED':
             return Object.assign({}, state, {join_challengeId:action.payload})
+        case DELETE_CHALLENGE + '_FULLFILLED':
+            return Object.assign({}, state, {selectedChallengeId:action.payload})
         default:
             return state
     }
@@ -151,6 +154,7 @@ export function dailyLog(changeLog) {
         return value.challenge_id
     })
 let challenge_id = selectedId.pop().challenge_id
+console.log(challenge_id)
     const daily_log = axios.put(`/api/daily/daily_log/${challenge_id}`, body).then(res=>{
         return res.data
     })
@@ -173,4 +177,14 @@ export function joinChallenge(challenge_id){
         payload: join_challengeId
     }
 }
-
+export function deleteChallenge(selectedChallengeId) {
+    console.log(selectedChallengeId)
+    const deleteChallenge = axios.delete(`/api/daily/delete/${selectedChallengeId}`).then(res=>{
+        console.log(res.data)
+        return res.data
+    })
+    return{
+        type:DELETE_CHALLENGE,
+        payload:deleteChallenge
+    }
+}

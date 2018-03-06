@@ -154,7 +154,7 @@ app.put('/api/create_challenge', ((req, res, next) => {
         res.status(500).send("Error")
     })
 }))
-
+ 
 
 app.get('/api/create_challenge/options', challenge_ctrl.getAllOptions)
 app.get('/api/create_challenge/points', challenge_ctrl.getAllPoints)
@@ -168,7 +168,8 @@ app.put('/api/join_challenge/:challenge_id', challenge_ctrl.joinChallenge)
 app.get('/api/group/:challenge_id', challenge_ctrl.getAllUsersOnChallenge)
 // app.get('/api/group/:challenge_id', challenge_ctrl.getAllUsersPointsOnChallege)
 app.get('/api/daily/daily_points/:challenge_id', challenge_ctrl.getUserPoints)
-
+app.get('/api/daily/images/:challenger_id', challenge_ctrl.getUserPhotos)
+app.delete('/api/daily/delete/:challenge_id', challenge_ctrl.deleteChallenge)
 
 S3(app)
 ScaleS3(app)

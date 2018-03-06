@@ -24,7 +24,7 @@ class Create extends Component {
             challengePoints: [],
             selected: [],
             points: [],
-            customOptions:[]
+            customOptions: []
         }
     }
     componentDidMount() {
@@ -118,8 +118,8 @@ class Create extends Component {
         console.log(this.props.user)
         this.setState({ user_id: this.props.userData.id })
     }
-    handleCustom(e){
-        
+    handleCustom(e) {
+
         // console.log(e)
         // let coppied = this.state.customOptions.slice()
         // let copt = coppied.find(c => c)
@@ -151,45 +151,50 @@ class Create extends Component {
         //     <div key={opt.id} >{}<input type="text" /></div>
         // })
         return (
-            <div className="create_container">
-                <div><Header /></div>
-                <div className="create_parent_left">
-                    <div className="startDate">
-                        <label> Start Date
+            <div className="Create">
+                <div className="create_img_container">
+                    <div><Header /></div>
+                    </div>
+                    <br />
+                    <div className="create_container">
+                    <div className="create_parent_left">
+                        <div className="startDate">
+                            <label> Start Date
                                     <DatePicker className="challenge_start_date" name="startDate" value={this.state.startDate} onChange={(e) => this.handleStartDate(e)} />
-                        </label>
-                    </div>
-                    <div>
-                        <label> End Date
+                            </label>
+                        </div>
+                        <div>
+                            <label> End Date
                                 <DatePicker className="challenge_end_date" name="endDate" value={this.state.endDate} onChange={(e) => this.handleEndDate(e)} />
-                        </label>
-                    </div>
-                    <div className="create_children_left">
-                        <div className="create_child_left1">Group Name:</div>
-                        <div className="create_child_left1_props">
-                            <input name="groupName" type="text" onChange={(e) => this.handleGroupNameChange(e)} />
+                            </label>
                         </div>
-                        <div className="create_child_left4">Collection Type:</div>
-                        <div className="create_child_left4_props">
-                            <select value={this.state.value} onChange={(e) => this.handleCollection(e)}>
-                                <option value="">--Select Option</option>
-                                <option value="creditcard">Creditcard</option>
-                                <option value="cash">Cash</option>
-                                <option value="venmo">Venmo</option>
-                            </select>
-                        </div>
-                        <div className="create_child_left3">Reward Amount:</div>
-                        <div className="create_child_left3_props">
-                            <input name="rewardAmount" type="text" onChange={(e) => this.handleRewardChange(e)} />
-                        </div>
-                        <div className="create_child_left2">Select Point Options:</div>
-                        <div className="create_child_left2_props">
-                            <div>{options}</div>
-                            <br />
-                        {/* <div className="create_child_left3">Add custom option (optional):<input type="text" name="option"onChange={(e)=>this.handleCustom({id:1, option:e.target.value})}/><input type="number" name="points" onChange={(e)=>this.handleCustom({id:2, points:e.target.value})}/></div> */}
-                        </div>
-                        <div className="create_child_left5">
-                            <Link to="/dashboard"><button onClick={(e) => this.createChallengeID(e)}>Create Challenge!</button></Link>
+                        <div className="create_children_left">
+                            <div className="create_child_left1">Group Name:</div>
+                            <div className="create_child_left1_props">
+                                <input name="groupName" type="text" onChange={(e) => this.handleGroupNameChange(e)} />
+                            </div>
+                            <div className="create_child_left4">Collection Type:</div>
+                            <div className="create_child_left4_props">
+                                <select value={this.state.value} onChange={(e) => this.handleCollection(e)}>
+                                    <option value="">--Select Option</option>
+                                    <option value="creditcard">Creditcard</option>
+                                    <option value="cash">Cash</option>
+                                    <option value="venmo">Venmo</option>
+                                </select>
+                            </div>
+                            <div className="create_child_left3">Reward Amount:</div>
+                            <div className="create_child_left3_props">
+                                <input name="rewardAmount" type="text" onChange={(e) => this.handleRewardChange(e)} />
+                            </div>
+                            <div className="create_child_left2">Select Point Options:</div>
+                            <div className="create_child_left2_props">
+                                <div>{options}</div>
+                                <br />
+                                {/* <div className="create_child_left3">Add custom option (optional):<input type="text" name="option"onChange={(e)=>this.handleCustom({id:1, option:e.target.value})}/><input type="number" name="points" onChange={(e)=>this.handleCustom({id:2, points:e.target.value})}/></div> */}
+                            </div>
+                            <div className="create_child_left5">
+                                <Link to="/dashboard"><button onClick={(e) => this.createChallengeID(e)}>Create Challenge!</button></Link>
+                            </div>
                         </div>
                     </div>
                 </div>

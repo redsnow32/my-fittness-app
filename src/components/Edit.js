@@ -90,8 +90,10 @@ class Edit extends Component {
                             <div className="edit_profile_gender_props">
                                 <input name="gender" value={this.state.gender} type="text"  onChange={e=>this.handleInput(e)}/>
                             </div>
+                            <div className="edit_buttons">
+                            <Link to="/dashboard" ><div><button className="edit_buttons" onClick={()=>this.submitChanges()}>Update</button></div></Link>
+                            </div>
                         </div>
-                        <Link to="/dashboard" ><div><button onClick={()=>this.submitChanges()}>Update</button></div></Link>
                     </div>
                     <div className="edit_parent_container_right">
                         <div className=""></div>

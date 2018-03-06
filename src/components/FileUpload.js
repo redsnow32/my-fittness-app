@@ -50,7 +50,7 @@ class FileUpload extends Component {
             this.state.file &&
             <img src={this.state.file} alt="" className="file-preview"/>  
             }
-            <button onClick={this.savePhoto}>Upload Image</button>
+            <button className="upload_button"onClick={this.savePhoto}>Upload Image</button>
         </div>
         )
     }

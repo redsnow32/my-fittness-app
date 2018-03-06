@@ -1,7 +1,7 @@
 .FileUpload{
     height:300px;
     width:300px;
-    background: pink;
+   
 
 }
 .file-preview {
@@ -10,4 +10,12 @@
     background-size: cover;
     overflow: hidden;
 }
+.upload_button {
+    background:none;
+    border: 2px solid black;
+    border-radius: 12px;
+    height: 50px;
+    width: 200px;
+}
+
 

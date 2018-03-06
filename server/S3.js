@@ -22,20 +22,12 @@ function uploadPhoto(req, res) {
         }
 
     S3.upload(params, (err, data) => {
-        const{ id } = req.user
         console.log(params)
         if (err) {
             console.log(err)
         } else {
             (response = data.Location, code = 200)
-            // res.status(code).send(response)
-            const db = req.app.get('db')
-            db.upload_profile_image([id, response]).then(resp=>{
-                console.log(resp)
-                res.status(200).send(resp)
-            }).catch((err)=>{
-                console.log(err)
-            })
+            res.status(code).send(response)
             console.log('S3 response', data)
         }
     })

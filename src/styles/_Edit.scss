@@ -39,7 +39,7 @@
 .image_container {
     height: 300px;
     width: 300px;
-    background:red;
+    // background:red;
     display: flex;
 }
 .edit_grandchild_profile_right {
@@ -128,6 +128,15 @@
 .edit_profile_email_props {
     grid-row:11;
     grid-column:3;
+}
+.edit_buttons {
+    background:none;
+    height:50px;
+    width:200px;
+    grid-row:13;
+    grid-column: 2;
+    border:solid 2px black;
+    border-radius: 12px;
 }
 // .edit_parent_container_right {
 // }

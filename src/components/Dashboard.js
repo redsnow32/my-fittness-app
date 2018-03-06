@@ -74,6 +74,10 @@ class Dashboard extends Component {
                             <div className="dashboard_profileinfo_button">
                                 <Link to="/edit"><button>Edit Profile:</button></Link>
                             </div>
+
+                            <div className="dashboard_profileinfo_button">
+                                <Link to="/edit"><button>Edit Profile:</button></Link>
+                            </div>
                             <div className="dashboard_profileinfo_gender">
                                 <h3>Gender:</h3>
                             </div>
@@ -109,13 +113,14 @@ class Dashboard extends Component {
                             </div>
                             <div className="dashboard_profileinfo_height_props">
                                 <h3>{userData.height_cm}</h3>
+
                             </div>
-
+                            
                         </div>
-
+                        <div><Link to="/create_challenge"><div><button>Create Challenge</button></div></Link>
+                            <Link to="/join_challenge"><div><button>Join Challenge</button></div></Link></div>
                         <div className="dashboard_left_parent_buttons">
-                            <Link to="/create_challenge"><div><button>Create Challenge</button></div></Link>
-                            <Link to="/join_challenge"><div><button>Join Challenge</button></div></Link>
+
                             {/* <Link to="/daily"><div><button></button></div></Link> */}
                             {/* <button onClick={(e) => this.getAllChallenges(e)}>onClick</button> */}
                         </div>
@@ -127,16 +132,13 @@ class Dashboard extends Component {
                             <div className="dashboard_left_image">
                                 <br />
                                 <div className="created_challenges_header">
-                                    <h2>CHALLENGES YOU'VE CREATED</h2>
+                                    <h2>YOUR CHALLENGES</h2>
                                 </div>
                                 <div>{groupNames}</div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
         )
     }

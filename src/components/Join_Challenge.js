@@ -18,7 +18,9 @@ class Join_Challenge extends Component {
     }
     handleChallengeSubmit(e) {
         console.log(e)
+        console.log()
         let challenge_id = this.state.join_challenge_id
+        console.log(challenge_id)
         this.props.joinChallenge(challenge_id)
     }
     // handleSettingRedux(e){
@@ -35,7 +37,9 @@ class Join_Challenge extends Component {
                             <form className="join_form" onSubmit={(e) => this.handleChallengeSubmit(e)}>
                                 <label/>Enter Challenge ID:  <input onChange={(e) => this.handleChallengeId(e)} />
                                 <div className="form_space">
-                                    <Link to="/dashboard"><input className="submit"type="submit" /></Link>
+                                    {/* <Link to="/dashboard"> */}
+                                    <input className="submit"type="submit" />
+                                    {/* </Link> */}
                                 </div>
                             </form>
                         {/* </div> */}

@@ -26,15 +26,16 @@ class Group extends Component {
             return <li key={i}>Group Name:  {challenge.group_name} Name:{challenge.first_name} {challenge.last_name} Todays Points: {challenge.daily_points} Total Points: {challenge.total_points} Start Date:{challenge.start_date} End Date:{challenge.end_date}</li>
         })
         return (
-            <div>
-                <Header />
-                <Daily />
-                <br />
-                <div>
-                    <h1>People in the challenge:</h1>
+            <div class_name="Group">
+                <div className="Group_container">
+                    <Header />
+                    <Daily />
+                    <br />
+                    <div>
+                        <h1>People in the challenge:</h1>
+                    </div>
+                    <div>{currentChallenges}</div>
                 </div>
-                <div>{currentChallenges}</div>
-
             </div>
         )
     }

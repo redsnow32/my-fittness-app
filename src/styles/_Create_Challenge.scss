@@ -1,3 +1,19 @@
+.Create {
+    height: 100vh;
+    width:100vw;
+}
+.create_img_container {
+       height: 40vh;
+    // height: 55vh;
+    width:100vw;
+    margin:auto;
+    display:grid;
+    background-image: url(julian.jpg);
+    background-size:cover;
+background-position: bottom 25% left 50%;
+overflow: hidden;
+
+}
 .create_container {
     height: 100vh;
     width: 100vw;

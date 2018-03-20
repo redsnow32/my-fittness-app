@@ -213,3 +213,10 @@ overflow: hidden;
 
     }
 } 
+@media(max-width:300px) {
+    .dashboard_parent_container {
+        grid-template-columns: 1fr;
+
+    }
+   
+}

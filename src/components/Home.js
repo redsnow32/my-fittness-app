@@ -4,7 +4,6 @@ export default class Home extends Component {
     render() {
         return (
             <div className="home_container">
-
                 <div className="home_img_container">
                     <div className="home_child_right">
                         <div className="nav_container">
@@ -21,7 +20,6 @@ export default class Home extends Component {
                     <div className="homechild_left">
                     </div>
                 </div>
-
             </div>
         )
     }

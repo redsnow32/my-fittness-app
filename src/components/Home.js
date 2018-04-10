@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import logo from '../styles/IMG_5270.jpeg';
-
 
 export default class Home extends Component {
     render() {

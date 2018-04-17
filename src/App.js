@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { HashRouter as Router, Route, Switch } from 'react-router-dom';
-import Maintenance from './components/Maintenance';
-// import Home from './components/Home';
+// import Maintenance from './components/Maintenance';
+import Home from './components/Home';
 import Dashboard from './components/Dashboard';
 import Edit from './components/Edit';
 import Create_Challenge from './components/Create_Challenge';
@@ -10,8 +10,10 @@ import Daily from './components/Daily';
 import Group from './components/Group';
 import FileUpload from './components/FileUpload';
 import Group_Members from './components/Group_Members';
-import Scale_Img from './components/Scale_Img'
+import Scale_Img from './components/Scale_Img';
+import NewDashboard from './components/NewDashboard';
 import './styles/main.css';
+
 
 
 class App extends Component {
@@ -20,8 +22,9 @@ class App extends Component {
       <div className="App">
         <Router >
           <Switch>
-            <Route exact path="/" component={Maintenance}/>
-            {/* <Route exact path="/" component={Home} /> */}
+            {/* <Route exact path="/" component={Maintenance}/> */}
+            <Route exact path="/" component={Home} />
+            <Route path="/newdashboard" component={NewDashboard}/>
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/edit" component={Edit} />
             <Route path="/create_challenge" component={Create_Challenge} newID/>

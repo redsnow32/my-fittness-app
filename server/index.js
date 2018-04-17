@@ -59,27 +59,27 @@ passport.use(new Auth0Strategy({
 //////!req.user) {
 //         req.user
 
-// app.use((req, res, next) => {
-//     if (!req.user) {
-//         req.user = {
-//             id: 4,
-//             first_name: "Brandon",
-//             last_name: "Allred",
-//             age: 34,
-//             gender: "male",
-//             auth_id: "google-oauth2|104169181473731414256",
-//             email: "B32alls@gmail.com",
-//             height: '',
-//             current_weight: '',
-//             current_height: "234",
-//             challenge_id: '',
-//             birthdate: '',
-//             profile_picture: '',
-//         }
-//     }
+app.use((req, res, next) => {
+    if (!req.user) {
+        req.user = {
+            id: 4,
+            first_name: "Brandon",
+            last_name: "Allred",
+            age: 34,
+            gender: "male",
+            auth_id: "google-oauth2|104169181473731414256",
+            email: "B32alls@gmail.com",
+            height: '',
+            current_weight: '',
+            current_height: "234",
+            challenge_id: '',
+            birthdate: '',
+            profile_picture: '',
+        }
+    }
 
-//     next()
-// })
+    next()
+})
 
 
 
@@ -130,7 +130,6 @@ app.put('/api/edit/:id', ctrl.updateUser);
 app.put('/api/create_challenge', ((req, res, next) => {
 
     const { id } = req.user
-    // console.log(id)
     const { group_name, start_date, end_date, reward_amount, water_intake, caloric_intake, daily_weight, exercise, collection_type, payment_required } = req.body
     let token = randtoken.generate(16)
     const db = req.app.get('db')

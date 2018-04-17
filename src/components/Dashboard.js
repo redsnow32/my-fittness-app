@@ -23,10 +23,7 @@ class Dashboard extends Component {
         })
     }
     handleRedirectByChallengeId(e) {
-        console.log(e)
-        // console.log(this.state)
         const { challenges } = this.state
-        // console.log(challenges)
         let selectedIndex = e
         console.log(selectedIndex)
 
@@ -38,11 +35,8 @@ class Dashboard extends Component {
         this.setState({ selectedChallenge: selectedChallengeId })
     }
     render() {
-        console.log(this.props)
         let { userData } = this.props
-        console.log(userData)
         let { challenges } = this.state
-        // console.log(this.state.selectedChallenge)
         const { selectedChallenge } = this.state.selectedChallenge
         let groupNames = challenges.map((group, index, self) => {
             return <Link key={[index]} to="/group"><div className="group_names" value={index} onClick={(e) => this.handleRedirectByChallengeId(index)}>Group Name: {group.group_name}</div></Link>

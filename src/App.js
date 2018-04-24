@@ -12,6 +12,7 @@ import FileUpload from './components/FileUpload';
 import Group_Members from './components/Group_Members';
 import Scale_Img from './components/Scale_Img';
 import NewDashboard from './components/NewDashboard';
+import NewEdit from './components/Edit/NewEdit';
 import './styles/main.css';
 
 
@@ -39,6 +40,7 @@ class App extends Component {
             <Route path="/api/daily/images" component={Daily} />
             <Route path="/api/daily/delete/:challenge_id" component={Daily} />
             <Route path="/group/group_members" component={Group_Members}/>
+            <Route path="/newEdit" component={NewEdit}/>
           </Switch>
         </Router>
       </div>

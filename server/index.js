@@ -86,15 +86,15 @@ app.use((req, res, next) => {
 
 //////////////////////////////////////////
 
-passport.serializeUser((id, done) => {
-    done(null, id)
-})
-passport.deserializeUser((id, done) => {
-    const db = app.get('db');
-    db.find_logged_in_user([id]).then(res => {
-        done(null, res[0])
-    })
-});
+// passport.serializeUser((id, done) => {
+//     done(null, id)
+// })
+// passport.deserializeUser((id, done) => {
+//     const db = app.get('db');
+//     db.find_logged_in_user([id]).then(res => {
+//         done(null, res[0])
+//     })
+// });
 
 app.get('/auth', passport.authenticate('auth0'));
 app.get('/auth/callback', passport.authenticate('auth0', {
@@ -117,7 +117,9 @@ app.get('/auth/me', (req, res) => {
     if (!req.user) {
         res.status(404).send('Not Logged In')
     } else {
+        // console.log(req.user)
         res.status(200).send(req.user)
+        // res.status(200).send(req.user)
     }
 })
 

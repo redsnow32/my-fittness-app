@@ -40,7 +40,7 @@ class Edit extends Component {
     render() {
         let { userData, updateUser } = this.props
         console.log(this.state.birthday)
-        console.log(this.props)
+
         return (
             <div className="edit_container">
                 <div className="header">

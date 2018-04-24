@@ -38,6 +38,7 @@ const GET_CHALLENGE_ID = 'GET_CHALLENGE_ID';
 const ADD_DAILY_LOG = 'ADD_DAILY_LOG';
 const JOIN_CHALLENGE = 'JOIN_CHALLENGE';
 const DELETE_CHALLENGE = 'DELETE_CHALLENGE';
+const ALL_USER_DATA = 'ALL_USER_DATA';
 
 
 export default function reducer(state = initialState, action) {
@@ -186,5 +187,10 @@ export function deleteChallenge(selectedChallengeId) {
     return{
         type:DELETE_CHALLENGE,
         payload:deleteChallenge
+    }
+}
+export function allUserData() {
+    return {
+        user:this.state
     }
 }

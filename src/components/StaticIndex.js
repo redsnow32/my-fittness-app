@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Layout } from 'antd'
 
 import { getUser } from '../ducks/reducer';
-// import { Header } from './Edit';
 
 import User from '../ducks/reducer';
 

@@ -42,7 +42,6 @@ const ALL_USER_DATA = 'ALL_USER_DATA';
 
 
 export default function reducer(state = initialState, action) {
-    console.log(state)
     switch (action.type) {
         case GET_USER + '_FULFILLED':
             return Object.assign({}, state, { user: action.payload });
@@ -77,7 +76,6 @@ export function getUser() {
 }
 
 export function updateUser(user) {
-    // console.log(user)
     let body = {
         id: user.id,
         first_name: user.first_name,
@@ -103,7 +101,6 @@ export function updateUser(user) {
 }
 
 export function createChallenge(challenge, options) {
-    // console.log(challenge, options)
     let body = {
         challenge_id: '',
         user_id: '',
@@ -129,7 +126,6 @@ export function createChallenge(challenge, options) {
 
 
 export function createOptions(option) {
-    console.log(option)
     const selectedChallenge = axios.put(`/api/create_challenge`, option).then(res => {
         return res.data
     })
@@ -140,7 +136,6 @@ export function createOptions(option) {
 }
 
 export function selectChallenge(selectedChallengeId) {
-    console.log(selectedChallengeId)
     return {
         type: GET_CHALLENGE_ID,
         payload: selectedChallengeId
@@ -149,13 +144,11 @@ export function selectChallenge(selectedChallengeId) {
 }
 
 export function dailyLog(changeLog) {
-    console.log(changeLog)
     let body = changeLog
     let selectedId = body.filter((value, i)=>{
         return value.challenge_id
     })
 let challenge_id = selectedId.pop().challenge_id
-console.log(challenge_id)
     const daily_log = axios.put(`/api/daily/daily_log/${challenge_id}`, body).then(res=>{
         return res.data
     })
@@ -167,9 +160,7 @@ console.log(challenge_id)
 }
 
 export function joinChallenge(challenge_id){
-    console.log(challenge_id)
     const join_challengeId = axios.put(`/api/join_challenge/${challenge_id}`).then(res=>{
-        console.log(res.data)
         return res.data
 
     })
@@ -179,9 +170,7 @@ export function joinChallenge(challenge_id){
     }
 }
 export function deleteChallenge(selectedChallengeId) {
-    console.log(selectedChallengeId)
     const deleteChallenge = axios.delete(`/api/daily/delete/${selectedChallengeId}`).then(res=>{
-        console.log(res.data)
         return res.data
     })
     return{

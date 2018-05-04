@@ -6,6 +6,7 @@ import { Layout } from 'antd'
 import { getUser } from '../ducks/reducer';
 
 import User from '../ducks/reducer';
+import NewEdit from './Edit/NewEdit'
 
 const { Header } = Layout;
 
@@ -19,11 +20,10 @@ class StaticIndex extends Component{
         const { userData } = this.props
     }
     render(){
-        console.log(this.props.user)
         return(
             <Layout>
                 <Header>
-                    <h1>Edit</h1>
+                    <NewEdit getUser={this.getUser}/>
                 </Header>
             </Layout>
         )

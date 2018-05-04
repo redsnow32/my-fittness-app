@@ -117,7 +117,7 @@ app.get('/auth/me', (req, res) => {
     if (!req.user) {
         res.status(404).send('Not Logged In')
     } else {
-        // console.log(req.user)
+        console.log(req.user)
         res.status(200).send(req.user)
         // res.status(200).send(req.user)
     }

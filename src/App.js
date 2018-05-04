@@ -11,7 +11,7 @@ import Group from './components/Group';
 import FileUpload from './components/FileUpload';
 import Group_Members from './components/Group_Members';
 import Scale_Img from './components/Scale_Img';
-import NewDashboard from './components/NewDashboard';
+// import NewDashboard from './components/NewDashboard';
 import NewEdit from './components/Edit/NewEdit';
 import './styles/main.css';
 
@@ -25,7 +25,7 @@ class App extends Component {
           <Switch>
             {/* <Route exact path="/" component={Maintenance}/> */}
             <Route exact path="/" component={Home} />
-            <Route path="/newdashboard" component={NewDashboard}/>
+            {/* <Route path="/newdashboard" component={NewDashboard}/> */}
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/edit" component={Edit} />
             <Route path="/create_challenge" component={Create_Challenge} newID/>

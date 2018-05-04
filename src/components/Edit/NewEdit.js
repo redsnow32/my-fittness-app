@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getUser, allUserData } from '../../ducks/reducer';
+// import { getUser, allUserData } from '../../ducks/reducer';
 import { mapValues } from 'lodash'
 import { Form, Input, Row, Col, Button } from 'antd';
 
@@ -52,8 +52,6 @@ class NewEdit extends Component {
     // }
 
     render() {
-        console.log(this.props)
-        console.log(this.props.userData.first_name)
         return (
             <div>
                 <CustomizedForm />
@@ -67,4 +65,4 @@ export function mapStateToProps(state) {
     }
 }
 // export default(NewEdit)
-export default connect(mapStateToProps, { getUser, allUserData })(NewEdit);
+export default connect(mapStateToProps)(NewEdit);

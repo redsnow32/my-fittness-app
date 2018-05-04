@@ -12,7 +12,7 @@ export default class Header extends Component {
     }
 
     render() {
-        let dashboard = '/api/dashboard'
+        // let dashboard = '/api/dashboard'
         let width = window.innerWidth
         // {dashboard ? {background:null} : background:black}
         const large = <div className="header_child_right">

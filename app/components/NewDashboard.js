@@ -29,7 +29,6 @@ class NewDashboard extends Component {
         }
     }
     componentDidMount() {
-        // this.props.getUser();
         axios.get('/api/dashboard/group_name').then(res => {
             console.log(res.data)
             this.setState({ challenges: res.data })
@@ -56,6 +55,7 @@ class NewDashboard extends Component {
         const { getFieldDecorator } = this.props.form
         let { userData, updateUser } = this.props
         console.log(this.props)
+        console.log('hi')
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
@@ -98,8 +98,8 @@ class NewDashboard extends Component {
 export function mapStateToProps(state) {
     return {
         userData: state.user
-    }
-}
+    };
+};
 
 export default Form.create({
     mapPropsToFields: props =>

@@ -20,7 +20,6 @@ module.exports = {
     getGroupsById: (req, res) => {
         const db = req.app.get('db')
         const { id } = req.user
-        console.log(req.user.id)
 
         db.get_challenge_info_by_id([id]).then(resp => {
             res.status(200).send(resp)
@@ -117,7 +116,6 @@ module.exports = {
         console.log(challenge_id, "THIS WAS HIT FOR THE USER")
         let stack = []
         ///CHANGE THIS CHALLENGE ID BACK TO challenge_id
-        console.log(challenge_id)
         db.get_challenge_by_challenge_id([challenge_id]).then(resp => {
             resp.forEach((option, i) => {
                 // if(option.id === id && challenge_id == option.challenge_id) {
@@ -181,7 +179,6 @@ module.exports = {
     deleteChallenge: (req, res) => {
         const { id } = req.user
         const { challenge_id } = req.params
-        console.log(req.params)
         const db = req.app.get('db')
 
         // console.log(challenge_id, "THIS IS THE CHALLENGE_ID")

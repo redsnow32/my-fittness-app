@@ -18,7 +18,7 @@ const initialState = {
 
 };
 
-class EditLayout extends Component {
+class AppLayout extends Component {
     constructor(props) {
         super(props);
         this.state = initialState;
@@ -87,4 +87,4 @@ class EditLayout extends Component {
         )
     }
 }
-export default EditLayout;
+export default AppLayout;

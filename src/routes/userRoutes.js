@@ -6,7 +6,7 @@ import Dashboard from '../components/Dashboard';
 import Edit from '../components/Edit';
 import FileUpload from '../components/FileUpload';
 import NewEdit from '../components/Edit/NewEdit';
-import EditLayout from '../components/Edit/EditLayout';
+import AppLayout from '../components/Edit/AppLayout';
 
 const challenges = challengeRoutes();
 
@@ -17,7 +17,7 @@ const userRoutes = () => (
             <Route path="/edit" component={Edit} />
             <Route path="/fileupload" component={FileUpload} />
             <Route path="/newedit" component={NewEdit} />
-            <Route path="/editlayout" component={EditLayout} />
+            <Route path="/applayout" component={AppLayout} />
             { challenges }
         </Switch>
     </Router>

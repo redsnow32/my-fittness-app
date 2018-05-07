@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { mapValues } from 'lodash';
-import { getUser, updateUser } from '../ducks/reducer';
+import { getUser, updateUser } from '../../ducks/reducer';
 import axios from 'axios';
 import { Form, Input, Button, List } from 'antd';
 

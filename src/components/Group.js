@@ -14,7 +14,7 @@ class Group extends Component {
     }
     componentDidMount() {
         const { selectedChallengeId } = this.props
-        axios.get(`/api/group/${selectedChallengeId}`).then(res => {
+        axios.get(`/group/${selectedChallengeId}`).then(res => {
             console.log(res.data)
             this.setState({ challenges: res.data })
         })

@@ -1,4 +1,7 @@
 @import './_reset.scss';
+@import "~antd/dist/antd.less";   // import official less entry file
+@import "theme.less";
+@import './_AppLayout.scss';
 @import './App.scss';
 @import './_Header.scss';
 @import './_Button.scss';

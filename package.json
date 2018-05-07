@@ -42,5 +42,9 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:3223"
+  "proxy": "http://localhost:3223",
+  "devDependencies": {
+    "less-loader": "^4.1.0",
+    "sass-loader": "^7.0.1"
+  }
 }

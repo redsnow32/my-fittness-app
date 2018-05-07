@@ -6,7 +6,7 @@ import Dashboard from '../components/Dashboard';
 import Edit from '../components/Edit';
 import FileUpload from '../components/FileUpload';
 import NewEdit from '../components/Edit/NewEdit';
-import AppLayout from '../components/Edit/AppLayout';
+import AppLayout from '../components/AppLayout';
 
 const challenges = challengeRoutes();
 
